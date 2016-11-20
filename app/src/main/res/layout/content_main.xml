@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cc.easyandroid.easyrecyclerview.core.progress.EasyProgressLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/easyProgressLinearLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.meizitu.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/activity_main">
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:layout_height="40dp"
+        android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabPaddingStart="@dimen/q10dp"
+        app:tabPaddingEnd="@dimen/q10dp"
+        app:tabIndicatorHeight="2dp"
+        app:tabSelectedTextColor="@color/q333333"
+        app:tabTextColor="@color/q333333" />
+    <!--app:tabBackground="@drawable/bottom_line"-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
+</cc.easyandroid.easyrecyclerview.core.progress.EasyProgressLinearLayout>

@@ -1,0 +1,51 @@
+<cc.easyandroid.customview.progress.KProgressLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/KProgressLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/q333333"
+        tools:context="com.meizitu.ui.fragments.ImageDetailsFragment">
+
+        <com.meizitu.ui.views.FixedViewPager
+            android:id="@+id/banner_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+        <!--android:textColor="@color/qFFFFFF"-->
+        <!--android:padding="@dimen/activity_horizontal_margin"-->
+        <!--android:textSize="16sp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@color/q77333333"-->
+        <!--android:layout_marginBottom="50dp"-->
+        <!--android:text="ddddd" />-->
+        <com.meizitu.ui.views.ViewpagerIndicator
+            android:id="@+id/viewpagerIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/q88333333"
+            android:paddingBottom="100dp" />
+        <!--android:paddingBottom="50dp"-->
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:adSize="SMART_BANNER"
+            android:layout_gravity="bottom"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:adUnitId="ca-app-pub-7086711774077602/7530667207"
+            />
+    </FrameLayout>
+</cc.easyandroid.customview.progress.KProgressLayout>

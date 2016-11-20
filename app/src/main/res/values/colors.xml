@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#239fdc</color>
+    <color name="colorPrimaryDark">#239fdc</color>
+
+    <color name="colorAccent">#333333</color>
+    <color name="titleTextColor">#FFFFFF</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="qFFFFFF">#FFFFFF</color>
+    <color name="q888888">#888888</color>
+    <color name="q333333">#333333</color>
+    <color name="q000000">#000000</color>
+    <color name="qE5E5E5">#E5E5E5</color>
+    <color name="q77777777">#77777777</color>
+    <color name="q55555555">#55555555</color>
+    <color name="q88333333">#88333333</color>
+    <color name="qF5F5F9">#F5F5F9</color>
+
+
 </resources>
