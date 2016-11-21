@@ -18,9 +18,10 @@
         app:tabPaddingStart="@dimen/q10dp"
         app:tabPaddingEnd="@dimen/q10dp"
         app:tabIndicatorHeight="2dp"
-        app:tabSelectedTextColor="@color/q333333"
-        app:tabTextColor="@color/q333333" />
-    <!--app:tabBackground="@drawable/bottom_line"-->
+        app:tabBackground="@color/qF9FAF9"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/qAAAAAA" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

@@ -32,7 +32,7 @@ public class QfangRecyclerView extends EasyRecyclerView {
         setHeaderHander(new DefaultHeaderHander(getContext()));
         setFooterHander(new DefaultFooterHander(getContext()));
         setLayoutManager(new LinearLayoutManager(context));
-        setRestItemCountToLoadMore(20);
+        setRestItemCountToLoadMore(40);
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 

@@ -7,7 +7,9 @@
     <color name="titleTextColor">#FFFFFF</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="qFFFFFF">#FFFFFF</color>
+    <color name="qF9FAF9">#F9FAF9</color>
     <color name="q888888">#888888</color>
+    <color name="qAAAAAA">#AAAAAA</color>
     <color name="q333333">#333333</color>
     <color name="q000000">#000000</color>
     <color name="qE5E5E5">#E5E5E5</color>

@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements EasyWorkContract.View<
                 //设置tab可以滚动
                 tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                 tablayout.setupWithViewPager(viewpager);
-                easyProgressLinearLayout.showEmptyView();
+                easyProgressLinearLayout.showContentView();
             } else {
                 easyProgressLinearLayout.showEmptyView();
             }

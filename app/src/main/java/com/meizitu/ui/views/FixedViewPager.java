@@ -14,7 +14,6 @@ public class FixedViewPager extends ViewPager {
 
     public FixedViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setla
     }
 
     @Override
