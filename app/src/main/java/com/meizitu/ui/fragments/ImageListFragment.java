@@ -59,7 +59,7 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
 
     @Override
     protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoList>>>> onCreateRequestValues(int pulltype, Bundle paraBundle) {
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().queryGroupImageInfoList(paraBundle.getInt(ID), helper.getCurrentPage() + 1));
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().adminGroupImageInfoList(paraBundle.getInt(ID), helper.getCurrentPage() + 1));
         return new EasyWorkUseCase.RequestValues<>(pulltype, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
     }
 

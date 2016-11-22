@@ -28,7 +28,12 @@ public interface ImageApi {
      */
     @Headers({"Cache-Control: max-age=640000"})
     @GET("/groupImageInfoList?count=40")
-    Call<ResponseInfo<Paging<List<Item_GroupImageInfoList>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
+    Call<ResponseInfo<Paging<List<Item_GroupImageInfoList>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);    /**
+     * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
+     */
+    @Headers({"Cache-Control: max-age=640000"})
+    @GET("/adminGroupImageInfoList?count=40")
+    Call<ResponseInfo<Paging<List<Item_GroupImageInfoList>>>> adminGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
 
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
@@ -39,7 +44,7 @@ public interface ImageApi {
 
     @Headers({"Cache-Control: max-age=640000"})
     @GET("/categoryList")
-    Call<ResponseInfo<List<Category>>>  categoryList(@Query("id") int id);
+    Call<ResponseInfo<List<Category>>> categoryList(@Query("id") int id);
 
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
@@ -55,4 +60,8 @@ public interface ImageApi {
 
     @GET("/openGroupImageInfoByCategoryCode")
     Call<ResponseInfo<Item_GroupImageInfoList>> openGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
+
+    @FormUrlEncoded
+    @POST("/login")
+    Call<ResponseInfo<Item_GroupImageInfoList>> login(@Field("username") String username, @Field("password") String password);
 }

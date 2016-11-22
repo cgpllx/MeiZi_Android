@@ -6,12 +6,12 @@
     android:layout_marginLeft="@dimen/q5dp"
     android:layout_marginRight="@dimen/q5dp"
     android:layout_marginTop="@dimen/q5dp"
-    app:cardBackgroundColor="@color/qFFFFFF"
+
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true">
-
+    <!--app:cardBackgroundColor="@color/qFFFFFF"-->
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -90,6 +90,7 @@ public class MainActivity extends BaseActivity implements EasyWorkContract.View<
         } else {
             easyProgressLinearLayout.showEmptyView();
         }
+
     }
 
     @Override
