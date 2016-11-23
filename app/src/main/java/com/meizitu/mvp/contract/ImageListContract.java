@@ -1,10 +1,6 @@
 package com.meizitu.mvp.contract;
 
-import com.bumptech.glide.request.FutureTarget;
-import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
-
-import java.io.File;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easyclean.presentation.presenter.base.EasyBasePresenter;
@@ -28,13 +24,16 @@ public interface ImageListContract {
 
         void onOpenSuccess(Object var1, ResponseInfo var2);
 
+
     }
 
     abstract class Presenter extends EasyBasePresenter<View> {
 
-        public abstract void exeCloseRequest(EasyWorkUseCase.RequestValues requestValues);
-
         public abstract void exeOpenRequest(EasyWorkUseCase.RequestValues requestValues);
+        public abstract void exeCloseRequest(EasyWorkUseCase.RequestValues requestValues);
+//
+//        public abstract void exeOpenSingleRequest(EasyWorkUseCase.RequestValues requestValues);
+//        public abstract void exeCloseSingleRequest(EasyWorkUseCase.RequestValues requestValues);
 
 
     }

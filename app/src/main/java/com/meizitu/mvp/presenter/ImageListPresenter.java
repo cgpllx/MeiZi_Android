@@ -12,12 +12,18 @@ import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 public class ImageListPresenter extends ImageListContract.Presenter {
 
     protected QfangEasyWorkPresenter<ResponseInfo> openpresenter = new QfangEasyWorkPresenter<>();//使用clean
-
     protected QfangEasyWorkPresenter<ResponseInfo> closepresenter = new QfangEasyWorkPresenter<>();//使用clean
+
+    protected QfangEasyWorkPresenter<ResponseInfo> closeSinglePresenter = new QfangEasyWorkPresenter<>();//使用clea
+
+    protected QfangEasyWorkPresenter<ResponseInfo> openSinglePresenter = new QfangEasyWorkPresenter<>();//使用clean
 
     public ImageListPresenter() {
         openpresenter.attachView(openView);
         closepresenter.attachView(closeView);
+        closeSinglePresenter.attachView(closeView);
+        openSinglePresenter.attachView(closeView);
+
     }
 
     @Override

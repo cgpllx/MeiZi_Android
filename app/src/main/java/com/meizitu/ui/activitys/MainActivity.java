@@ -4,16 +4,11 @@ package com.meizitu.ui.activitys;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.meizitu.R;
 import com.meizitu.adapter.SimpleFragmentPagerAdapter;
-import com.meizitu.items.Item_GroupImageInfoList;
 import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.Category;
-import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.EasyHttpRequestParaWrap;
 import com.meizitu.service.QfangRetrofitCallToEasyCall;
