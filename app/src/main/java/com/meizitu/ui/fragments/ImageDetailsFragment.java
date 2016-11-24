@@ -1,7 +1,6 @@
 package com.meizitu.ui.fragments;
 
 
-import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.meizitu.R;
 import com.meizitu.banner.BannerAtlasAdapter;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.Image;
 import com.meizitu.pojo.ResponseInfo;

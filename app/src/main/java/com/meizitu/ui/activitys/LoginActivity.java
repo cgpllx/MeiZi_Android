@@ -1,42 +1,41 @@
 package com.meizitu.ui.activitys;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
+import com.meizitu.Di.Module.LoginModule;
+import com.meizitu.Di.component.DaggerLoginComponent;
+import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
-import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.QfangRetrofitManager;
+import com.meizitu.service.ImageApi;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
+import cc.easyandroid.easyutils.EasyToast;
 
 
 public class LoginActivity extends BaseActivity implements EasyWorkContract.View<ResponseInfo> {
-    protected QfangEasyWorkPresenter<ResponseInfo> presenter = new QfangEasyWorkPresenter<>();//使用clean
+    @Inject
+    QfangEasyWorkPresenter<ResponseInfo> presenter;// = new QfangEasyWorkPresenter<>();//使用clean
 
+    @Inject
+    ImageApi imageApi;
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -68,9 +67,16 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
                 attemptLogin();
             }
         });
+        inject();
         presenter.attachView(this);
     }
 
+    private void inject() {
+//        DaggerLoginComponent daggerLoginComponent=
+                DaggerLoginComponent.builder().appComponent(ImageApplication.get(this).getAppComponent())
+                .loginModule(new LoginModule()).build().inject(this);
+
+    }
 
 
     private void attemptLogin() {
@@ -113,8 +119,8 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
 //            showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
-            EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().login(username,password));
-            presenter.execute(new EasyWorkUseCase.RequestValues("",easyCall,CacheMode.LOAD_NETWORK_ONLY));
+            EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.login(username, password));
+            presenter.execute(new EasyWorkUseCase.RequestValues("", easyCall, CacheMode.LOAD_NETWORK_ONLY));
         }
     }
 
@@ -130,13 +136,14 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
 
     @Override
     public void onStart(Object o) {
-
+        EasyToast.showShort(getApplicationContext(), "onStart");
     }
 
     @Override
     public void onSuccess(Object o, ResponseInfo responseInfo) {
-        if(responseInfo!=null&&responseInfo.isSuccess()){
-            Intent intent=new Intent(this,MainActivity.class);
+        EasyToast.showShort(getApplicationContext(), "onSuccess responseInfo="+responseInfo);
+        if (responseInfo != null && responseInfo.isSuccess()) {
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }

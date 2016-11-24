@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.meizitu.Di.Module.MainModule;
+import com.meizitu.Di.component.DaggerMainComponent;
+import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.adapter.SimpleFragmentPagerAdapter;
 import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.Category;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.EasyHttpRequestParaWrap;
+import com.meizitu.service.ImageApi;
 import com.meizitu.service.QfangRetrofitCallToEasyCall;
-import com.meizitu.service.QfangRetrofitManager;
 import com.meizitu.ui.fragments.ImageListFragment;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
@@ -32,8 +37,10 @@ public class MainActivity extends BaseActivity implements EasyWorkContract.View<
 
     private ViewPager viewpager;
 
-    QfangEasyWorkPresenter<ResponseInfo<List<Category>>> presenter = new QfangEasyWorkPresenter<>();
-
+    @Inject
+    QfangEasyWorkPresenter<ResponseInfo<List<Category>>> presenter;// = new QfangEasyWorkPresenter<>();
+    @Inject
+    ImageApi imageApi;
     SimpleFragmentPagerAdapter adapter;
 
     EasyProgressLinearLayout easyProgressLinearLayout;
@@ -44,15 +51,25 @@ public class MainActivity extends BaseActivity implements EasyWorkContract.View<
         setContentView(R.layout.activity_main);
         initTitleBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        presenter.attachView(this);
+
         tablayout = EasyViewUtil.findViewById(this, R.id.tablayout);
         viewpager = EasyViewUtil.findViewById(this, R.id.viewpager);
         easyProgressLinearLayout = EasyViewUtil.findViewById(this, R.id.easyProgressLinearLayout);
 
         adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this);
-
-        EasyCall easyCall = new QfangRetrofitCallToEasyCall(QfangRetrofitManager.getApi().categoryList(30));
+        inject();
+        presenter.attachView(this);
+        EasyCall easyCall = new QfangRetrofitCallToEasyCall(imageApi.categoryList(30));
         presenter.execute(new EasyWorkUseCase.RequestValues("", easyCall, null));
+    }
+
+    private void inject() {
+//        DaggerLoginComponent daggerLoginComponent=
+//        DaggerMainComponent daggerMainComponent;
+//        ImageApplication.get(this).getAppComponent().
+        DaggerMainComponent.builder().appComponent(ImageApplication.get(this).getAppComponent())
+                .mainModule(new MainModule()).build().inject(this);
+
     }
 
     @Override

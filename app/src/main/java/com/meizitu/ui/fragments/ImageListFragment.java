@@ -9,7 +9,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.meizitu.Di.component.DaggerBaseFragmentComponent;
 import com.meizitu.GroupImageInfoListAdapter;
+import com.meizitu.ImageApplication;
 import com.meizitu.It.IToggle;
 import com.meizitu.R;
 import com.meizitu.items.Item_GroupImageInfoListItem;
@@ -17,7 +19,6 @@ import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.EasyHttpRequestParaWrap;
-import com.meizitu.service.QfangRetrofitManager;
 
 import java.util.List;
 
@@ -70,10 +71,18 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
 
     protected QfangEasyWorkPresenter<ResponseInfo> presenter = new QfangEasyWorkPresenter<>();//使用clean
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
+        super.onQfangViewCreated(view, savedInstanceState);
+        DaggerBaseFragmentComponent.builder().appComponent(ImageApplication.get(getContext()).getAppComponent()).build().inject(this);
     }
 
     @Override
@@ -143,13 +152,13 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
 
     @Override
     protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> onCreateRequestValues(int pulltype, Bundle paraBundle) {
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().adminGroupImageInfoList(paraBundle.getInt(ID), helper.getCurrentPage() + 1));
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.adminGroupImageInfoList(paraBundle.getInt(ID), helper.getCurrentPage() + 1));
         return new EasyWorkUseCase.RequestValues<>(pulltype, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
     }
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
-        return new GroupImageInfoListAdapter(getContext(),this);
+        return new GroupImageInfoListAdapter(getContext(), this);
     }
 
     @Override
@@ -173,26 +182,26 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
 
     private void closeAll() {
         Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().closeGroupImageInfoByCategoryCode(paraBundle.getInt(ID)));
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.closeGroupImageInfoByCategoryCode(paraBundle.getInt(ID)));
         presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.CLOSEALL), easyCall, null));
     }
 
     private void openAll() {
         Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().openGroupImageInfoByCategoryCode(paraBundle.getInt(ID)));
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.openGroupImageInfoByCategoryCode(paraBundle.getInt(ID)));
         presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.OPENALL), easyCall, null));
     }
 
     public void closeSingle(Item_GroupImageInfoListItem item_groupImageInfoListItem) {
-        Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().closeGroupImageInfoById(item_groupImageInfoListItem.getId()));
-        presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.CLOSESINGLE,item_groupImageInfoListItem), easyCall, null));
+        //Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.closeGroupImageInfoById(item_groupImageInfoListItem.getId()));
+        presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.CLOSESINGLE, item_groupImageInfoListItem), easyCall, null));
     }
 
     public void openSingle(Item_GroupImageInfoListItem item_groupImageInfoListItem) {
-        Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(QfangRetrofitManager.getApi().openGroupImageInfoById(item_groupImageInfoListItem.getId()));
-        presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.OPENSINGLE,item_groupImageInfoListItem), easyCall, null));
+        //Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.openGroupImageInfoById(item_groupImageInfoListItem.getId()));
+        presenter.execute(new EasyWorkUseCase.RequestValues<>(new RequestTag(RequestTag.OPENSINGLE, item_groupImageInfoListItem), easyCall, null));
     }
 
     @Override

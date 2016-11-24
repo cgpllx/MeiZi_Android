@@ -19,12 +19,17 @@ import retrofit2.http.Query;
  * 接口公共方法
  */
 public interface ImageApi {
+    String DOMAIN = "www.ffvvv.cc";
+//    String DOMAIN="192.168.1.105:8080";
+
     /**
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
     @Headers({"Cache-Control: max-age=640000"})
     @GET("/groupImageInfoList?count=40")
-    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);    /**
+    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
+
+    /**
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
     @Headers({"Cache-Control: max-age=640000"})

@@ -3,7 +3,6 @@ package com.meizitu.ui.activitys;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.meizitu.R;
@@ -54,7 +53,8 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void onError(Object i, Throwable throwable) {
-        EasyToast.showShort(getApplicationContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());
+//        EasyToast.showShort(getApplicationContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());
+        EasyToast.showShort(getApplicationContext(),   "服務器或者網絡異常"  );
 
     }
 

@@ -1,7 +1,6 @@
 package com.meizitu.service;
 
 
-import cc.easyandroid.easycore.EasyExecutor;
 import cc.easyandroid.easyhttp.EasyHttpUtils;
 import cc.easyandroid.easyhttp.retrofit2.EasyExecutorCallAdapterFactory;
 import retrofit2.Retrofit;
@@ -27,7 +26,7 @@ public class QfangRetrofitManager {
                     Retrofit retrofit = new Retrofit.Builder()//
                             .baseUrl("http://" + DOMAIN + "/")//
                             .addConverterFactory(GsonConverterFactory.create(EasyHttpUtils.getInstance().getGson()))//
-                            .addCallAdapterFactory(new EasyExecutorCallAdapterFactory())
+                            .addCallAdapterFactory(new EasyExecutorCallAdapterFactory(null))
                             .client(EasyHttpUtils.getInstance().getOkHttpClient())
                             .build();
                     api = retrofit.create(ImageApi.class);

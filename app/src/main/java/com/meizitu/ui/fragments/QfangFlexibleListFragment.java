@@ -13,10 +13,12 @@ import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.EasyHttpRequestParaWrap;
+import com.meizitu.service.ImageApi;
 import com.meizitu.ui.views.QfangRecyclerView;
 
-
 import java.util.List;
+
+import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
@@ -40,6 +42,9 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
      */
     private boolean isPrepared;
 
+    @Inject
+    ImageApi imageApi;
+
     @Override
     protected int getResourceId() {
         return R.layout.fragment_simple_list;
@@ -52,10 +57,7 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
         presenter.attachView(this);
         qfangRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
         qfangRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//        qfangRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        qfangRecyclerView.addItemDecoration(onCreateItemDecoration());
         qfangRecyclerView.setHasFixedSize(true);
-//        final EasyRecyclerAdapter<T> adapter = onCreateEasyRecyclerAdapter();
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
         helper = new EasyFlexibleRecyclerViewHelper<T>(qfangRecyclerView, adapter) {
             @Override
@@ -73,7 +75,6 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
         lazyLoad();
-        System.out.println("isPrepared= onViewCreated" + isPrepared + " isVisible=" + isVisible);
     }
 
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
@@ -123,8 +124,6 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
     }
 
     protected abstract EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<T>>>> onCreateRequestValues(int pulltype, Bundle paraBundle);
-
-//    protected abstract EasyFlexibleAdapter<T> onCreateEasyRecyclerAdapter();
 
     @Override
     public void onStart(Object o) {
