@@ -1,3 +1,4 @@
+/*
 package com.meizitu.Di.Module;
 
 import android.app.Application;
@@ -23,3 +24,4 @@ public class AppModule {
     }
 
 }
+*/

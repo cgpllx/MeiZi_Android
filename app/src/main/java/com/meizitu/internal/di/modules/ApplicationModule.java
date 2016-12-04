@@ -1,18 +1,33 @@
-package com.meizitu.Di.Module;
+/**
+ * Copyright (C) 2015 Fernando Cejas Open Source Project
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.meizitu.internal.di.modules;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
+import com.meizitu.ImageApplication;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
 import com.meizitu.utils.DecodeInterceptor;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Singleton;
 
 import cc.easyandroid.easycache.EasyHttpCache;
 import dagger.Module;
@@ -21,11 +36,24 @@ import okhttp3.OkHttpClient;
 import okhttp3.internal.http.BridgeInterceptor;
 import retrofit2.Retrofit;
 
+import javax.inject.Singleton;
+
 /**
- * Created by clevo on 2015/6/10.
+ * Dagger module that provides objects which will live during the application lifecycle.
  */
 @Module
-public class ApiServiceModule {
+public class ApplicationModule {
+    private final ImageApplication application;
+
+    public ApplicationModule(ImageApplication application) {
+        this.application = application;
+    }
+
+    @Provides
+    @Singleton
+    Context provideApplicationContext() {
+        return this.application;
+    }
 
     @Provides
     @Singleton
@@ -47,13 +75,13 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
-    public EasyHttpCache provideEasyHttpCache(Application application) {
+    public EasyHttpCache provideEasyHttpCache(Context application) {
         return new EasyHttpCache(application);
     }
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(Application application) {
+    public OkHttpClient provideOkHttpClient(Context application) {
         PersistentCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
         cookieJar.clear();
         OkHttpClient okHttpClient = (new OkHttpClient.Builder()).connectTimeout(15000L, TimeUnit.MILLISECONDS)
@@ -65,4 +93,5 @@ public class ApiServiceModule {
                 .build();
         return okHttpClient;
     }
+
 }

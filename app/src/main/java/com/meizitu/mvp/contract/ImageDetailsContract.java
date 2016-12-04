@@ -42,7 +42,7 @@ public interface ImageDetailsContract {
 
         public abstract void exeShare(FutureTarget<File> future );
 
-        public abstract void exeImageDetailsDataRequest(EasyWorkUseCase.RequestValues requestValues);
+        public abstract void exeImageDetailsDataRequest();
 
     }
 }

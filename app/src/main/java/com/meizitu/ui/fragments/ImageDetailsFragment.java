@@ -18,17 +18,15 @@ import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.meizitu.Di.component.DaggerBaseFragmentComponent;
-import com.meizitu.ImageApplication;
+
 import com.meizitu.R;
 import com.meizitu.banner.BannerAtlasAdapter;
+import com.meizitu.internal.di.components.ImageComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.Image;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.ImageApi;
-import com.meizitu.service.QfangRetrofitManager;
 import com.meizitu.ui.views.ViewpagerIndicator;
 
 import java.io.File;
@@ -37,10 +35,7 @@ import javax.inject.Inject;
 
 import cc.easyandroid.customview.progress.KProgressLayout;
 import cc.easyandroid.customview.progress.core.KProgressClickListener;
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easycore.EasyCall;
-import cc.easyandroid.easyhttp.core.CacheMode;
-import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
+
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -49,21 +44,15 @@ import cc.easyandroid.easyutils.EasyToast;
  * A simple {@link Fragment} subclass.
  */
 public class ImageDetailsFragment extends QfangBaseFragment implements ImageDetailsContract.View {
-    public static final String Imagecategory_ID = "ImagecategoryID";
     ViewPager viewPager;
     KProgressLayout progressLayout;
     ViewpagerIndicator viewpagerIndicator;
     AdView adView;
-    ImageDetailsPresenter presenter = new ImageDetailsPresenter();
-
     @Inject
-    ImageApi imageApi;
+    ImageDetailsPresenter presenter;
 
-    public static Fragment newFragment(int id) {
+    public static Fragment newFragment() {
         ImageDetailsFragment fragment = new ImageDetailsFragment();
-        Bundle args = new Bundle();
-        args.putInt(Imagecategory_ID, id);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -81,7 +70,7 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DaggerBaseFragmentComponent.builder().appComponent(ImageApplication.get(getContext()).getAppComponent()).build().inject(this);
+        this.getComponent(ImageComponent.class).inject(this);
         presenter.attachView(this);
         adView = EasyViewUtil.findViewById(view, R.id.adView);
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
@@ -110,9 +99,7 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     }
 
     public void execute() {
-        int id = getArguments().getInt(Imagecategory_ID);
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(id));
-        presenter.exeImageDetailsDataRequest(new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE));
+        presenter.exeImageDetailsDataRequest();
     }
 
     @Override
@@ -205,7 +192,6 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
                 }
                 break;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

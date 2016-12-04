@@ -12,30 +12,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.meizitu.Di.Module.LoginModule;
-import com.meizitu.Di.component.DaggerLoginComponent;
-import com.meizitu.ImageApplication;
+
 import com.meizitu.R;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
+import com.meizitu.internal.di.components.DaggerLoginComponent;
+import com.meizitu.mvp.presenter.LoginPresenter;
+
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.ImageApi;
+
 
 import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easycore.EasyCall;
-import cc.easyandroid.easyhttp.core.CacheMode;
-import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
+
 import cc.easyandroid.easyutils.EasyToast;
 
 
 public class LoginActivity extends BaseActivity implements EasyWorkContract.View<ResponseInfo> {
     @Inject
-    QfangEasyWorkPresenter<ResponseInfo> presenter;// = new QfangEasyWorkPresenter<>();//使用clean
+    LoginPresenter presenter;
 
-    @Inject
-    ImageApi imageApi;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -72,10 +68,7 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
     }
 
     private void inject() {
-//        DaggerLoginComponent daggerLoginComponent=
-                DaggerLoginComponent.builder().appComponent(ImageApplication.get(this).getAppComponent())
-                .loginModule(new LoginModule()).build().inject(this);
-
+        DaggerLoginComponent.builder().activityModule(getActivityModule()).applicationComponent(getApplicationComponent()).build().inject(this);
     }
 
 
@@ -110,17 +103,9 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-//            showProgress(true);
-//            mAuthTask = new UserLoginTask(email, password);
-//            mAuthTask.execute((Void) null);
-            EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.login(username, password));
-            presenter.execute(new EasyWorkUseCase.RequestValues("", easyCall, CacheMode.LOAD_NETWORK_ONLY));
+            presenter.doLogin(username, password);
         }
     }
 
@@ -128,8 +113,8 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
         return username.length() > 4;
     }
 
-    private boolean isPasswordValid(String password) {
 
+    private boolean isPasswordValid(String password) {
         return password.length() > 4;
     }
 
@@ -146,6 +131,12 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
     }
 }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.target.Target;
+import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract.Presenter;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
@@ -14,26 +15,33 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
 
+@PerActivity
 public class ImageDetailsPresenter extends Presenter {
 
 
     protected QfangEasyWorkPresenter<ResponseInfo<GroupImageInfo>> presenter = new QfangEasyWorkPresenter<>();//使用clean
     protected QfangEasyWorkPresenter<File> presenter_down = new QfangEasyWorkPresenter<>();
     protected QfangEasyWorkPresenter<File> presenter_share = new QfangEasyWorkPresenter<>();
+    EasyWorkUseCase.RequestValues requestValues;
 
-    public ImageDetailsPresenter() {
+    @Inject
+    public ImageDetailsPresenter(@Named("imageDetails") EasyWorkUseCase.RequestValues requestValues) {
         presenter.attachView(view);
         presenter_down.attachView(view_download);
         presenter_share.attachView(view_share);
+        presenter.setRequestValues(requestValues);
     }
 
     @Override
-    public void exeDownloadRequest(final FutureTarget<File> future  ) {
+    public void exeDownloadRequest(final FutureTarget<File> future) {
         presenter_down.execute(new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
@@ -43,7 +51,7 @@ public class ImageDetailsPresenter extends Presenter {
     }
 
     //banner_viewpager
-    private File down( FutureTarget<File> future) throws ExecutionException, InterruptedException, IOException {
+    private File down(FutureTarget<File> future) throws ExecutionException, InterruptedException, IOException {
 //        FutureTarget<File> future = Glide.with((Context) null).load(imageUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         File cacheFile = future.get();
         if (cacheFile != null) {
@@ -62,7 +70,7 @@ public class ImageDetailsPresenter extends Presenter {
     }
 
     @Override
-    public void exeShare(final FutureTarget<File> future ) {
+    public void exeShare(final FutureTarget<File> future) {
         presenter_share.execute(new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
@@ -72,8 +80,8 @@ public class ImageDetailsPresenter extends Presenter {
     }
 
     @Override
-    public void exeImageDetailsDataRequest(EasyWorkUseCase.RequestValues requestValues) {
-        presenter.execute(requestValues);
+    public void exeImageDetailsDataRequest() {
+        presenter.execute();
     }
 
     protected EasyWorkContract.View<ResponseInfo<GroupImageInfo>> view = new EasyWorkContract.View<ResponseInfo<GroupImageInfo>>() {
@@ -110,7 +118,7 @@ public class ImageDetailsPresenter extends Presenter {
         @Override
         public void onError(Object o, Throwable throwable) {
             if (getView() != null)
-                getView().onDownloadError(o,throwable);
+                getView().onDownloadError(o, throwable);
         }
 
         @Override

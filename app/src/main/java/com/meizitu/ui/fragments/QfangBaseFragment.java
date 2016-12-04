@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.meizitu.internal.di.HasComponent;
+
 import cc.easyandroid.easyui.fragment.EasyLazyLoadFragment;
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -45,5 +47,13 @@ public abstract class QfangBaseFragment extends EasyLazyLoadFragment {
     public void onError(Object i, Throwable throwable) {
         EasyToast.showShort(getContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());
 
+    }
+    /**
+     * Gets a component for dependency injection by its type.
+     */
+    @SuppressWarnings("unchecked")
+    protected <C> C getComponent(Class<C> componentType) {
+
+        return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
     }
 }
