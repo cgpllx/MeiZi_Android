@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity implements HasComponent<ImageComp
         initTitleBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initializeInjector();
-        addFragment(R.id.fragmentContainer, new TabFragment());
+        replaceFragment(R.id.fragmentContainer, new TabFragment());
     }
 
     private void initializeInjector() {

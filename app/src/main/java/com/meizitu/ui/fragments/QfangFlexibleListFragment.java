@@ -10,9 +10,9 @@ import android.view.View;
 import com.meizitu.R;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
+import com.meizitu.mvp.presenter.SimpleListPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.EasyHttpRequestParaWrap;
 import com.meizitu.service.ImageApi;
 import com.meizitu.ui.views.QfangRecyclerView;
 
@@ -27,15 +27,16 @@ import cc.easyandroid.easyrecyclerview.EasyRecycleViewDivider;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
+import cc.easyandroid.easyutils.EasyToast;
 
 
 /**
  * 通用列表
  */
-public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment implements EasyWorkContract.View<ResponseInfo<Paging<List<T>>>> {
+public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
     public static final String TAG = QfangFlexibleListFragment.class.getSimpleName();
     protected QfangRecyclerView qfangRecyclerView;
-    protected QfangEasyWorkPresenter<ResponseInfo<Paging<List<T>>>> presenter = new QfangEasyWorkPresenter<>();//使用clean
+
     protected EasyFlexibleRecyclerViewHelper<T> helper;
     /**
      * 标志位，标志已经初始化完成
@@ -44,6 +45,9 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
 
     @Inject
     ImageApi imageApi;
+
+    @Inject
+    SimpleListPresenter<T> presenter;
 
     @Override
     protected int getResourceId() {
@@ -54,7 +58,57 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
-        presenter.attachView(this);
+        presenter.attachView(new EasyWorkContract.View<ResponseInfo<Paging<List<T>>>>() {
+            @Override
+            public void onStart(Object o) {
+                qfangRecyclerView.showLoadingView();
+            }
+
+            @Override
+            public void onError(Object o, Throwable throwable) {
+                if (o != null && o instanceof Integer) {
+                    Integer type = (Integer) o;
+                    switch (type.intValue()) {
+                        case EasyFlexibleRecyclerViewHelper.REFRESH:
+                            qfangRecyclerView.showErrorView();
+                            qfangRecyclerView.finishRefresh(false);
+                            break;
+                        case EasyFlexibleRecyclerViewHelper.LOADMORE:
+                            qfangRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FAIL);
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(Object o, ResponseInfo<Paging<List<T>>> pagingResponseInfo) {
+                deliverResult(o, pagingResponseInfo);
+                onCompleted(o);
+            }
+
+            public void deliverResult(Object i, ResponseInfo<Paging<List<T>>> pagingResultQfangResult) {
+                if (helper.isSuccess(pagingResultQfangResult)) {
+                    Paging<List<T>> pagingResult = pagingResultQfangResult.getData();
+                    if (pagingResult != null) {
+                        helper.setDatas(pagingResult);
+                    }
+                }
+            }
+
+            public void onCompleted(Object o) {
+                if (o != null && o instanceof Integer) {
+                    Integer type = (Integer) o;
+                    switch (type.intValue()) {
+                        case EasyFlexibleRecyclerViewHelper.REFRESH:
+                            qfangRecyclerView.finishRefresh(true);
+                            break;
+                        case EasyFlexibleRecyclerViewHelper.LOADMORE:
+                            qfangRecyclerView.finishLoadMore(-1);
+                            break;
+                    }
+                }
+            }
+        });
         qfangRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
         qfangRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         qfangRecyclerView.setHasFixedSize(true);
@@ -85,12 +139,6 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
     protected RecyclerView.ItemDecoration onCreateItemDecoration() {
         return new EasyRecycleViewDivider(getContext(), LinearLayoutManager.HORIZONTAL).setNotShowDividerCount(1, 1);
     }
@@ -112,77 +160,24 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
         execute(EasyFlexibleRecyclerViewHelper.REFRESH);
     }
 
-    public void execute(EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<T>>>> requestValues) {
-        presenter.setRequestValues(requestValues);
-        presenter.execute();
-    }
 
     private void execute(int pulltype) {
-        Bundle paraBundle = EasyHttpRequestParaWrap.getHttpParaFromFragment(this);
-        EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<T>>>> requestValues = onCreateRequestValues(pulltype, paraBundle);
-        presenter.execute(requestValues);
+        presenter.executeRequest(pulltype, helper.getCurrentPage() + 1);
     }
 
-    protected abstract EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<T>>>> onCreateRequestValues(int pulltype, Bundle paraBundle);
-
-    @Override
-    public void onStart(Object o) {
-        qfangRecyclerView.showLoadingView();
-    }
-
-    @Override
-    public void onError(Object o, Throwable throwable) {
-        if (o != null && o instanceof Integer) {
-            Integer type = (Integer) o;
-            switch (type.intValue()) {
-                case EasyFlexibleRecyclerViewHelper.REFRESH:
-                    qfangRecyclerView.showErrorView();
-                    qfangRecyclerView.finishRefresh(false);
-                    break;
-                case EasyFlexibleRecyclerViewHelper.LOADMORE:
-                    qfangRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FAIL);
-                    break;
-            }
-        }
-
-    }
-
-    @Override
-    public void onSuccess(Object o, ResponseInfo<Paging<List<T>>> pagingResultQfangResult) {
-        deliverResult(o, pagingResultQfangResult);
-        onCompleted(o);
-    }
-
-    public void deliverResult(Object i, ResponseInfo<Paging<List<T>>> pagingResultQfangResult) {
-        if (helper.isSuccess(pagingResultQfangResult)) {
-            Paging<List<T>> pagingResult = pagingResultQfangResult.getData();
-            if (pagingResult != null) {
-                helper.setDatas(pagingResult);
-            }
-        }
-    }
 
     protected EasyFlexibleAdapter<T> onCreateEasyRecyclerAdapter() {
         return new EasyFlexibleAdapter<>();
     }
 
-    public void onCompleted(Object o) {
-        if (o != null && o instanceof Integer) {
-            Integer type = (Integer) o;
-            switch (type.intValue()) {
-                case EasyFlexibleRecyclerViewHelper.REFRESH:
-                    qfangRecyclerView.finishRefresh(true);
-                    break;
-                case EasyFlexibleRecyclerViewHelper.LOADMORE:
-                    qfangRecyclerView.finishLoadMore(-1);
-                    break;
-            }
-        }
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.detachView();
+    }
+
+    protected void errorTip(Object o, Throwable throwable){
+        EasyToast.showShort(getContext(), throwable != null ? throwable.getMessage() : "服务器或网络异常");
     }
 }

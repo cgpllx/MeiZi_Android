@@ -9,6 +9,7 @@ import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract.Presenter;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
+import com.meizitu.service.ImageApi;
 import com.meizitu.utils.FileUtil;
 
 import java.io.File;
@@ -20,6 +21,9 @@ import javax.inject.Named;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
+import cc.easyandroid.easycore.EasyCall;
+import cc.easyandroid.easyhttp.core.CacheMode;
+import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
 
@@ -30,14 +34,17 @@ public class ImageDetailsPresenter extends Presenter {
     protected QfangEasyWorkPresenter<ResponseInfo<GroupImageInfo>> presenter = new QfangEasyWorkPresenter<>();//使用clean
     protected QfangEasyWorkPresenter<File> presenter_down = new QfangEasyWorkPresenter<>();
     protected QfangEasyWorkPresenter<File> presenter_share = new QfangEasyWorkPresenter<>();
-    EasyWorkUseCase.RequestValues requestValues;
+
+    ImageApi imageApi;
+    int imageid;
 
     @Inject
-    public ImageDetailsPresenter(@Named("imageDetails") EasyWorkUseCase.RequestValues requestValues) {
+    public ImageDetailsPresenter(ImageApi imageApi, int imageid ) {
+        this.imageApi=imageApi;
+        this.imageid=imageid;
         presenter.attachView(view);
         presenter_down.attachView(view_download);
         presenter_share.attachView(view_share);
-        presenter.setRequestValues(requestValues);
     }
 
     @Override
@@ -81,7 +88,9 @@ public class ImageDetailsPresenter extends Presenter {
 
     @Override
     public void exeImageDetailsDataRequest() {
-        presenter.execute();
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid));
+        EasyWorkUseCase.RequestValues requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
+        presenter.execute(requestValues);
     }
 
     protected EasyWorkContract.View<ResponseInfo<GroupImageInfo>> view = new EasyWorkContract.View<ResponseInfo<GroupImageInfo>>() {

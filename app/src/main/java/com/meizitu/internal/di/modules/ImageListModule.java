@@ -19,36 +19,31 @@ package com.meizitu.internal.di.modules;
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.service.ImageApi;
 
+import javax.inject.Named;
+
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.http.Query;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 
-/**
- * Dagger module that provides user related collaborators.
- */
 @Module
-public class ImageModule {
+public class ImageListModule {
 
-    private int imageid = -1;
+    private int gategoryId = -1;
 
-    public ImageModule() {
-    }
-
-    public ImageModule(int imageid) {
-        this.imageid = imageid;
+    public ImageListModule(int gategoryId) {
+        this.gategoryId = gategoryId;
     }
 
     @Provides
     @PerActivity
-    public int provideImageId() {
-        return imageid;
+    public int provideGategoryId() {
+        return gategoryId;
     }
+
+
 
 }

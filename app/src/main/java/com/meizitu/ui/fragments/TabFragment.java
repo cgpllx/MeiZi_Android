@@ -4,27 +4,23 @@ package com.meizitu.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.meizitu.R;
 import com.meizitu.adapter.SimpleFragmentPagerAdapter;
 import com.meizitu.internal.di.components.ImageComponent;
 import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
+import com.meizitu.mvp.presenter.TabPresenter;
 import com.meizitu.pojo.Category;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.EasyHttpRequestParaWrap;
+
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressLinearLayout;
 import cc.easyandroid.easyui.pojo.EasyTab;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
@@ -41,10 +37,7 @@ public class TabFragment extends QfangBaseFragment implements EasyWorkContract.V
     EasyProgressLinearLayout easyProgressLinearLayout;
 
     @Inject
-    QfangEasyWorkPresenter<ResponseInfo<List<Category>>> presenter;
-    @Inject
-    @Named("CategoryList")
-    EasyWorkUseCase.RequestValues requestValues;
+    TabPresenter presenter;
 
     public TabFragment() {
     }
@@ -63,7 +56,7 @@ public class TabFragment extends QfangBaseFragment implements EasyWorkContract.V
         easyProgressLinearLayout = EasyViewUtil.findViewById(view, R.id.easyProgressLinearLayout);
         adapter = new SimpleFragmentPagerAdapter(getFragmentManager(), getContext());
         presenter.attachView(this);
-        presenter.execute(requestValues);
+        presenter.execute();
     }
 
     private void inject() {
@@ -83,9 +76,7 @@ public class TabFragment extends QfangBaseFragment implements EasyWorkContract.V
                 Bundle arge;
                 for (Category category : categories) {
                     arge = new Bundle();
-                    Bundle paraBundle = new Bundle();
-                    paraBundle.putInt(ImageListFragment.ID, category.getCategory_code());
-                    EasyHttpRequestParaWrap.bindingHttpPara(arge, paraBundle);
+                    arge.putInt(ImageListFragment.ID, category.getCategory_code());
                     adapter.addTab(new EasyTab(category.getCategory_name(), null, ImageListFragment.class, arge));
                 }
                 viewpager.setAdapter(adapter);

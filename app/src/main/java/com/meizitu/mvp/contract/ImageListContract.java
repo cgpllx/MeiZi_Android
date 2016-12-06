@@ -1,5 +1,6 @@
 package com.meizitu.mvp.contract;
 
+import com.meizitu.items.Item_GroupImageInfoListItem;
 import com.meizitu.pojo.ResponseInfo;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
@@ -12,28 +13,46 @@ import cc.easyandroid.easyclean.presentation.view.IEasyView;
 public interface ImageListContract {
     interface View extends IEasyView {
 
-        void onCloseStart(Object var1);
+        void onCloseAllStart(Object o);
 
-        void onCloseError(Object var1, Throwable var2);
+        void onCloseAllError(Object o, Throwable t);
 
-        void onCloseSuccess(Object var1, ResponseInfo var2);
+        void onCloseAllSuccess(Object o, ResponseInfo t);
 
-        void onOpenStart(Object var1);
+        //----------------------------------------------------
+        void onOpenAllStart(Object o);
 
-        void onOpenError(Object var1, Throwable var2);
+        void onOpenAllError(Object o, Throwable t);
 
-        void onOpenSuccess(Object var1, ResponseInfo var2);
+        void onOpenAllSuccess(Object o, ResponseInfo t);
+
+        //----------------------------------------------------
+        void onCloseSingleStart(Object o);
+
+        void onCloseSingleError(Object o, Throwable t);
+
+        void onCloseSingleSuccess(Item_GroupImageInfoListItem item_groupImageInfoListItem, ResponseInfo t);
+
+        //----------------------------------------------------
+        void onOpenSingleStart(Object o);
+
+        void onOpenSingleError(Object o, Throwable t);
+
+        void onOpenSingleSuccess(Item_GroupImageInfoListItem item_groupImageInfoListItem, ResponseInfo t);
 
 
     }
 
     abstract class Presenter extends EasyBasePresenter<View> {
 
-        public abstract void exeOpenRequest(EasyWorkUseCase.RequestValues requestValues);
-        public abstract void exeCloseRequest(EasyWorkUseCase.RequestValues requestValues);
-//
-//        public abstract void exeOpenSingleRequest(EasyWorkUseCase.RequestValues requestValues);
-//        public abstract void exeCloseSingleRequest(EasyWorkUseCase.RequestValues requestValues);
+        public abstract void exeOpenAllRequest();
+
+        public abstract void exeCloseAllRequest(  );
+
+        //
+        public abstract void exeOpenSingleRequest(Item_GroupImageInfoListItem item_groupImageInfoListItem);
+
+        public abstract void exeCloseSingleRequest(Item_GroupImageInfoListItem item_groupImageInfoListItem);
 
 
     }
