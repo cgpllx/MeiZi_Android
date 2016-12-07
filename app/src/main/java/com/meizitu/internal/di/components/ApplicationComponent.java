@@ -28,7 +28,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
+public interface ApplicationComponent {//要注入的对象必须在Component 中现实暴露出来，（或者是构造可以注入）
     void inject(BaseActivity baseActivity);//公用对象都注入到父Activity
 
     Context context();

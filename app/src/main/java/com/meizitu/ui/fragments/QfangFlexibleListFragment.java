@@ -9,11 +9,9 @@ import android.view.View;
 
 import com.meizitu.R;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.mvp.presenter.SimpleListPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.ImageApi;
 import com.meizitu.ui.views.QfangRecyclerView;
 
 import java.util.List;
@@ -33,7 +31,7 @@ import cc.easyandroid.easyutils.EasyToast;
 /**
  * 通用列表
  */
-public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
+public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
     public static final String TAG = QfangFlexibleListFragment.class.getSimpleName();
     protected QfangRecyclerView qfangRecyclerView;
 
@@ -42,9 +40,6 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
      * 标志位，标志已经初始化完成
      */
     private boolean isPrepared;
-
-    @Inject
-    ImageApi imageApi;
 
     @Inject
     SimpleListPresenter<T> presenter;
@@ -177,7 +172,7 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
         presenter.detachView();
     }
 
-    protected void errorTip(Object o, Throwable throwable){
+    protected void errorTip(Object o, Throwable throwable) {
         EasyToast.showShort(getContext(), throwable != null ? throwable.getMessage() : "服务器或网络异常");
     }
 }
