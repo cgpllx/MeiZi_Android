@@ -15,6 +15,6 @@ public class QfangEasyWorkPresenter<T> extends EasyWorkPresenter<T> {
 
     @Inject
     public QfangEasyWorkPresenter() {
-        super((new EasyWorkUseCase<T>(new EasyWorkRepository())));
+        super( new EasyWorkUseCase<T>(new EasyWorkRepository() ));
     }
 }
