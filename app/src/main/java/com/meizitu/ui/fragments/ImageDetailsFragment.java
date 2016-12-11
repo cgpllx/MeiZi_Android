@@ -13,9 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -33,19 +30,14 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import cc.easyandroid.customview.progress.KProgressLayout;
-import cc.easyandroid.customview.progress.core.KProgressClickListener;
-
+import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout;
+import cc.easyandroid.easyrecyclerview.listener.OnEasyProgressClickListener;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.EasyToast;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ImageDetailsFragment extends QfangBaseFragment implements ImageDetailsContract.View {
     ViewPager viewPager;
-    KProgressLayout progressLayout;
+    EasyProgressFrameLayout easyProgress;
     ViewpagerIndicator viewpagerIndicator;
     AdView adView;
     @Inject
@@ -74,12 +66,12 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
         presenter.attachView(this);
         adView = EasyViewUtil.findViewById(view, R.id.adView);
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
-        progressLayout = EasyViewUtil.findViewById(view, R.id.KProgressLayout);
+        easyProgress = EasyViewUtil.findViewById(view, R.id.easyProgress);
         viewpagerIndicator = EasyViewUtil.findViewById(view, R.id.viewpagerIndicator);
 
         execute();
 
-        progressLayout.setKProgressClickListener(new KProgressClickListener() {
+        easyProgress.setOnEasyProgressClickListener(new OnEasyProgressClickListener() {
             @Override
             public void onLoadingViewClick() {
 
@@ -99,13 +91,9 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     }
 
     public void execute() {
-        presenter.exeImageDetailsDataRequest();
+        presenter.execute();
     }
 
-    @Override
-    public void onDownLoadRequestStart(Object o) {
-        //开始下载
-    }
 
     @Override
     public void onDownloadSuccess(File imageFile) {
@@ -116,13 +104,13 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     }
 
     @Override
-    public void onDownloadError(Object o, Throwable throwable) {
+    public void onDownloadError(Throwable throwable) {
         throwable.printStackTrace();
         EasyToast.showLong(getContext(), "下载出错了");
     }
 
     @Override
-    public void onShare(Object var1, File imageFile) {
+    public void onShare(File imageFile) {
         ShareCompat.IntentBuilder.from(getActivity())
                 .setType("image/*")//
                 .setStream(Uri.fromFile(imageFile))
@@ -131,27 +119,25 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     }
 
     @Override
-    public void onShareError(Object var1, Throwable var2) {
+    public void onShareError(Throwable var2) {
         var2.printStackTrace();
         EasyToast.showLong(getContext(), "分享出错了");
     }
 
-
     @Override
-    public void onStart(Object o) {
-        progressLayout.showLoadingView();
+    public void onStart(Object tag) {
+        easyProgress.showLoadingView();
     }
 
     @Override
-    public void onError(Object o, Throwable throwable) {
-        progressLayout.showErrorView();
+    public void onError(Throwable throwable) {
+        easyProgress.showErrorView();
     }
 
     BannerAtlasAdapter<Image> bannerAdapter;
 
     @Override
-    public void onSuccess(Object o, ResponseInfo<GroupImageInfo> groupImageInfoResponseInfo) {
-
+    public void onSuccess(ResponseInfo<GroupImageInfo> groupImageInfoResponseInfo) {
         if (groupImageInfoResponseInfo != null && groupImageInfoResponseInfo.isSuccess()) {
             GroupImageInfo groupImageInfo = groupImageInfoResponseInfo.getData();
             if (groupImageInfo != null) {
@@ -161,7 +147,8 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
                 viewPager.setAdapter(bannerAdapter);
                 viewpagerIndicator.setViewPager(viewPager);
                 viewpagerIndicator.setTitleName(groupImageInfo.getTitle());
-                progressLayout.cancelAll();
+                easyProgress.showContentView();
+                showAllMenu(getToolBar().getMenu());
             }
         }
     }
@@ -170,7 +157,31 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.imagedetail, menu);
+
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        hideAllMenu(menu);
+    }
+
+    protected void showAllMenu(Menu menu) {
+        if (null != menu) {
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setVisible(true);
+            }
+        }
+    }
+
+    protected void hideAllMenu(Menu menu) {
+        if (null != menu) {
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setVisible(false);
+            }
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -179,16 +190,14 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
                 if (bannerAdapter != null) {
                     int current = viewPager.getCurrentItem();
                     String imageurl = bannerAdapter.getItem(current).getImageUrl();
-                    FutureTarget<File> future = Glide.with(getContext()).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-                    presenter.exeDownloadRequest(future);
+                    presenter.exeDownloadRequest(imageurl);
                 }
                 break;
             case R.id.share:
                 if (bannerAdapter != null) {
                     int current = viewPager.getCurrentItem();
                     String imageurl = bannerAdapter.getItem(current).getImageUrl();
-                    FutureTarget<File> future = Glide.with(getContext()).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-                    presenter.exeShare(future);
+                    presenter.exeShare(imageurl);
                 }
                 break;
         }
@@ -202,5 +211,6 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
         if (adView != null) {
             adView.destroy();
         }
+        presenter.detachView();
     }
 }

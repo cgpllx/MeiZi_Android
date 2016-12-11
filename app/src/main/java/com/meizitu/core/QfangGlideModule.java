@@ -10,10 +10,12 @@ import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
+import com.meizitu.ImageApplication;
 
 import java.io.InputStream;
 
 import cc.easyandroid.easyhttp.EasyHttpUtils;
+import okhttp3.OkHttpClient;
 
 /**
  * GlideModule
@@ -30,7 +32,8 @@ public class QfangGlideModule implements GlideModule {
     @Override
     public void registerComponents(Context context, Glide glide) {
         //小米手机在这里注册没有效果，在app中有注册
-//        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
-        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(EasyHttpUtils.getInstance().getOkHttpClient()));
+        ImageApplication applicationp = (ImageApplication) context.getApplicationContext();
+        OkHttpClient okHttpClient= applicationp.getApplicationComponent().getOkHttpClient();
+        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(okHttpClient));
     }
 }

@@ -38,9 +38,6 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter implements IT
 
     @Override
     public void setItems(List items) {
-        if (!ArrayUtils.isEmpty(items)) {
-//            items.add(new Item_GroupImageInfoList_AD());
-        }
         super.setItems(items);
     }
 

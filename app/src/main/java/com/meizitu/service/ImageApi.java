@@ -51,18 +51,18 @@ public interface ImageApi {
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
      */
     @GET("/closeGroupImageInfoById")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> closeGroupImageInfoById(@Query("id") int id);
+    Call<ResponseInfo> closeGroupImageInfoById(@Query("id") int id);
 
     @GET("/openGroupImageInfoById")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> openGroupImageInfoById(@Query("id") int id);
+    Call<ResponseInfo> openGroupImageInfoById(@Query("id") int id);
 
     @GET("/closeGroupImageInfoByCategoryCode")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> closeGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
+    Call<ResponseInfo> closeGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
 
     @GET("/openGroupImageInfoByCategoryCode")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> openGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
+    Call<ResponseInfo> openGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
 
     @FormUrlEncoded
     @POST("/login")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> login(@Field("username") String username, @Field("password") String password);
+    Call<ResponseInfo> login(@Field("username") String username, @Field("password") String password);
 }

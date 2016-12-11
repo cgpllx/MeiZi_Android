@@ -31,19 +31,20 @@
         <!--<item name="EasyListFilterMenuStyle">@style/QfamgEasyListFilterMenuStyle</item>-->
         <!--<item name="kProgressLayoutsStyle">@style/qfang_KProgressLayoutStyle</item>-->
         <item name="EasyRecyclerViewStyle">@style/qfang_EasyRecyclerViewStyle</item>
-
-        <item name="kProgressLayoutsStyle">@style/qfang_KProgressLayoutStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="ImageDetailsTheme" parent="AppBaseTheme">
-        <item name="colorPrimaryDark">@color/q333333</item>
 
+    <style name="ImageDetailsTheme" parent="AppBaseTheme">
+        <item name="colorPrimaryDark">@color/q88333333</item>
+        <!--<item name="colorPrimaryDark">#CF333333</item>-->
+        <!--<item name="android:windowBackground">@color/q88333333</item>-->
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

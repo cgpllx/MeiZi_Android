@@ -50,7 +50,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected Toolbar getToolbar() {
+    public Toolbar getToolbar() {
         return toolbar;
     }
 

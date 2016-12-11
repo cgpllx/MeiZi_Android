@@ -23,7 +23,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
         setContentView(R.layout.activity_image_details);
         this.initializeInjector();
         initTitleBar();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, ImageDetailsFragment.newFragment(), "ImageListFragment").commit();
+        replaceFragment(R.id.content,ImageDetailsFragment.newFragment());
 
     }
 

@@ -10,7 +10,7 @@ import android.view.View;
 import com.meizitu.R;
 import com.meizitu.adapter.SimpleFragmentPagerAdapter;
 import com.meizitu.internal.di.components.ImageComponent;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
+import com.meizitu.mvp.contract.TabContract;
 import com.meizitu.mvp.presenter.TabPresenter;
 import com.meizitu.pojo.Category;
 import com.meizitu.pojo.ResponseInfo;
@@ -20,14 +20,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressLinearLayout;
 import cc.easyandroid.easyui.pojo.EasyTab;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.ArrayUtils;
 
 
-public class TabFragment extends QfangBaseFragment implements EasyWorkContract.View<ResponseInfo<List<Category>>> {
+public class TabFragment extends QfangBaseFragment implements TabContract.View {
     private TabLayout tablayout;
 
     private ViewPager viewpager;
@@ -64,12 +63,12 @@ public class TabFragment extends QfangBaseFragment implements EasyWorkContract.V
     }
 
     @Override
-    public void onStart(Object o) {
+    public void onTabLoadStart(Object o) {
         easyProgressLinearLayout.showLoadingView();
     }
 
     @Override
-    public void onSuccess(Object o, ResponseInfo<List<Category>> pagingResponseInfo) {
+    public void onTabLoadSuccess(Object o, ResponseInfo<List<Category>> pagingResponseInfo) {
         if (pagingResponseInfo != null && pagingResponseInfo.isSuccess()) {
             List<Category> categories = pagingResponseInfo.getData();
             if (!ArrayUtils.isEmpty(categories)) {
@@ -99,4 +98,12 @@ public class TabFragment extends QfangBaseFragment implements EasyWorkContract.V
         super.onDestroyView();
         presenter.detachView();
     }
+
+
+    @Override
+    public void onTabLoadError(Object o, Throwable t) {
+        onError(o, t);
+    }
+
+
 }

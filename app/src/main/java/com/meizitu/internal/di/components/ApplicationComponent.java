@@ -22,6 +22,7 @@ import com.meizitu.service.ImageApi;
 import com.meizitu.ui.activitys.BaseActivity;
 
 import dagger.Component;
+import okhttp3.OkHttpClient;
 
 import javax.inject.Singleton;
 
@@ -34,5 +35,7 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
     Context context();
 
     ImageApi getImageApi();//如果其他module要使用，必须在这里暴露
+
+    OkHttpClient getOkHttpClient();
 
 }

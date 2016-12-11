@@ -1,6 +1,7 @@
 package com.meizitu.mvp.contract;
 
 import com.meizitu.items.Item_GroupImageInfoListItem;
+import com.meizitu.mvp.presenter.SimpleWorkPresenter;
 import com.meizitu.pojo.ResponseInfo;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
@@ -43,7 +44,7 @@ public interface ImageListContract {
 
     }
 
-    abstract class Presenter extends EasyBasePresenter<View> {
+    abstract class Presenter extends SimpleWorkPresenter<View> {
 
         public abstract void exeOpenAllRequest();
 

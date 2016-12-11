@@ -29,10 +29,7 @@ public class GlideRoundTransform extends BitmapTransformation {
 
     @Override
     protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        System.out.println("cgp outWidth =" + outWidth);
-        System.out.println("cgp outHeight =" + outHeight);
         return roundCrop(pool, toTransform);
-//        return roundCrop(pool, toTransform, outWidth, outHeight);
     }
 
     private static Bitmap roundCrop(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {

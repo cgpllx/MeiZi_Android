@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.meizitu.R;
 import com.meizitu.internal.di.components.DaggerLoginComponent;
+import com.meizitu.mvp.contract.LoginContract;
 import com.meizitu.mvp.presenter.LoginPresenter;
 
 import com.meizitu.pojo.ResponseInfo;
@@ -27,7 +28,7 @@ import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class LoginActivity extends BaseActivity implements EasyWorkContract.View<ResponseInfo> {
+public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Inject
     LoginPresenter presenter;
 
@@ -120,13 +121,13 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
 
 
     @Override
-    public void onStart(Object o) {
+    public void onLoginStart(Object o) {
         EasyToast.showShort(getApplicationContext(), "onStart");
     }
 
     @Override
-    public void onSuccess(Object o, ResponseInfo responseInfo) {
-        EasyToast.showShort(getApplicationContext(), "onSuccess responseInfo="+responseInfo);
+    public void onLoginSuccess(Object o, ResponseInfo responseInfo) {
+        EasyToast.showShort(getApplicationContext(), "onSuccess responseInfo=" + responseInfo);
         if (responseInfo != null && responseInfo.isSuccess()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -138,5 +139,12 @@ public class LoginActivity extends BaseActivity implements EasyWorkContract.View
         super.onDestroy();
         presenter.detachView();
     }
+
+
+    @Override
+    public void onLoginError(Object o, Throwable t) {
+        onError(o, t);
+    }
+
 }
 

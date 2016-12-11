@@ -3,7 +3,6 @@ package com.meizitu.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,25 +14,16 @@ import com.meizitu.ImageApplication;
 import com.meizitu.It.IToggle;
 import com.meizitu.R;
 import com.meizitu.internal.di.components.DaggerImageListComponent;
-import com.meizitu.internal.di.components.ImageComponent;
-import com.meizitu.internal.di.modules.ActivityModule;
 import com.meizitu.internal.di.modules.ImageListModule;
 import com.meizitu.items.Item_GroupImageInfoListItem;
 import com.meizitu.mvp.contract.ImageListContract;
 import com.meizitu.mvp.presenter.ImageListPresenter;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
-import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easycore.EasyCall;
-import cc.easyandroid.easyhttp.core.CacheMode;
-import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -63,6 +53,11 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected EasyWorkUseCase.RequestValues onCreateRequestValues(int pulltype, int pageIndex) {
+        return presenter.getRequestValues(pulltype, pageIndex);
     }
 
     @Override
@@ -187,6 +182,7 @@ public class ImageListFragment extends QfangFlexibleListFragment<Item_GroupImage
             item_groupImageInfoListItem.setStatus(true);
             System.out.println("item_groupImageInfoListItem" + item_groupImageInfoListItem);
             helper.getRecyclerAdapter().updateItem(item_groupImageInfoListItem, null);
+            EasyToast.showShort(getContext(), "onOpenSingleSuccess");
         }
     }
 

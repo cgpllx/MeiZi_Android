@@ -9,7 +9,8 @@ import android.view.View;
 
 import com.meizitu.R;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
-import com.meizitu.mvp.presenter.SimpleListPresenter;
+import com.meizitu.mvp.contract.SimpleListContract;
+import com.meizitu.mvp.presenter.AbsSimpleListPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.views.QfangRecyclerView;
@@ -31,7 +32,7 @@ import cc.easyandroid.easyutils.EasyToast;
 /**
  * 通用列表
  */
-public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
+public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
     public static final String TAG = QfangFlexibleListFragment.class.getSimpleName();
     protected QfangRecyclerView qfangRecyclerView;
 
@@ -41,8 +42,7 @@ public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFra
      */
     private boolean isPrepared;
 
-    @Inject
-    SimpleListPresenter<T> presenter;
+    AbsSimpleListPresenter presenter;
 
     @Override
     protected int getResourceId() {
@@ -53,14 +53,21 @@ public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFra
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
-        presenter.attachView(new EasyWorkContract.View<ResponseInfo<Paging<List<T>>>>() {
+        presenter = new AbsSimpleListPresenter() {
             @Override
-            public void onStart(Object o) {
+            protected EasyWorkUseCase.RequestValues getRequestValues(int pulltype, int pageIndex) {
+                return onCreateRequestValues(pulltype, pageIndex);
+            }
+        };
+
+        presenter.attachView(new SimpleListContract.View<ResponseInfo<Paging<List<T>>>>() {
+            @Override
+            public void onSimpleListStart(Object o) {
                 qfangRecyclerView.showLoadingView();
             }
 
             @Override
-            public void onError(Object o, Throwable throwable) {
+            public void onSimpleListError(Object o, Throwable throwable) {
                 if (o != null && o instanceof Integer) {
                     Integer type = (Integer) o;
                     switch (type.intValue()) {
@@ -76,7 +83,7 @@ public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFra
             }
 
             @Override
-            public void onSuccess(Object o, ResponseInfo<Paging<List<T>>> pagingResponseInfo) {
+            public void onSimpleListSuccess(Object o, ResponseInfo<Paging<List<T>>> pagingResponseInfo) {
                 deliverResult(o, pagingResponseInfo);
                 onCompleted(o);
             }
@@ -126,6 +133,8 @@ public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFra
         lazyLoad();
     }
 
+    protected abstract EasyWorkUseCase.RequestValues onCreateRequestValues(int pulltype, int pageIndex) ;
+
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
 
     }
@@ -157,7 +166,7 @@ public class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFra
 
 
     private void execute(int pulltype) {
-        presenter.executeRequest(pulltype, helper.getCurrentPage() + 1);
+        presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1);
     }
 
 

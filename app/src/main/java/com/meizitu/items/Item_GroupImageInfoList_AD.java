@@ -1,38 +1,20 @@
 package com.meizitu.items;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.NativeExpressAdView;
-import com.google.android.gms.ads.formats.NativeAppInstallAd;
-import com.google.android.gms.ads.formats.NativeAppInstallAdView;
 import com.meizitu.R;
-import com.meizitu.mvp.presenter.QfangEasyWorkPresenter;
 import com.meizitu.pojo.GroupImageInfo;
-import com.meizitu.ui.activitys.ImageDetailsActivity;
-import com.meizitu.utils.ImageUtils;
 
 import java.util.List;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easymvp.PresenterLoader;
-import cc.easyandroid.easymvp.call.EasyThreadCall;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
-import cc.easyandroid.easyui.utils.EasyViewUtil;
 
 
 @SuppressLint("ParcelCreator")

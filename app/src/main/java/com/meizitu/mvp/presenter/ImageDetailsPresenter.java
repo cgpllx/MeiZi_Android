@@ -1,5 +1,6 @@
 package com.meizitu.mvp.presenter;
 
+
 import android.content.Context;
 
 import com.bumptech.glide.Glide;
@@ -17,9 +18,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
+import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
@@ -31,35 +31,44 @@ import cc.easyandroid.easymvp.call.EasyThreadCall;
 public class ImageDetailsPresenter extends Presenter {
 
 
-    protected QfangEasyWorkPresenter<ResponseInfo<GroupImageInfo>> presenter = new QfangEasyWorkPresenter<>();//使用clean
-    protected QfangEasyWorkPresenter<File> presenter_down = new QfangEasyWorkPresenter<>();
-    protected QfangEasyWorkPresenter<File> presenter_share = new QfangEasyWorkPresenter<>();
-
-    ImageApi imageApi;
-    int imageid;
+    final ImageApi imageApi;
+    final int imageid;
+    final Context context;
 
     @Inject
-    public ImageDetailsPresenter(ImageApi imageApi, int imageid ) {
-        this.imageApi=imageApi;
-        this.imageid=imageid;
-        presenter.attachView(view);
-        presenter_down.attachView(view_download);
-        presenter_share.attachView(view_share);
+    public ImageDetailsPresenter(Context context, ImageApi imageApi, int imageid) {
+        this.context = context;
+        this.imageApi = imageApi;
+        this.imageid = imageid;
     }
 
     @Override
-    public void exeDownloadRequest(final FutureTarget<File> future) {
-        presenter_down.execute(new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
+    public void exeDownloadRequest(String imageurl) {
+        final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
                 return down(future);
             }
-        }), ""));
+        }), "");
+//        if (isViewAttached())
+//            getView().onDownLoadRequestStart();
+        handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<File>>() {
+            @Override
+            public void onSuccess(EasyWorkUseCase.ResponseValue<File> responseValue) {
+                if (isViewAttached())
+                    getView().onDownloadSuccess(responseValue.getData());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached())
+                    getView().onDownloadError(throwable);
+            }
+        });
     }
 
-    //banner_viewpager
     private File down(FutureTarget<File> future) throws ExecutionException, InterruptedException, IOException {
-//        FutureTarget<File> future = Glide.with((Context) null).load(imageUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         File cacheFile = future.get();
         if (cacheFile != null) {
             File targetFile = new File(FileUtil.getSdpath() + File.separator + "mm", cacheFile.getName() + ".jpg");
@@ -77,89 +86,60 @@ public class ImageDetailsPresenter extends Presenter {
     }
 
     @Override
-    public void exeShare(final FutureTarget<File> future) {
-        presenter_share.execute(new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
+    public void exeShare(String imageurl) {//分享和下载是一样额，都必须先下载
+        final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
                 return down(future);
             }
-        }), ""));
+        }), "");
+//        if (isViewAttached())
+//            getView().onDownLoadRequestStart();
+        handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<File>>() {
+            @Override
+            public void onSuccess(EasyWorkUseCase.ResponseValue<File> responseValue) {
+                if (isViewAttached())
+                    getView().onShare(responseValue.getData());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached())
+                    getView().onShareError(throwable);
+            }
+        });
+
     }
 
     @Override
-    public void exeImageDetailsDataRequest() {
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid));
-        EasyWorkUseCase.RequestValues requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
-        presenter.execute(requestValues);
+    public void execute() {
+        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid));
+        EasyWorkUseCase.RequestValues<ResponseInfo<GroupImageInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
+        if (isViewAttached()) {
+            getView().onStart(requestValues.getTag());
+        }
+        handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<GroupImageInfo>>>() {
+            @Override
+            public void onSuccess(EasyWorkUseCase.ResponseValue<ResponseInfo<GroupImageInfo>> responseValue) {
+                ResponseInfo<GroupImageInfo> responseInfo = responseValue.getData();
+                if (isViewAttached()) {
+                    getView().onSuccess(responseInfo);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    getView().onError(throwable);
+                }
+            }
+        });
     }
-
-    protected EasyWorkContract.View<ResponseInfo<GroupImageInfo>> view = new EasyWorkContract.View<ResponseInfo<GroupImageInfo>>() {
-        @Override
-        public void onStart(Object o) {
-            if (getView() != null) {
-                getView().onStart(o);
-            }
-        }
-
-        @Override
-        public void onError(Object o, Throwable throwable) {
-            if (getView() != null) {
-                getView().onError(o, throwable);
-            }
-        }
-
-        @Override
-        public void onSuccess(Object o, ResponseInfo<GroupImageInfo> groupImageInfoResponseInfo) {
-            if (getView() != null) {
-                getView().onSuccess(o, groupImageInfoResponseInfo);
-            }
-        }
-    };
-
-    protected EasyWorkContract.View<File> view_download = new EasyWorkContract.View<File>() {
-        @Override
-        public void onStart(Object o) {
-            if (getView() != null)
-                getView().onDownLoadRequestStart(o);
-
-        }
-
-        @Override
-        public void onError(Object o, Throwable throwable) {
-            if (getView() != null)
-                getView().onDownloadError(o, throwable);
-        }
-
-        @Override
-        public void onSuccess(Object o, File file) {
-            if (getView() != null)
-                getView().onDownloadSuccess(file);
-        }
-    };
-    protected EasyWorkContract.View<File> view_share = new EasyWorkContract.View<File>() {
-        @Override
-        public void onStart(Object o) {
-
-        }
-
-        @Override
-        public void onError(Object o, Throwable throwable) {
-            if (getView() != null)
-                getView().onShareError(o, throwable);
-        }
-
-        @Override
-        public void onSuccess(Object o, File file) {
-            if (getView() != null)
-                getView().onShare(o, file);
-        }
-    };
 
     @Override
     protected void onDetachView() {
         super.onDetachView();
-        presenter.detachView();
-        presenter_down.detachView();
-        presenter_share.detachView();
     }
 }
