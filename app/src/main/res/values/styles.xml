@@ -19,9 +19,9 @@
         <!--<item name="actionBarItemBackground">@drawable/menu_item_selector</item>-->
         <!--<item name="android:actionBarItemBackground">@drawable/menu_item_selector</item>-->
         <item name="toolbarNavigationButtonStyle">@style/QfangToolbarNavigationButtonStyle</item>
-        <item name="android:listDivider">@drawable/qfang_horizontal_line</item>
+        <item name="android:listDivider">@drawable/horizontal_line</item>
 
-        <item name="android:divider">@drawable/qfang_horizontal_line</item>
+        <item name="android:divider">@drawable/horizontal_line</item>
         <!--<item name="navigationIcon">@mipmap/qfang_white_back_image</item>-->
         <item name="actionMenuTextColor">@color/qFFFFFF</item>
         <!--actionbar 高度-->
@@ -30,7 +30,7 @@
         <!--<item name="kProgressListViewStyle">@style/QfangListView</item>-->
         <!--<item name="EasyListFilterMenuStyle">@style/QfamgEasyListFilterMenuStyle</item>-->
         <!--<item name="kProgressLayoutsStyle">@style/qfang_KProgressLayoutStyle</item>-->
-        <item name="EasyRecyclerViewStyle">@style/qfang_EasyRecyclerViewStyle</item>
+        <item name="EasyRecyclerViewStyle">@style/easyRecyclerViewStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

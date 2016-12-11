@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="easyRecyclerViewStyle">
+        <item name="easyLoadingView">@layout/loadingview_white</item>
+        <item name="easyEmptyView">@layout/emptyview_white</item>
+        <item name="easyErrorView">@layout/errorview_white</item>
+    </style>
+
+    <style name="easyRecyclerViewStyle_black">
+        <item name="easyLoadingView">@layout/loadingview_black</item>
+        <item name="easyEmptyView">@layout/emptyview_black</item>
+        <item name="easyErrorView">@layout/errorview_black</item>
+    </style>
+</resources>
