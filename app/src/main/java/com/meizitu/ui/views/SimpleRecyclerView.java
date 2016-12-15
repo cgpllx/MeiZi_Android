@@ -9,21 +9,19 @@ import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.core.DefaultFooterHander;
 import cc.easyandroid.easyrecyclerview.core.DefaultHeaderHander;
 
-/**
- * Created by cgpllx on 2016/7/27.
- */
-public class QfangRecyclerView extends EasyRecyclerView {
-    public QfangRecyclerView(Context context) {
+
+public class SimpleRecyclerView extends EasyRecyclerView {
+    public SimpleRecyclerView(Context context) {
         super(context);
         init(context);
     }
 
-    public QfangRecyclerView(Context context, AttributeSet attrs) {
+    public SimpleRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public QfangRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public SimpleRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }

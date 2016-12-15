@@ -1,4 +1,6 @@
-package com.meizitu.utils;
+package com.meizitu.service.Interceptor;
+
+import com.meizitu.utils.AESUtil;
 
 import java.io.IOException;
 

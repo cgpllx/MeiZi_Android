@@ -289,7 +289,7 @@ public class QfangUtils {
         ShareCompat.IntentBuilder.from(launchingActivity)
                 .setType("text/plain")//
                 .setText(text)//
-                .setChooserTitle("Q房網香港")
+                .setChooserTitle("title")
                 .startChooser();
     }
 

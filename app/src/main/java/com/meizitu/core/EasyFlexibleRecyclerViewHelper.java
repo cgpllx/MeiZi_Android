@@ -5,7 +5,7 @@ package com.meizitu.core;
 import com.meizitu.anim.AlphaInAnimation;
 import com.meizitu.exception.NoneDataException;
 import com.meizitu.pojo.Paging;
-import com.meizitu.ui.views.QfangRecyclerView;
+import com.meizitu.ui.views.SimpleRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import cc.easyandroid.easyutils.EasyToast;
 
 public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLoadMoreListener, OnRefreshListener, OnEasyProgressClickListener {
 
-    private QfangRecyclerView mEasyRecyclerView;
+    private SimpleRecyclerView mEasyRecyclerView;
     private EasyFlexibleAdapter<T> mEasyRecyclerAdapter;
     public static final int REFRESH = 1;
     public static final int LOADMORE = 2;
@@ -31,7 +31,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
     private boolean mShouldPullLoad;
     private boolean mShouldPullRefresh;
 
-    public EasyFlexibleRecyclerViewHelper(QfangRecyclerView easyRecyclerView, EasyFlexibleAdapter<T> easyRecyclerAdapter, int eachPageNumber, boolean shouldPullLoad, boolean shouldPullRefresh) {
+    public EasyFlexibleRecyclerViewHelper(SimpleRecyclerView easyRecyclerView, EasyFlexibleAdapter<T> easyRecyclerAdapter, int eachPageNumber, boolean shouldPullLoad, boolean shouldPullRefresh) {
         this.mEasyRecyclerView = easyRecyclerView;
         this.mEasyRecyclerAdapter = easyRecyclerAdapter;
         this.eachPageNumber = eachPageNumber;
@@ -59,7 +59,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
 
     }
 
-    public EasyFlexibleRecyclerViewHelper(QfangRecyclerView easyRecyclerView, EasyFlexibleAdapter<T> easyRecyclerAdapter) {
+    public EasyFlexibleRecyclerViewHelper(SimpleRecyclerView easyRecyclerView, EasyFlexibleAdapter<T> easyRecyclerAdapter) {
         this(easyRecyclerView, easyRecyclerAdapter, 20, true, true);
     }
 

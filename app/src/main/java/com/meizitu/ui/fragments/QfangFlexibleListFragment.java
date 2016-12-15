@@ -13,13 +13,10 @@ import com.meizitu.mvp.contract.SimpleListContract;
 import com.meizitu.mvp.presenter.AbsSimpleListPresenter;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.ui.views.QfangRecyclerView;
+import com.meizitu.ui.views.SimpleRecyclerView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.EasyRecycleViewDivider;
@@ -34,7 +31,7 @@ import cc.easyandroid.easyutils.EasyToast;
  */
 public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
     public static final String TAG = QfangFlexibleListFragment.class.getSimpleName();
-    protected QfangRecyclerView qfangRecyclerView;
+    protected SimpleRecyclerView simpleRecyclerView;
 
     protected EasyFlexibleRecyclerViewHelper<T> helper;
     /**
@@ -63,7 +60,7 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
         presenter.attachView(new SimpleListContract.View<ResponseInfo<Paging<List<T>>>>() {
             @Override
             public void onSimpleListStart(Object o) {
-                qfangRecyclerView.showLoadingView();
+                simpleRecyclerView.showLoadingView();
             }
 
             @Override
@@ -72,11 +69,11 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
                     Integer type = (Integer) o;
                     switch (type.intValue()) {
                         case EasyFlexibleRecyclerViewHelper.REFRESH:
-                            qfangRecyclerView.showErrorView();
-                            qfangRecyclerView.finishRefresh(false);
+                            simpleRecyclerView.showErrorView();
+                            simpleRecyclerView.finishRefresh(false);
                             break;
                         case EasyFlexibleRecyclerViewHelper.LOADMORE:
-                            qfangRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FAIL);
+                            simpleRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FAIL);
                             break;
                     }
                 }
@@ -102,20 +99,20 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
                     Integer type = (Integer) o;
                     switch (type.intValue()) {
                         case EasyFlexibleRecyclerViewHelper.REFRESH:
-                            qfangRecyclerView.finishRefresh(true);
+                            simpleRecyclerView.finishRefresh(true);
                             break;
                         case EasyFlexibleRecyclerViewHelper.LOADMORE:
-                            qfangRecyclerView.finishLoadMore(-1);
+                            simpleRecyclerView.finishLoadMore(-1);
                             break;
                     }
                 }
             }
         });
-        qfangRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        qfangRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        qfangRecyclerView.setHasFixedSize(true);
+        simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
+        simpleRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
-        helper = new EasyFlexibleRecyclerViewHelper<T>(qfangRecyclerView, adapter) {
+        helper = new EasyFlexibleRecyclerViewHelper<T>(simpleRecyclerView, adapter) {
             @Override
             public void onRefresh() {
                 super.onRefresh();
@@ -157,7 +154,7 @@ public abstract class QfangFlexibleListFragment<T extends IFlexible> extends Qfa
     }
 
     public void autoRefresh() {
-        qfangRecyclerView.autoRefresh();
+        simpleRecyclerView.autoRefresh();
     }
 
     protected void refesh() {

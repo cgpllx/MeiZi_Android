@@ -15,7 +15,6 @@
  */
 package com.meizitu.internal.di.modules;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -25,7 +24,7 @@ import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
-import com.meizitu.utils.DecodeInterceptor;
+import com.meizitu.service.Interceptor.DecodeInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
