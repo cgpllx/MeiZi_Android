@@ -9,13 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-import com.meizitu.GroupImageInfoListAdapter;
+import com.meizitu.adapter.GroupImageInfoListAdapter;
 import com.meizitu.ImageApplication;
-import com.meizitu.It.IToggle;
+import com.meizitu.core.IToggle;
 import com.meizitu.R;
 import com.meizitu.internal.di.components.DaggerImageListComponent;
 import com.meizitu.internal.di.modules.ImageListModule;
-import com.meizitu.items.Item_GroupImageInfoListItem;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import com.meizitu.mvp.contract.ImageListContract;
 import com.meizitu.mvp.presenter.ImageListPresenter;
 import com.meizitu.pojo.ResponseInfo;

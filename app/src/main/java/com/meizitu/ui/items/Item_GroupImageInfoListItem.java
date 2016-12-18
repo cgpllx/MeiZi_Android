@@ -1,4 +1,4 @@
-package com.meizitu.items;
+package com.meizitu.ui.items;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.meizitu.It.IToggle;
+import com.meizitu.core.IToggle;
 import com.meizitu.R;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.activitys.ImageDetailsActivity;

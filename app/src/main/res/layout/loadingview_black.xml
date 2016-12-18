@@ -6,13 +6,13 @@
     android:background="@color/q333333"
     android:gravity="center"
     android:orientation="horizontal"
-    android:visibility="visible" >
+    android:visibility="visible">
+    <!--style="@android:style/Widget.ProgressBar.Small.Inverse"-->
 
     <ProgressBar
-        style="?android:attr/progressBarStyle"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="40dp"
-        android:layout_height="40dp"
-        />
+        android:layout_height="40dp" />
     <!--android:background="@drawable/xpt_home_image"-->
     <!--android:indeterminateDrawable="@drawable/xpt_loading_animation"-->
 
@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center_vertical"
-        android:textColor="@color/qFFFFFF"
         android:text="正在加載..."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/qFFFFFF" />
 
 </LinearLayout>

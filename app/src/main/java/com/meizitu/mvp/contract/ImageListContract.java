@@ -1,11 +1,9 @@
 package com.meizitu.mvp.contract;
 
-import com.meizitu.items.Item_GroupImageInfoListItem;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import com.meizitu.mvp.presenter.SimpleWorkPresenter;
 import com.meizitu.pojo.ResponseInfo;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easyclean.presentation.presenter.base.EasyBasePresenter;
 import cc.easyandroid.easyclean.presentation.view.IEasyView;
 
 /**

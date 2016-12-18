@@ -2,8 +2,6 @@ package com.meizitu.core;
 
 
 
-import com.meizitu.anim.AlphaInAnimation;
-import com.meizitu.exception.NoneDataException;
 import com.meizitu.pojo.Paging;
 import com.meizitu.ui.views.SimpleRecyclerView;
 

@@ -1,6 +1,6 @@
-package com.meizitu.It;
+package com.meizitu.core;
 
-import com.meizitu.items.Item_GroupImageInfoListItem;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 /**
  * Created by cgpllx on 2016/11/23.

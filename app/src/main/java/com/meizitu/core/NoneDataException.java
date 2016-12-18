@@ -1,4 +1,4 @@
-package com.meizitu.exception;
+package com.meizitu.core;
 
 /**
  * Created by Administrator on 2016/1/28.

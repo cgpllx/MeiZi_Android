@@ -1,4 +1,4 @@
-package com.meizitu.items;
+package com.meizitu.ui.items;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.CardView;

@@ -1,4 +1,4 @@
-package com.meizitu.anim;
+package com.meizitu.core;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
