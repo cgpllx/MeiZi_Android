@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply from: 'productFlavors.gradle'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "com.meizitu.admin"
         minSdkVersion 15
@@ -11,56 +11,23 @@ android {
         versionCode 3
         versionName "1.1.1"
     }
-    productFlavors {
-        xiaohua {
-            applicationId = "com.meizitu.xiaohua"
-        }
-        qingchun {
-            applicationId = "com.meizitu.qingchun"
-        }
-        qizhi {
-            applicationId = "com.meizitu.qizhi"
-        }
-        mengnv {
-            applicationId = "com.meizitu.mengnv"
-        }
-        hunshameinv {
-            applicationId = "com.meizitu.hunshameinv"
-        }
-        jiepaimeinv {
-            applicationId = "com.meizitu.jiepaimeinv"
-        }
-        feizhuliumeinv {
-            applicationId = "com.meizitu.feizhuliumeinv"
-        }
-        meituimeinv {
-            applicationId = "com.meizitu.meituimeinv"
-        }
-        qingchunmeinv {
-            applicationId = "com.meizitu.qingchunmeinv"
-        }
-        xingganmeinv {
-            applicationId = "com.meizitu.xingganmeinv"
-        }
-        rihanmeinv {
-            applicationId = "com.meizitu.rihanmeinv"
-        }
-        chemomeinv {
-            applicationId = "com.meizitu.chemomeinv"
-        }
-        motemeinv {
-            applicationId = "com.meizitu.motemeinv"
-        }
-        mvshengtupian {
-            applicationId = "com.meizitu.mvshengtupian"
-        }
-        meinvmeihuo {
-            applicationId = "com.meizitu.meinvmeihuo"
+    signingConfigs {
+        config {
+            keyAlias 'qfang_ks'
+            keyPassword '123456'
+            storeFile file('qfang_ks')
+            storePassword '123456'
         }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.config
             minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -70,7 +37,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.6'
-
     compile 'com.google.dagger:dagger:2.6'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
