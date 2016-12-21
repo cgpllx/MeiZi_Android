@@ -23,10 +23,12 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.service.ImageApi;
-import com.meizitu.service.RestApiAdapter;
 import com.meizitu.service.Interceptor.DecodeInterceptor;
+import com.meizitu.service.RestApiAdapter;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
 
 import cc.easyandroid.easycache.EasyHttpCache;
 import dagger.Module;
@@ -34,8 +36,6 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.http.BridgeInterceptor;
 import retrofit2.Retrofit;
-
-import javax.inject.Singleton;
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
@@ -89,6 +89,7 @@ public class ApplicationModule {
                 .cookieJar(cookieJar)
                 .addInterceptor(new DecodeInterceptor())//decode
                 .addInterceptor(new BridgeInterceptor(cookieJar))//zip
+                .addNetworkInterceptor(new com.meizitu.service.Interceptor.CacheInterceptor())
                 .build();
         return okHttpClient;
     }

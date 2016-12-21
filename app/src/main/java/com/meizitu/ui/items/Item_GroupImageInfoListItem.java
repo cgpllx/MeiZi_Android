@@ -3,6 +3,7 @@ package com.meizitu.ui.items;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.meizitu.core.IToggle;
 import com.meizitu.R;
+import com.meizitu.core.IToggle;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.activitys.ImageDetailsActivity;
 import com.meizitu.utils.ImageUtils;
@@ -23,6 +24,7 @@ import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.DisplayUtils;
+import cc.easyandroid.easyutils.WindowUtil;
 
 
 @SuppressLint("ParcelCreator")
@@ -80,14 +82,6 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             title = EasyViewUtil.findViewById(view, R.id.title);
             imagecount = EasyViewUtil.findViewById(view, R.id.imagecount);
             switchText = EasyViewUtil.findViewById(view, R.id.switchText);
-//            switchText.toggle();
-//            switchText.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    iToggle.
-//                }
-//            });
-
         }
 
         //-------------------
@@ -97,37 +91,37 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
             title.setText(imageInfo.getTitle());
             imagecount.setText(imageInfo.getPiccount() + "pics");
-            //int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
+            int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
             switchText.setChecked(imageInfo.isStatus());
-//            try {
-//                String pixelString = imageInfo.getPixel();
-//                if (!TextUtils.isEmpty(pixelString)) {
-//                    String[] pixelStringArray = pixelString.split("\\*");
-//                    if (pixelStringArray.length == 2) {
-//                        String pixel_x = pixelStringArray[0];
-//                        String pixel_y = pixelStringArray[1];
-//                        int x = Integer.parseInt(pixel_x);
-//                        int y = Integer.parseInt(pixel_y);
-//                        double ratio = widthPixels * 1.0 / (x);
-//                        int height = (int) (y * ratio);
-//                        ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
-//                        layoutParams.height = height;
-//                        image.setLayoutParams(layoutParams);
-//                    } else {
-//                        setImageDefaultLayoutParams();
-//                    }
-//                } else {
-//                    setImageDefaultLayoutParams();
-//                }
-//            } catch (Exception e) {
-            setImageDefaultLayoutParams();
-//            }
+            try {
+                String pixelString = imageInfo.getPixel();
+                if (!TextUtils.isEmpty(pixelString)) {
+                    String[] pixelStringArray = pixelString.split("\\*");
+                    if (pixelStringArray.length == 2) {
+                        String pixel_x = pixelStringArray[0];
+                        String pixel_y = pixelStringArray[1];
+                        int x = Integer.parseInt(pixel_x);
+                        int y = Integer.parseInt(pixel_y);
+                        double ratio = widthPixels * 1.0 / (x);
+                        int height = (int) (y * ratio);
+                        ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
+                        layoutParams.height = height;
+                        image.setLayoutParams(layoutParams);
+                    } else {
+                        setImageDefaultLayoutParams();
+                    }
+                } else {
+                    setImageDefaultLayoutParams();
+                }
+            } catch (Exception e) {
+                setImageDefaultLayoutParams();
+            }
             switchText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (imageInfo.isStatus()) {
                         iToggle.closeSingle(imageInfo);
-                    }else{
+                    } else {
                         iToggle.openSingle(imageInfo);
                     }
                 }

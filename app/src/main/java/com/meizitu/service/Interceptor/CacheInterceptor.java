@@ -1,5 +1,7 @@
 package com.meizitu.service.Interceptor;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -14,12 +16,15 @@ public class CacheInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Response response = chain.proceed(request);
-        Response response1 = response.newBuilder()
-                .removeHeader("Pragma")
-                .removeHeader("Cache-Control")
-                //cache for 30 days
-                .header("Cache-Control", "max-age=" + 3600 * 24 * 30)
-                .build();
-        return response1;
+        String cache = request.header("Cache-Time");
+        if (!TextUtils.isEmpty(cache)) {//缓存时间不为空
+            Response cacheResponse = response.newBuilder()
+                    .removeHeader("Pragma")
+                    .removeHeader("Cache-Control")
+                    .header("Cache-Control", "max-age=" + cache)    //cache for 10 h
+                    .build();
+            return cacheResponse;
+        }
+        return response;
     }
 }
