@@ -33,7 +33,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
     private void initializeInjector() {
         this.component = DaggerImageListComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .imageListModule(new ImageListModule(100))
+                .imageListModule(new ImageListModule(70))
                 .build();
     }
 
