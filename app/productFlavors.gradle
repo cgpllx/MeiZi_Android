@@ -45,79 +45,82 @@ android {
         meinvmeihuo {
             applicationId = "com.meizitu.meinvmeihuo"
         }
-    }
-    sourceSets {
-        main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java']
-            resources.srcDirs = ['src/main/java']
-            aidl.srcDirs = ['src/main/java']
-            renderscript.srcDirs = ['src/main/java']
-            res.srcDirs = ['src/main/res']
-            assets.srcDirs = ['src/main/assets']
-            jniLibs.srcDirs = ['libs']
-
-        }
-        xiaohua {
-            java.srcDirs = ['src/xiaohua/java']
-            res.srcDirs = ['src/xiaohua/res']
-        }
-        qingchun {
-            java.srcDirs = ['src/qingchun/java']
-            res.srcDirs = ['src/qingchun/res']
-        }
-        qizhi {
-            java.srcDirs = ['src/qizhi/java']
-            res.srcDirs = ['src/qizhi/res']
-        }
-        mengnv {
-            java.srcDirs = ['src/mengnv/java']
-            res.srcDirs = ['src/mengnv/res']
-        }
-        hunshameinv {
-            java.srcDirs = ['src/hunshameinv/java']
-            res.srcDirs = ['src/hunshameinv/res']
-        }
-        jiepaimeinv {
-            java.srcDirs = ['src/jiepaimeinv/java']
-            res.srcDirs = ['src/jiepaimeinv/res']
-        }
-        feizhuliumeinv {
-            java.srcDirs = ['src/feizhuliumeinv/java']
-            res.srcDirs = ['src/feizhuliumeinv/res']
-        }
-        meituimeinv {
-            java.srcDirs = ['src/meituimeinv/java']
-            res.srcDirs = ['src/meituimeinv/res']
-        }
-        qingchunmeinv {
-            java.srcDirs = ['src/qingchunmeinv/java']
-            res.srcDirs = ['src/qingchunmeinv/res']
-        }
-        xingganmeinv {
-            java.srcDirs = ['src/xingganmeinv/java']
-            res.srcDirs = ['src/xingganmeinv/res']
-        }
-        rihanmeinv {
-            java.srcDirs = ['src/rihanmeinv/java']
-            res.srcDirs = ['src/rihanmeinv/res']
-        }
-        chemomeinv {
-            java.srcDirs = ['src/chemomeinv/java']
-            res.srcDirs = ['src/chemomeinv/res']
-        }
-        motemeinv {
-            java.srcDirs = ['src/motemeinv/java']
-            res.srcDirs = ['src/motemeinv/res']
-        }
-        mvshengtupian {
-            java.srcDirs = ['src/mvshengtupian/java']
-            res.srcDirs = ['src/mvshengtupian/res']
-        }
-        meinvmeihuo {
-//            manifest.srcFile 'src/meinvmeihuo/AndroidManifest.xml'
-            java.srcDirs = ['src/meinvmeihuo/java']
-            res.srcDirs = ['src/meinvmeihuo/res']
+        admin {
+            applicationId = "com.meizitu.admin"
         }
     }
+//    下面的是默认配置，不配也是安装下面的规则
+//    sourceSets {
+//        main {
+//            manifest.srcFile 'src/main/AndroidManifest.xml'
+//            java.srcDirs = ['src/main/java']
+//            resources.srcDirs = ['src/main/java']
+//            aidl.srcDirs = ['src/main/java']
+//            renderscript.srcDirs = ['src/main/java']
+//            res.srcDirs = ['src/main/res']
+//            assets.srcDirs = ['src/main/assets']
+//            jniLibs.srcDirs = ['libs']
+//
+//        }
+//        xiaohua {
+//            java.srcDirs = ['src/xiaohua/java']
+//            res.srcDirs = ['src/xiaohua/res']
+//        }
+//        qingchun {
+//            java.srcDirs = ['src/qingchun/java']
+//            res.srcDirs = ['src/qingchun/res']
+//        }
+//        qizhi {
+//            java.srcDirs = ['src/qizhi/java']
+//            res.srcDirs = ['src/qizhi/res']
+//        }
+//        mengnv {
+//            java.srcDirs = ['src/mengnv/java']
+//            res.srcDirs = ['src/mengnv/res']
+//        }
+//        hunshameinv {
+//            java.srcDirs = ['src/hunshameinv/java']
+//            res.srcDirs = ['src/hunshameinv/res']
+//        }
+//        jiepaimeinv {
+//            java.srcDirs = ['src/jiepaimeinv/java']
+//            res.srcDirs = ['src/jiepaimeinv/res']
+//        }
+//        feizhuliumeinv {
+//            java.srcDirs = ['src/feizhuliumeinv/java']
+//            res.srcDirs = ['src/feizhuliumeinv/res']
+//        }
+//        meituimeinv {
+//            java.srcDirs = ['src/meituimeinv/java']
+//            res.srcDirs = ['src/meituimeinv/res']
+//        }
+//        qingchunmeinv {
+//            java.srcDirs = ['src/qingchunmeinv/java']
+//            res.srcDirs = ['src/qingchunmeinv/res']
+//        }
+//        xingganmeinv {
+//            java.srcDirs = ['src/xingganmeinv/java']
+//            res.srcDirs = ['src/xingganmeinv/res']
+//        }
+//        rihanmeinv {
+//            java.srcDirs = ['src/rihanmeinv/java']
+//            res.srcDirs = ['src/rihanmeinv/res']
+//        }
+//        chemomeinv {
+//            java.srcDirs = ['src/chemomeinv/java']
+//            res.srcDirs = ['src/chemomeinv/res']
+//        }
+//        motemeinv {
+//            java.srcDirs = ['src/motemeinv/java']
+//            res.srcDirs = ['src/motemeinv/res']
+//        }
+//        mvshengtupian {
+//            java.srcDirs = ['src/mvshengtupian/java']
+//            res.srcDirs = ['src/mvshengtupian/res']
+//        }
+//        meinvmeihuo {
+//            java.srcDirs = ['src/meinvmeihuo/java']
+//            res.srcDirs = ['src/meinvmeihuo/res']
+//        }
+//    }
 }
