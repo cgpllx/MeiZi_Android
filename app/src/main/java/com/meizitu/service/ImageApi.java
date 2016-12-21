@@ -29,12 +29,6 @@ public interface ImageApi {
     @GET("/groupImageInfoList?count=40")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
 
-    /**
-     * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
-     */
-    @Headers({"Cache-Control: max-age=640000"})
-    @GET("/adminGroupImageInfoList?count=40")
-    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> adminGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
 
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
@@ -43,26 +37,4 @@ public interface ImageApi {
     @GET("/groupImageInfoDetails")
     Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
 
-    @Headers({"Cache-Control: max-age=640000"})
-    @GET("/categoryList")
-    Call<ResponseInfo<List<Category>>> categoryList(@Query("id") int id);
-
-    /**
-     * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
-     */
-    @GET("/closeGroupImageInfoById")
-    Call<ResponseInfo> closeGroupImageInfoById(@Query("id") int id);
-
-    @GET("/openGroupImageInfoById")
-    Call<ResponseInfo> openGroupImageInfoById(@Query("id") int id);
-
-    @GET("/closeGroupImageInfoByCategoryCode")
-    Call<ResponseInfo> closeGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
-
-    @GET("/openGroupImageInfoByCategoryCode")
-    Call<ResponseInfo> openGroupImageInfoByCategoryCode(@Query("categoryCode") int id);
-
-    @FormUrlEncoded
-    @POST("/login")
-    Call<ResponseInfo> login(@Field("username") String username, @Field("password") String password);
 }

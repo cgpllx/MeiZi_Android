@@ -34,14 +34,12 @@ import javax.inject.Named;
  * Dagger module that provides user related collaborators.
  */
 @Module
-public class ImageModule {
+public class ImageDetailsModule {
 
     private int imageid = -1;
 
-    public ImageModule() {
-    }
 
-    public ImageModule(int imageid) {
+    public ImageDetailsModule(int imageid) {
         this.imageid = imageid;
     }
 

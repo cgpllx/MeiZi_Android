@@ -5,17 +5,19 @@ import android.os.Bundle;
 
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
-import com.meizitu.internal.di.components.DaggerImageComponent;
-import com.meizitu.internal.di.components.ImageComponent;
-import com.meizitu.internal.di.modules.ImageModule;
-import com.meizitu.ui.fragments.TabFragment;
+import com.meizitu.internal.di.components.DaggerImageDetailsComponent;
+import com.meizitu.internal.di.components.DaggerImageListComponent;
+import com.meizitu.internal.di.components.ImageDetailsComponent;
+import com.meizitu.internal.di.components.ImageListComponent;
+import com.meizitu.internal.di.modules.ImageListModule;
+import com.meizitu.ui.fragments.ImageListFragment;
 
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class MainActivity extends BaseActivity implements HasComponent<ImageComponent> {
+public class PublicMainActivity extends BaseActivity implements HasComponent<ImageListComponent> {
 
-    ImageComponent component;
+    ImageListComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +26,14 @@ public class MainActivity extends BaseActivity implements HasComponent<ImageComp
         initTitleBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initializeInjector();
-        replaceFragment(R.id.fragmentContainer, new TabFragment());
+
+        replaceFragment(R.id.fragmentContainer, ImageListFragment.newInstance());
     }
 
     private void initializeInjector() {
-        this.component = DaggerImageComponent.builder()
+        this.component = DaggerImageListComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .imageModule(new ImageModule())
-                .activityModule(getActivityModule())
+                .imageListModule(new ImageListModule(100))
                 .build();
     }
 
@@ -55,7 +57,7 @@ public class MainActivity extends BaseActivity implements HasComponent<ImageComp
     }
 
     @Override
-    public ImageComponent getComponent() {
+    public ImageListComponent getComponent() {
         return component;
     }
 }

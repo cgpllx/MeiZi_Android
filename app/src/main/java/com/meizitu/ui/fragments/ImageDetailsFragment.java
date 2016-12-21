@@ -18,7 +18,7 @@ import com.google.android.gms.ads.AdView;
 
 import com.meizitu.R;
 import com.meizitu.banner.BannerAtlasAdapter;
-import com.meizitu.internal.di.components.ImageComponent;
+import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
 import com.meizitu.pojo.GroupImageInfo;
@@ -62,7 +62,7 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.getComponent(ImageComponent.class).inject(this);
+        this.getComponent(ImageDetailsComponent.class).inject(this);
         presenter.attachView(this);
         adView = EasyViewUtil.findViewById(view, R.id.adView);
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);

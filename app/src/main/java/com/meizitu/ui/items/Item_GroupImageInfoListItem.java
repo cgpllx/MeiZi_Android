@@ -72,16 +72,12 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         TextView imagecount;
 
         GroupImageInfo imageInfo;
-        Switch switchText;
-        IToggle iToggle;
 
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
-            iToggle = (IToggle) adapter;
             image = EasyViewUtil.findViewById(view, R.id.image);
             title = EasyViewUtil.findViewById(view, R.id.title);
             imagecount = EasyViewUtil.findViewById(view, R.id.imagecount);
-            switchText = EasyViewUtil.findViewById(view, R.id.switchText);
         }
 
         //-------------------
@@ -92,7 +88,6 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             title.setText(imageInfo.getTitle());
             imagecount.setText(imageInfo.getPiccount() + "pics");
             int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
-            switchText.setChecked(imageInfo.isStatus());
             try {
                 String pixelString = imageInfo.getPixel();
                 if (!TextUtils.isEmpty(pixelString)) {
@@ -116,16 +111,6 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             } catch (Exception e) {
                 setImageDefaultLayoutParams();
             }
-            switchText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (imageInfo.isStatus()) {
-                        iToggle.closeSingle(imageInfo);
-                    } else {
-                        iToggle.openSingle(imageInfo);
-                    }
-                }
-            });
         }
 
         void setImageDefaultLayoutParams() {
