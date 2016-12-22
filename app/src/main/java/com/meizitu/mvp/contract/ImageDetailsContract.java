@@ -19,8 +19,6 @@ import cc.easyandroid.easyclean.presentation.view.IEasyView;
 public interface ImageDetailsContract {
     interface View extends IEasyView {
 
-
-
         void onDownloadSuccess(File imageFile);
 
         void onDownloadError(Throwable throwable);
