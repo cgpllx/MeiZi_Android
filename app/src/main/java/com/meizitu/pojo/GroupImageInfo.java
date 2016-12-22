@@ -3,35 +3,25 @@ package com.meizitu.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupImageInfo implements Parcelable {
-    @Expose
+    @SerializedName("id")
     private int id;
-    @Expose
+    @SerializedName("title")
     private String title;
-    @Expose
+    @SerializedName("images")
     private List<Image> images;
-    @Expose
+    @SerializedName("coverimage")
     private String coverimage;//封面图片
-    @Expose
+    @SerializedName("piccount")
     private int piccount;//数量
-    @Expose
+    @SerializedName("pixel")
     private String pixel;//尺寸
 
-    private boolean status;
-
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public int getPiccount() {
         return piccount;
@@ -97,7 +87,6 @@ public class GroupImageInfo implements Parcelable {
         dest.writeString(this.coverimage);
         dest.writeInt(this.piccount);
         dest.writeString(this.pixel);
-        dest.writeByte(status ? (byte) 1 : (byte) 0);
     }
 
     protected GroupImageInfo(Parcel in) {
@@ -108,7 +97,6 @@ public class GroupImageInfo implements Parcelable {
         this.coverimage = in.readString();
         this.piccount = in.readInt();
         this.pixel = in.readString();
-        this.status = in.readByte() != 0;
     }
 
     public static final Creator<GroupImageInfo> CREATOR = new Creator<GroupImageInfo>() {

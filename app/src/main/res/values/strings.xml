@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">logintext</string>
-
-    <string name="loading_hardly">正在加载..</string>
-
+    <string name="loading">loading..</string>
+    <string name="load_error">Error loading,click reload</string>
+    <string name="nodata">nodata</string>
+    <string name="pressAnotherExit">pressAnotherExit</string>
+    <string name="saveAddress">Save picture successfully, save path as：%1$s</string>
+    <string name="downloadError">Download error</string>
+    <string name="shareError">Share error</string>
 </resources>

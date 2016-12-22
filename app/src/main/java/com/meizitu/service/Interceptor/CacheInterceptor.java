@@ -9,7 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by chenguoping on 16/12/15.
+ *  添加缓存
  */
 public class CacheInterceptor implements Interceptor {
     @Override

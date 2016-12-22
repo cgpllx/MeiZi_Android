@@ -26,11 +26,9 @@
         <item name="actionMenuTextColor">@color/qFFFFFF</item>
         <!--actionbar 高度-->
         <!--<item name="android:actionBarSize">@dimen/px_dp_100</item>-->
-        <!--<item name=""-->
-        <!--<item name="kProgressListViewStyle">@style/QfangListView</item>-->
         <!--<item name="EasyListFilterMenuStyle">@style/QfamgEasyListFilterMenuStyle</item>-->
         <!--<item name="kProgressLayoutsStyle">@style/qfang_KProgressLayoutStyle</item>-->
-        <item name="EasyRecyclerViewStyle">@style/easyRecyclerViewStyle</item>
+        <item name="EasyRecyclerViewStyle">@style/easyRecyclerViewStyle_white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

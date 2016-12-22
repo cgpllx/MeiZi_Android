@@ -14,13 +14,12 @@ import com.meizitu.ImageApplication;
 
 import java.io.InputStream;
 
-import cc.easyandroid.easyhttp.EasyHttpUtils;
 import okhttp3.OkHttpClient;
 
 /**
  * GlideModule
  */
-public class QfangGlideModule implements GlideModule {
+public class ImageGlideModule implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         // Apply options to the builder here.

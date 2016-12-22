@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">logintext</string>
-
-    <string name="loading_hardly">正在加载..</string>
-
+    <string name="app_name">app_name</string>
+    <string name="loading">正在加载..</string>
+    <string name="load_error">加载出错,点击重新加载</string>
+    <string name="nodata">暂无数据</string>
+    <string name="pressAnotherExit">再按一次退出</string>
+    <string name="saveAddress">图片保存成功，保存路径为：%1$s</string>
+    <string name="downloadError">下载出错了</string>
+    <string name="shareError">分享出错了</string>
 </resources>

@@ -29,8 +29,8 @@ import cc.easyandroid.easyutils.EasyToast;
 /**
  * 通用列表
  */
-public abstract class QfangFlexibleListFragment<T extends IFlexible> extends QfangBaseFragment {
-    public static final String TAG = QfangFlexibleListFragment.class.getSimpleName();
+public abstract class ImageFlexibleListFragment<T extends IFlexible> extends ImageBaseFragment {
+    public static final String TAG = ImageFlexibleListFragment.class.getSimpleName();
     protected SimpleRecyclerView simpleRecyclerView;
 
     protected EasyFlexibleRecyclerViewHelper<T> helper;

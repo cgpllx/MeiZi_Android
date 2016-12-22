@@ -35,7 +35,7 @@ import cc.easyandroid.easyrecyclerview.listener.OnEasyProgressClickListener;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.EasyToast;
 
-public class ImageDetailsFragment extends QfangBaseFragment implements ImageDetailsContract.View {
+public class ImageDetailsFragment extends ImageBaseFragment implements ImageDetailsContract.View {
     ViewPager viewPager;
     EasyProgressFrameLayout easyProgress;
     ViewpagerIndicator viewpagerIndicator;
@@ -99,14 +99,14 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     public void onDownloadSuccess(File imageFile) {
         if (imageFile != null) {
             MediaScannerConnection.scanFile(getContext(), new String[]{imageFile.getAbsolutePath()}, null, null);
-            EasyToast.showShort(getContext(), "圖片保存成功，保存路徑爲：" + imageFile.getAbsolutePath());
+            EasyToast.showShort(getContext(), getString(R.string.saveAddress, imageFile.getAbsolutePath()));
         }
     }
 
     @Override
     public void onDownloadError(Throwable throwable) {
         throwable.printStackTrace();
-        EasyToast.showLong(getContext(), "下载出错了");
+        EasyToast.showLong(getContext(), getString(R.string.downloadError));
     }
 
     @Override
@@ -114,14 +114,14 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
         ShareCompat.IntentBuilder.from(getActivity())
                 .setType("image/*")//
                 .setStream(Uri.fromFile(imageFile))
-                .setChooserTitle("分享")
+                .setChooserTitle(getString(R.string.app_name))
                 .startChooser();
     }
 
     @Override
     public void onShareError(Throwable var2) {
         var2.printStackTrace();
-        EasyToast.showLong(getContext(), "分享出错了");
+        EasyToast.showLong(getContext(), getString(R.string.shareError));
     }
 
     @Override
@@ -157,7 +157,6 @@ public class ImageDetailsFragment extends QfangBaseFragment implements ImageDeta
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.imagedetail, menu);
-
     }
 
     @Override

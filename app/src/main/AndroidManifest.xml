@@ -28,7 +28,7 @@
             android:theme="@style/ImageDetailsTheme" />
 
         <meta-data
-            android:name="com.meizitu.core.QfangGlideModule"
+            android:name="com.meizitu.core.ImageGlideModule"
             android:value="GlideModule" />
 
     </application>

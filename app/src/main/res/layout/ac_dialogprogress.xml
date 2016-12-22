@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center_vertical"
-        android:text="@string/loading_hardly"
+        android:text="@string/loading"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/qFFFFFF" />
 

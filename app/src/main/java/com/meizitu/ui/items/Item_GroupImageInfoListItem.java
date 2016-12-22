@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.meizitu.R;
-import com.meizitu.core.IToggle;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.activitys.ImageDetailsActivity;
 import com.meizitu.utils.ImageUtils;

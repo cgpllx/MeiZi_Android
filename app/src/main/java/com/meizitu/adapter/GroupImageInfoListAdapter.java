@@ -5,8 +5,6 @@ import android.content.Context;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
-import com.meizitu.core.IToggle;
-import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import com.meizitu.ui.items.Item_GroupImageInfoList_AD;
 
 import java.util.List;

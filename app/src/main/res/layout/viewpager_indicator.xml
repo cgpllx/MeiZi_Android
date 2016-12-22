@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="horizontal">
-    <!--android:background="@color/q77333333"-->
+
     <TextView
         android:id="@+id/titleName"
         android:layout_width="wrap_content"
@@ -14,7 +13,7 @@
         android:layout_centerVertical="true"
         android:paddingLeft="10dp"
         android:singleLine="true"
-        android:text=""
+        tools:text="titleName"
         android:textColor="@color/qFFFFFF"
         android:textSize="16sp" />
 
@@ -25,7 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        tools:text="0/0"
         android:textColor="@color/qFFFFFF"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="0/0" />
 </RelativeLayout>

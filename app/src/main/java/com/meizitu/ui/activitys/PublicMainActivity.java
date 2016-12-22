@@ -3,11 +3,10 @@ package com.meizitu.ui.activitys;
 
 import android.os.Bundle;
 
+import com.meizitu.BuildConfig;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
-import com.meizitu.internal.di.components.DaggerImageDetailsComponent;
 import com.meizitu.internal.di.components.DaggerImageListComponent;
-import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.internal.di.components.ImageListComponent;
 import com.meizitu.internal.di.modules.ImageListModule;
 import com.meizitu.ui.fragments.ImageListFragment;
@@ -33,7 +32,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
     private void initializeInjector() {
         this.component = DaggerImageListComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .imageListModule(new ImageListModule(70))
+                .imageListModule(new ImageListModule(BuildConfig.GATEGORYID))
                 .build();
     }
 
@@ -47,7 +46,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
             super.onBackPressed();
         } else {
             startTime = endTime;
-            EasyToast.showShort(getApplicationContext(), "再按一次退出");
+            EasyToast.showShort(getApplicationContext(), getString(R.string.pressAnotherExit));
         }
     }
 

@@ -18,7 +18,7 @@ import cc.easyandroid.easyutils.EasyToast;
 /**
  * fragment的父類
  */
-public abstract class QfangBaseFragment extends EasyLazyLoadFragment {
+public abstract class ImageBaseFragment extends EasyLazyLoadFragment {
 
 
     @Nullable
@@ -49,7 +49,6 @@ public abstract class QfangBaseFragment extends EasyLazyLoadFragment {
 
     public void onError(Object i, Throwable throwable) {
         EasyToast.showShort(getContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());
-
     }
 
     /**

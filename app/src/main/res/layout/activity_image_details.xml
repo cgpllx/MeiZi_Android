@@ -7,7 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.meizitu.ui.activitys.ImageDetailsActivity">
 
-
     <include layout="@layout/content_image_details" />
 
     <android.support.design.widget.AppBarLayout

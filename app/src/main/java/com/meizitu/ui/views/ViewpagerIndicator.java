@@ -30,7 +30,7 @@ public class ViewpagerIndicator extends LinearLayout {
 
     public ViewpagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.secondhandhouse_viewpager_indicator, this);
+        LayoutInflater.from(context).inflate(R.layout.viewpager_indicator, this);
         titleName_tv = EasyViewUtil.findViewById(this, R.id.titleName);
         pageName_tv = EasyViewUtil.findViewById(this, R.id.pageName);
     }
