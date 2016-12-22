@@ -1,64 +1,60 @@
 android {
     productFlavors {
-        xiaohua {
-            applicationId = "com.meizitu.xiaohua"
-            buildConfigField "int", "GATEGORYID", "70"
-        }
-        qingchun {
-            applicationId = "com.meizitu.qingchun"
-            buildConfigField "int", "GATEGORYID", "70"
-        }
         qizhi {
             applicationId = "com.meizitu.qizhi"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "80"
         }
         mengnv {
             applicationId = "com.meizitu.mengnv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "90"
+        }
+        xiaohua {
+            applicationId = "com.meizitu.xiaohua"
+            buildConfigField "int", "GATEGORYID", "100"
         }
         hunshameinv {
             applicationId = "com.meizitu.hunshameinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "110"
         }
         jiepaimeinv {
             applicationId = "com.meizitu.jiepaimeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "120"
         }
         feizhuliumeinv {
             applicationId = "com.meizitu.feizhuliumeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "130"
         }
         meituimeinv {
             applicationId = "com.meizitu.meituimeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "140"
         }
         qingchunmeinv {
             applicationId = "com.meizitu.qingchunmeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "150"
         }
         xingganmeinv {
             applicationId = "com.meizitu.xingganmeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "160"
         }
         rihanmeinv {
             applicationId = "com.meizitu.rihanmeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "170"
         }
         chemomeinv {
             applicationId = "com.meizitu.chemomeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "180"
         }
         motemeinv {
             applicationId = "com.meizitu.motemeinv"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "190"
         }
         mvshengtupian {
             applicationId = "com.meizitu.mvshengtupian"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "200"
         }
         meinvmeihuo {
             applicationId = "com.meizitu.meinvmeihuo"
-            buildConfigField "int", "GATEGORYID", "70"
+            buildConfigField "int", "GATEGORYID", "210"
         }
     }
 //    下面的是默认配置，不配也是安装下面的规则
