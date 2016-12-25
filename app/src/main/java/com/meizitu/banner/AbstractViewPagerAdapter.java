@@ -44,6 +44,7 @@ public abstract class AbstractViewPagerAdapter<T> extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = newView(container, position);
+        container.addView(view);
         return view;
     }
 

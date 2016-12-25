@@ -13,10 +13,10 @@ android {
     }
     signingConfigs {
         config {
-            keyAlias 'qfang_ks'
-            keyPassword '123456'
-            storeFile file('qfang_ks')
-            storePassword '123456'
+            keyAlias 'kubeiwu'
+            keyPassword 'cgp888'
+            storeFile file('key.jks')
+            storePassword 'cgp888'
         }
     }
     buildTypes {

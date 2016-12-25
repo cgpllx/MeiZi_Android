@@ -36,6 +36,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Splash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@mipmap/logo</item>
+    </style>
+
     <style name="ImageDetailsTheme" parent="AppBaseTheme">
         <item name="colorPrimaryDark">@color/q88333333</item>
         <!--<item name="colorPrimaryDark">#CF333333</item>-->
