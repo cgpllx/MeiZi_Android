@@ -39,7 +39,7 @@
     <style name="AppTheme.Splash">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@mipmap/logo</item>
+        <item name="android:windowBackground">@drawable/splashbg</item>
     </style>
 
     <style name="ImageDetailsTheme" parent="AppBaseTheme">

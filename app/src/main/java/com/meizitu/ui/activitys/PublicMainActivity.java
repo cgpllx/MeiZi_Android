@@ -43,7 +43,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
     public void onBackPressed() {
         long endTime = System.currentTimeMillis();
         if (startTime > (endTime - 2000)) {
-            super.onBackPressed();
+            moveTaskToBack(true);
         } else {
             startTime = endTime;
             EasyToast.showShort(getApplicationContext(), getString(R.string.pressAnotherExit));

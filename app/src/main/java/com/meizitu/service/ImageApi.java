@@ -20,12 +20,12 @@ import retrofit2.http.Query;
  */
 public interface ImageApi {
     String DOMAIN = "www.ffvvv.cc";
-//    String DOMAIN="192.168.1.105:8080";
+    //String DOMAIN = "192.168.1.105:8080";
 
     /**
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
-    @Headers({"Cache-Control: max-age=640000"})
+    @Headers({"Cache-Duration: 640000"})
     @GET("/groupImageInfoList?count=40")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
 
@@ -33,7 +33,7 @@ public interface ImageApi {
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
      */
-    @Headers({"Cache-Control: max-age=640000"})
+    @Headers({"Cache-Duration: 640000"})
     @GET("/groupImageInfoDetails")
     Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
 
