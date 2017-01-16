@@ -2,9 +2,6 @@ package com.meizitu.mvp.contract;
 
 import com.meizitu.mvp.presenter.SimpleWorkPresenter;
 
-import java.util.List;
-
-import cc.easyandroid.easyclean.presentation.presenter.base.EasyBasePresenter;
 import cc.easyandroid.easyclean.presentation.view.IEasyView;
 
 /**
@@ -19,6 +16,9 @@ public interface SimpleListContract {
 
         void onSimpleListSuccess(Object o, T responseInfo);
 
+        <P extends Presenter> void setPresenter(P presenter);
+
+        void refeshList();
     }
 
     abstract class Presenter<T, V extends SimpleListContract.View<T>> extends SimpleWorkPresenter<V> {
