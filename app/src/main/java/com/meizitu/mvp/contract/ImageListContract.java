@@ -1,26 +1,23 @@
 package com.meizitu.mvp.contract;
 
 import com.meizitu.pojo.Paging;
-import com.meizitu.ui.items.Item_GroupImageInfoListItem;
-import com.meizitu.mvp.presenter.SimpleWorkPresenter;
 import com.meizitu.pojo.ResponseInfo;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.util.List;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
+import cc.easyandroid.easyclean.presentation.presenter.base.EasyIPresenter;
 import cc.easyandroid.easyclean.presentation.view.IEasyView;
 
 /**
  * 屋苑menu的Contract
  */
 public interface ImageListContract {
-    interface View extends IEasyView {
+    interface View extends IEasyView, SimpleListContract.View<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> {
 
     }
 
-    abstract class Presenter extends SimpleWorkPresenter<View> {
-
-       public abstract EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex);
+    interface Presenter extends EasyIPresenter<View> {
 
     }
 }

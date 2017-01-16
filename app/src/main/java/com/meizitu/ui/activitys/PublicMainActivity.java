@@ -9,7 +9,7 @@ import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerImageListComponent;
 import com.meizitu.internal.di.components.ImageListComponent;
 import com.meizitu.internal.di.modules.ImageListModule;
-import com.meizitu.ui.fragments.ImageListFragment;
+import com.meizitu.ui.fragments.ListFragment;
 
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -26,7 +26,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initializeInjector();
 
-        replaceFragment(R.id.fragmentContainer, ImageListFragment.newInstance());
+        replaceFragment(R.id.fragmentContainer, ListFragment.newInstance());
     }
 
     private void initializeInjector() {

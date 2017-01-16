@@ -1,27 +1,14 @@
 package com.meizitu.mvp.presenter;
 
-import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.SimpleListContract;
-import com.meizitu.pojo.Category;
-import com.meizitu.pojo.Paging;
-import com.meizitu.pojo.ResponseInfo;
-import com.meizitu.service.ImageApi;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.UseCase;
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkContract;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easycore.EasyCall;
-import cc.easyandroid.easyhttp.core.CacheMode;
-import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 
 /**
- *
+ *抽象的list列表的presenter
  */
-public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.View<T>> extends SimpleListContract.Presenter<T, V> {
+public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.View<T>> extends SimpleWorkPresenter<V> implements SimpleListContract.Presenter<T, V> {
 
     @Override
     public void executeSimpleListRequest(int pulltype, int pageIndex) {

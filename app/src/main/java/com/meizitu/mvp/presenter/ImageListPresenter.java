@@ -1,24 +1,23 @@
 package com.meizitu.mvp.presenter;
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import com.meizitu.mvp.contract.ImageListContract;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.ImageApi;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 
 @PerActivity
-public class ImageListPresenter extends ImageListContract.Presenter {
+public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>,ImageListContract.View>  implements ImageListContract.Presenter   {
 
     final int gategoryId;
     final ImageApi imageApi;

@@ -13,11 +13,10 @@ import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Inject;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 
 
-public class ImageListFragment extends ImageFlexibleListFragment<Item_GroupImageInfoListItem> implements ImageListContract.View {
+public class ListFragment extends FlexibleListFragment<Item_GroupImageInfoListItem> implements ImageListContract.View {
 
     @Inject
     ImageListPresenter presenter;
@@ -30,7 +29,7 @@ public class ImageListFragment extends ImageFlexibleListFragment<Item_GroupImage
     }
 
     public static Fragment newInstance() {
-        ImageListFragment fragment = new ImageListFragment();
+        ListFragment fragment = new ListFragment();
         fragment.setUserVisibleHint(true);
         return fragment;
     }
@@ -39,11 +38,11 @@ public class ImageListFragment extends ImageFlexibleListFragment<Item_GroupImage
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
-    @Override
-    protected EasyWorkUseCase.RequestValues onCreateRequestValues(int pulltype, int pageIndex) {
-        return presenter.getRequestValues(pulltype, pageIndex);
-    }
+//
+//    @Override
+//    protected EasyWorkUseCase.RequestValues onCreateRequestValues(int pulltype, int pageIndex) {
+//        return presenter.getRequestValues(pulltype, pageIndex);
+//    }
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
