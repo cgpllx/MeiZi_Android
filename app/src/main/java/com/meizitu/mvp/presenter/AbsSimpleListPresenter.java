@@ -6,7 +6,7 @@ import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 
 /**
- *抽象的list列表的presenter
+ * 抽象的list列表的presenter,if you show list ，please extends AbsSimpleListPresenter
  */
 public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.View<T>> extends SimpleWorkPresenter<V> implements SimpleListContract.Presenter<T, V> {
 
@@ -34,6 +34,13 @@ public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.Vie
     }
 
     protected abstract EasyWorkUseCase.RequestValues<T> getRequestValues(int pulltype, int pageIndex);
+
+    @Override
+    public void attachView(V view) {
+        super.attachView(view);
+        view.setPresenter(this);
+    }
+
 }
 
 

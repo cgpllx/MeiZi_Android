@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.target.Target;
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.mvp.contract.ImageDetailsContract.Presenter;
+import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.ImageApi;
@@ -28,7 +28,7 @@ import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
 
 @PerActivity
-public class ImageDetailsPresenter extends Presenter {
+public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContract.View> implements ImageDetailsContract.Presenter {
 
 
     final ImageApi imageApi;
@@ -136,10 +136,5 @@ public class ImageDetailsPresenter extends Presenter {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onDetachView() {
-        super.onDetachView();
     }
 }

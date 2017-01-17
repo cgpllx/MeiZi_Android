@@ -30,10 +30,11 @@ public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Pagi
 
 
     @Override
-    public EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex) {
+    protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex) {
         EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoList(gategoryId, pageIndex));
         EasyWorkUseCase.RequestValues requestValues = new EasyWorkUseCase.RequestValues<>(pulltype, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         return requestValues;
     }
+
 
 }

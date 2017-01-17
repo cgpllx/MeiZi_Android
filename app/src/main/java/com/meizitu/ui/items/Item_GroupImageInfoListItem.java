@@ -82,8 +82,8 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         public void setData(final Item_GroupImageInfoListItem imageInfo) {
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
-            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
-            title.setText(imageInfo.getTitle());
+//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+//            title.setText(imageInfo.getTitle());
             imagecount.setText(imageInfo.getPiccount() + "pics");
             int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
             try {

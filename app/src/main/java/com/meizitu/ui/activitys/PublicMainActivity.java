@@ -2,6 +2,7 @@ package com.meizitu.ui.activitys;
 
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.meizitu.BuildConfig;
 import com.meizitu.R;
@@ -9,7 +10,7 @@ import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerImageListComponent;
 import com.meizitu.internal.di.components.ImageListComponent;
 import com.meizitu.internal.di.modules.ImageListModule;
-import com.meizitu.ui.fragments.ListFragment;
+import com.meizitu.ui.fragments.ImageListFragment;
 
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -17,6 +18,7 @@ import cc.easyandroid.easyutils.EasyToast;
 public class PublicMainActivity extends BaseActivity implements HasComponent<ImageListComponent> {
 
     ImageListComponent component;
+    public static final String IMAGELISTTAG = "imagelist_tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,10 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initializeInjector();
 
-        replaceFragment(R.id.fragmentContainer, ListFragment.newInstance());
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(IMAGELISTTAG);
+        if (fragment == null) {
+            replaceFragment(R.id.fragmentContainer, ImageListFragment.newInstance(), IMAGELISTTAG);
+        }
     }
 
     private void initializeInjector() {

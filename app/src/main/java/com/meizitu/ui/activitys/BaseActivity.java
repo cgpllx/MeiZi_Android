@@ -75,9 +75,9 @@ public class BaseActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    protected void replaceFragment(int containerViewId, Fragment fragment) {
+    protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(containerViewId, fragment);
+        fragmentTransaction.replace(containerViewId, fragment, tag);
         fragmentTransaction.commit();
     }
 

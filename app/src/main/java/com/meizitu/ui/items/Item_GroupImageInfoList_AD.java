@@ -61,9 +61,9 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
         holder.setData(view);
     }
 
-
     public class ViewHolder extends FlexibleViewHolder {
         CardView cardView;
+
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
             cardView = (CardView) view.findViewById(R.id.cardview);
@@ -75,7 +75,5 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
             }
             cardView.addView(mAdView);
         }
-
-
     }
 }

@@ -2,9 +2,9 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.meizitu.R;
@@ -14,6 +14,7 @@ import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.views.SimpleRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
@@ -21,14 +22,16 @@ import cc.easyandroid.easyrecyclerview.EasyRecycleViewDivider;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
+import cc.easyandroid.easyutils.ArrayUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
 
 /**
+ * onViewCreated --> onViewStateRestored -->onStart
  * 通用列表
  */
-public class FlexibleListFragment<T extends IFlexible> extends ImageBaseFragment implements SimpleListContract.View<ResponseInfo<Paging<List<T>>>> {
-    public static final String TAG = FlexibleListFragment.class.getSimpleName();
+public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment implements SimpleListContract.View<ResponseInfo<Paging<List<T>>>> {
+    public static final String TAG = BaseListFragment.class.getSimpleName();
     protected SimpleRecyclerView simpleRecyclerView;
 
     protected EasyFlexibleRecyclerViewHelper<T> helper;
@@ -50,7 +53,8 @@ public class FlexibleListFragment<T extends IFlexible> extends ImageBaseFragment
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        simpleRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        //simpleRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
         helper = new EasyFlexibleRecyclerViewHelper<T>(simpleRecyclerView, adapter) {
@@ -68,7 +72,39 @@ public class FlexibleListFragment<T extends IFlexible> extends ImageBaseFragment
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
-        lazyLoad();
+
+        System.out.println("cgp onViewCreated");
+        if (savedInstanceState != null) {
+            List list = savedInstanceState.getParcelableArrayList("dd");
+            helper.setDatas(list);
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("cgp onSaveInstanceState");
+        List<T> list = helper.getRecyclerAdapter().getItems();
+        if (!ArrayUtils.isEmpty(list)) {
+            outState.putParcelableArrayList("dd", (ArrayList<? extends Parcelable>) list);
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
+            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+            outState.putInt("firstVisiblePosition", firstVisibleItemPosition);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (noData()) {
+            lazyLoad();
+        }
+        System.out.println("cgp onStart");
+    }
+
+    private boolean noData() {
+        return helper.getRecyclerAdapter().getNormalItemCount() <= 0;
     }
 
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
@@ -77,6 +113,12 @@ public class FlexibleListFragment<T extends IFlexible> extends ImageBaseFragment
 
     protected void onQfangViewPrepared(View view, Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        System.out.println("cgp onViewStateRestored");
     }
 
     protected RecyclerView.ItemDecoration onCreateItemDecoration() {
@@ -109,13 +151,6 @@ public class FlexibleListFragment<T extends IFlexible> extends ImageBaseFragment
 
     protected EasyFlexibleAdapter<T> onCreateEasyRecyclerAdapter() {
         return new EasyFlexibleAdapter<>();
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.detachView();
     }
 
     protected void errorTip(Object o, Throwable throwable) {

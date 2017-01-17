@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 
 
-public class ListFragment extends FlexibleListFragment<Item_GroupImageInfoListItem> implements ImageListContract.View {
+public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements ImageListContract.View {
 
     @Inject
     ImageListPresenter presenter;
@@ -24,25 +24,16 @@ public class ListFragment extends FlexibleListFragment<Item_GroupImageInfoListIt
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
+        setUserVisibleHint(true);
         getComponent(ImageListComponent.class).inject(this);
         presenter.attachView(this);
+
     }
 
     public static Fragment newInstance() {
-        ListFragment fragment = new ListFragment();
-        fragment.setUserVisibleHint(true);
+        ImageListFragment fragment = new ImageListFragment();
         return fragment;
     }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-//
-//    @Override
-//    protected EasyWorkUseCase.RequestValues onCreateRequestValues(int pulltype, int pageIndex) {
-//        return presenter.getRequestValues(pulltype, pageIndex);
-//    }
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
@@ -52,6 +43,9 @@ public class ListFragment extends FlexibleListFragment<Item_GroupImageInfoListIt
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.detachView();
+        if (presenter != null) {
+            presenter.detachView();
+            presenter = null;
+        }
     }
 }

@@ -1,16 +1,11 @@
 package com.meizitu.mvp.contract;
 
-import android.app.Activity;
-
-import com.bumptech.glide.request.FutureTarget;
-import com.meizitu.mvp.presenter.SimpleWorkPresenter;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
 
 import java.io.File;
 
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easyclean.presentation.presenter.base.EasyBasePresenter;
+import cc.easyandroid.easyclean.presentation.presenter.base.EasyIPresenter;
 import cc.easyandroid.easyclean.presentation.view.IEasyView;
 
 /**
@@ -35,11 +30,11 @@ public interface ImageDetailsContract {
 
     }
 
-    abstract class Presenter extends SimpleWorkPresenter<View> {
+    interface Presenter extends EasyIPresenter<View> {
 
-        public abstract void exeDownloadRequest(String imageUrl);
+        void exeDownloadRequest(String imageUrl);
 
-        public abstract void exeShare(String imageUrl);
+        void exeShare(String imageUrl);
 
     }
 }

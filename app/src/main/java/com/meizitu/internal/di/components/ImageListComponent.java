@@ -19,7 +19,7 @@ package com.meizitu.internal.di.components;
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.internal.di.modules.ActivityModule;
 import com.meizitu.internal.di.modules.ImageListModule;
-import com.meizitu.ui.fragments.ListFragment;
+import com.meizitu.ui.fragments.ImageListFragment;
 
 import dagger.Component;
 
@@ -28,6 +28,6 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, ImageListModule.class})
 public interface ImageListComponent{//只会继承方法
 
-    void inject(ListFragment mainActivity);
+    void inject(ImageListFragment mainActivity);
 
 }
