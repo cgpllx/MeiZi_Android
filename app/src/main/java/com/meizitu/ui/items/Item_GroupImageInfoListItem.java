@@ -3,6 +3,7 @@ package com.meizitu.ui.items;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcel;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,4 +132,31 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             }
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    public Item_GroupImageInfoListItem() {
+    }
+
+    protected Item_GroupImageInfoListItem(Parcel in) {
+        super(in);
+    }
+
+    public static final Creator<Item_GroupImageInfoListItem> CREATOR = new Creator<Item_GroupImageInfoListItem>() {
+        public Item_GroupImageInfoListItem createFromParcel(Parcel source) {
+            return new Item_GroupImageInfoListItem(source);
+        }
+
+        public Item_GroupImageInfoListItem[] newArray(int size) {
+            return new Item_GroupImageInfoListItem[size];
+        }
+    };
 }

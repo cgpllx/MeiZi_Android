@@ -72,25 +72,38 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
-
-        System.out.println("cgp onViewCreated");
-        if (savedInstanceState != null) {
-            List list = savedInstanceState.getParcelableArrayList("dd");
-            helper.setDatas(list);
-        }
+//
+//        System.out.println("cgp onViewCreated");
+//        if (savedInstanceState != null) {
+//            List<Item_GroupImageInfoListItem> list = savedInstanceState.getParcelableArrayList("dd");
+//            helper.setDatas(list);
+//        }
 
     }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
+            helper.setDatas(list);
+//            simpleRecyclerView.scrollToPosition();
+        }
+    }
+
+    public static final String SAVEDATATAG = "saveDataTAG";
+    public static final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         System.out.println("cgp onSaveInstanceState");
-        List<T> list = helper.getRecyclerAdapter().getItems();
+        ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
         if (!ArrayUtils.isEmpty(list)) {
-            outState.putParcelableArrayList("dd", (ArrayList<? extends Parcelable>) list);
+            outState.putParcelableArrayList(SAVEDATATAG, list);
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
             int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-            outState.putInt("firstVisiblePosition", firstVisibleItemPosition);
+            outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
         }
     }
 
@@ -115,11 +128,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
     }
 
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        System.out.println("cgp onViewStateRestored");
-    }
 
     protected RecyclerView.ItemDecoration onCreateItemDecoration() {
         return new EasyRecycleViewDivider(getContext(), LinearLayoutManager.HORIZONTAL).setNotShowDividerCount(1, 1);

@@ -99,13 +99,4 @@ public class GroupImageInfo implements Parcelable {
         this.pixel = in.readString();
     }
 
-    public static final Creator<GroupImageInfo> CREATOR = new Creator<GroupImageInfo>() {
-        public GroupImageInfo createFromParcel(Parcel source) {
-            return new GroupImageInfo(source);
-        }
-
-        public GroupImageInfo[] newArray(int size) {
-            return new GroupImageInfo[size];
-        }
-    };
 }
