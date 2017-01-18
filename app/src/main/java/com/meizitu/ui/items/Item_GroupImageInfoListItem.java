@@ -83,8 +83,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         public void setData(final Item_GroupImageInfoListItem imageInfo) {
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
-//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
-//            title.setText(imageInfo.getTitle());
+
             imagecount.setText(imageInfo.getPiccount() + "pics");
             int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
             try {
@@ -110,6 +109,8 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             } catch (Exception e) {
                 setImageDefaultLayoutParams();
             }
+            // ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+            //title.setText(imageInfo.getTitle());
         }
 
         void setImageDefaultLayoutParams() {
@@ -133,6 +134,9 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         }
     }
 
+    public Item_GroupImageInfoListItem() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -141,9 +145,6 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-    }
-
-    public Item_GroupImageInfoListItem() {
     }
 
     protected Item_GroupImageInfoListItem(Parcel in) {

@@ -37,11 +37,17 @@ import cc.easyandroid.easyutils.EasyToast;
 
 public class ImageDetailsFragment extends ImageBaseFragment implements ImageDetailsContract.View {
     ViewPager viewPager;
+
     EasyProgressFrameLayout easyProgress;
+
     ViewpagerIndicator viewpagerIndicator;
+
     AdView adView;
+
     @Inject
     ImageDetailsPresenter presenter;
+
+    BannerAtlasAdapter<Image> bannerAdapter;
 
     public static Fragment newFragment() {
         ImageDetailsFragment fragment = new ImageDetailsFragment();
@@ -134,7 +140,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         easyProgress.showErrorView();
     }
 
-    BannerAtlasAdapter<Image> bannerAdapter;
+
 
     @Override
     public void onSuccess(ResponseInfo<GroupImageInfo> groupImageInfoResponseInfo) {

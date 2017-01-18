@@ -28,6 +28,8 @@ import cc.easyandroid.easyutils.EasyToast;
 
 /**
  * onViewCreated --> onViewStateRestored -->onStart
+ * <p/>
+ * T 建议实现 Parcelable
  * 通用列表
  */
 public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment implements SimpleListContract.View<ResponseInfo<Paging<List<T>>>> {
@@ -39,7 +41,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
      * 标志位，标志已经初始化完成
      */
     private boolean isPrepared;
-
 
     protected SimpleListContract.Presenter<ResponseInfo<Paging<List<T>>>, SimpleListContract.View<ResponseInfo<Paging<List<T>>>>> presenter;
 
@@ -72,38 +73,45 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
-//
-//        System.out.println("cgp onViewCreated");
-//        if (savedInstanceState != null) {
-//            List<Item_GroupImageInfoListItem> list = savedInstanceState.getParcelableArrayList("dd");
-//            helper.setDatas(list);
-//        }
-
     }
 
+    /**
+     * 恢复数据
+     */
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
-            helper.setDatas(list);
-//            simpleRecyclerView.scrollToPosition();
+        try {
+            if (savedInstanceState != null) {
+                ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
+                int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
+                helper.setDatas(list);
+                simpleRecyclerView.scrollToPosition(firstVisibleItemPosition);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static final String SAVEDATATAG = "saveDataTAG";
     public static final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
 
+    /**
+     * 保存数据
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        System.out.println("cgp onSaveInstanceState");
-        ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
-        if (!ArrayUtils.isEmpty(list)) {
-            outState.putParcelableArrayList(SAVEDATATAG, list);
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
-            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-            outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
+        try {
+            ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
+            if (!ArrayUtils.isEmpty(list)) {
+                outState.putParcelableArrayList(SAVEDATATAG, list);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
+                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+                outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,7 +121,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         if (noData()) {
             lazyLoad();
         }
-        System.out.println("cgp onStart");
     }
 
     private boolean noData() {
