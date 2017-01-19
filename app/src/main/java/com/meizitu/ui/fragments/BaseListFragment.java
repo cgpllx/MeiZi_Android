@@ -48,7 +48,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     protected int getResourceId() {
         return R.layout.fragment_simple_list;
     }
-
+    private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

@@ -2,13 +2,13 @@ package com.meizitu.ui.items;
 
 import android.annotation.SuppressLint;
 import android.os.Parcel;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.meizitu.R;
 import com.meizitu.pojo.GroupImageInfo;
@@ -59,56 +59,67 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
 
     @Override
     public void bindViewHolder(EasyFlexibleAdapter adapter, Item_GroupImageInfoList_AD.ViewHolder holder, int position, List payloads) {
-//        holder.setData();
+        if (!holder.isLoaded) {
+            holder.setData();
+        }
     }
 
     public class ViewHolder extends FlexibleViewHolder {
-                private CardView cardView;
+        private ViewGroup containerView;
         private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
-        final NativeExpressAdView mAdView;
+        NativeExpressAdView mAdView;
+        private boolean isLoaded = false;
 
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
-            cardView = (CardView) view.findViewById(R.id.cardview);
-            mAdView = (NativeExpressAdView) view.findViewById(R.id.nativeExpressAdView);
-//            mAdView = new NativeExpressAdView(getContentView().getContext());
-//            cardView.addView(mAdView);
-//            AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
-//            AdSize adSize = new AdSize(300, 300);/**/
-//            mAdView.setAdSize(adSize);
-//            mAdView.setAdUnitId(AD_UNIT_ID);
-            adapter.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        if (!mAdView.isLoading()) {
-                            handleadrequest(mAdView);
+            containerView = (ViewGroup) view.findViewById(R.id.containerView);
+            if (containerView.getChildCount() <= 0) {
+                mAdView = new NativeExpressAdView(getContentView().getContext());
+//                AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
+                 AdSize adSize = new AdSize(300, 300);/**/
+                mAdView.setAdSize(adSize);
+                mAdView.setAdUnitId(AD_UNIT_ID);
+                containerView.removeAllViews();
+                containerView.addView(mAdView);
+//                mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+                adapter.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            if (!mAdView.isLoading() && !isLoaded) {
+                                isLoaded = true;
+                                getContentView().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+
+                                    }
+                                });
+                            }else{
+                                mAdView.resume();
+                            }
+                        }else{
+                            mAdView.pause();
                         }
-                    }else{
-//                        mAdView.resume();
-//                        mAdView.pause();
                     }
-                }
-            });
+                });
+            }
+//            mAdView = (NativeExpressAdView) containerView.findViewById(R.id.nativeExpressAdView);
+            // mAdView = new NativeExpressAdView(getContentView().getContext());
+            // cardView.addView(mAdView);
+//            AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
+            // AdSize adSize = new AdSize(300, 300);/**/
+            // mAdView.setAdSize(adSize);
+            // mAdView.setAdUnitId(AD_UNIT_ID);
+
         }
 
-//        public synchronized void setData() {
-//            if (cardView.getChildCount() > 0) {
-//                cardView.removeAllViews();
-//            }
-//            cardView.addView(mAdView);
-//            handleadrequest(mAdView);
-//        }
-
-        private void handleadrequest(final NativeExpressAdView mAdView) {
-            getContentView().post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
-                }
-            });
+        public synchronized void setData() {
+//            mAdView.pause();
+//            mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
         }
+
     }
 
     @Override
