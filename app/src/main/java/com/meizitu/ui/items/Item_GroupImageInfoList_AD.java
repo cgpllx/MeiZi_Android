@@ -75,8 +75,8 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
             containerView = (ViewGroup) view.findViewById(R.id.containerView);
             if (containerView.getChildCount() <= 0) {
                 mAdView = new NativeExpressAdView(getContentView().getContext());
-//                AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
-                 AdSize adSize = new AdSize(300, 300);/**/
+                AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
+//                 AdSize adSize = new AdSize(300, 300);/**/
                 mAdView.setAdSize(adSize);
                 mAdView.setAdUnitId(AD_UNIT_ID);
                 containerView.removeAllViews();
@@ -105,13 +105,6 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                     }
                 });
             }
-//            mAdView = (NativeExpressAdView) containerView.findViewById(R.id.nativeExpressAdView);
-            // mAdView = new NativeExpressAdView(getContentView().getContext());
-            // cardView.addView(mAdView);
-//            AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
-            // AdSize adSize = new AdSize(300, 300);/**/
-            // mAdView.setAdSize(adSize);
-            // mAdView.setAdUnitId(AD_UNIT_ID);
 
         }
 
