@@ -76,12 +76,12 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
             if (containerView.getChildCount() <= 0) {
                 mAdView = new NativeExpressAdView(getContentView().getContext());
                 AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
-//                 AdSize adSize = new AdSize(300, 300);/**/
+//AdSize adSize = new AdSize(300, 300);/**/
                 mAdView.setAdSize(adSize);
                 mAdView.setAdUnitId(AD_UNIT_ID);
                 containerView.removeAllViews();
                 containerView.addView(mAdView);
-//                mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+                //mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
                 adapter.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
