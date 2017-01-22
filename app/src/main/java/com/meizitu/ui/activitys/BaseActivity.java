@@ -13,8 +13,6 @@ import com.meizitu.R;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.modules.ActivityModule;
 
-import cc.easyandroid.easyutils.EasyToast;
-
 
 /**
  * 全局activity父類
@@ -52,12 +50,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public Toolbar getToolbar() {
         return toolbar;
-    }
-
-
-    public void onError(Object i, Throwable throwable) {
-        EasyToast.showShort(getApplicationContext(), "服務器或者網絡異常");
-
     }
 
 

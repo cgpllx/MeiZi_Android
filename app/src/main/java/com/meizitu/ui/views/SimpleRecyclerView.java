@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
-import cc.easyandroid.easyrecyclerview.EasyRecycleViewDivider;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.core.DefaultFooterHander;
 import cc.easyandroid.easyrecyclerview.core.DefaultHeaderHander;
@@ -30,7 +29,7 @@ public class SimpleRecyclerView extends EasyRecyclerView {
         setHeaderHander(new DefaultHeaderHander(getContext()));
         setFooterHander(new DefaultFooterHander(getContext()));
         setLayoutManager(new LinearLayoutManager(context));
-        setRestItemCountToLoadMore(40);
+        setRestItemCountToLoadMore(10);
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
