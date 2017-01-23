@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
+import com.meizitu.BuildConfig;
 import com.meizitu.R;
 import com.meizitu.pojo.GroupImageInfo;
 
@@ -68,7 +69,8 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
 
     public class ViewHolder extends FlexibleViewHolder {
         private ViewGroup containerView;
-        private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
+        //        private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
+        private final String AD_UNIT_ID = BuildConfig.AD_UNIT_ID;
         NativeExpressAdView mAdView;
         private boolean isLoaded = false;
 
