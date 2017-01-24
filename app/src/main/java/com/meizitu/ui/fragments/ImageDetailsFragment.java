@@ -74,18 +74,13 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
         easyProgress = EasyViewUtil.findViewById(view, R.id.easyProgress);
         viewpagerIndicator = EasyViewUtil.findViewById(view, R.id.viewpagerIndicator);
-
-        execute();
-
         easyProgress.setOnEasyProgressClickListener(new OnEasyProgressClickListener() {
             @Override
             public void onLoadingViewClick() {
-
             }
 
             @Override
             public void onEmptyViewClick() {
-
             }
 
             @Override
@@ -94,6 +89,19 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
             }
         });
         adView.loadAd(new AdRequest.Builder().build());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (noData()) {
+            execute();
+        }
+
+    }
+
+    private boolean noData() {
+        return viewPager.getChildCount() <= 0;
     }
 
     public void execute() {
@@ -139,7 +147,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     public void onError(Throwable throwable) {
         easyProgress.showErrorView();
     }
-
 
 
     @Override

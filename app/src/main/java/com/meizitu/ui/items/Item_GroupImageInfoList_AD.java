@@ -13,7 +13,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
-import com.meizitu.BuildConfig;
 import com.meizitu.R;
 import com.meizitu.pojo.GroupImageInfo;
 
@@ -70,7 +69,7 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
     public class ViewHolder extends FlexibleViewHolder {
         private ViewGroup containerView;
         //        private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
-        private final String AD_UNIT_ID = BuildConfig.AD_UNIT_ID;
+//        private final String AD_UNIT_ID = gets;
         NativeExpressAdView mAdView;
         private boolean isLoaded = false;
 
@@ -107,7 +106,7 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                                             final float density = getContentView().getContext().getResources().getDisplayMetrics().density;
                                             AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, 300);/**/
                                             mAdView.setAdSize(adSize);
-                                            mAdView.setAdUnitId(AD_UNIT_ID);
+                                            mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
                                         }
                                         mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
 

@@ -2,7 +2,6 @@ package com.meizitu;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.google.android.gms.ads.MobileAds;
 import com.meizitu.internal.di.components.ApplicationComponent;
@@ -17,7 +16,8 @@ public class ImageApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //LeakCanary.install(this);
-        MobileAds.initialize(this, "ca-app-pub-7086711774077602~7150720809");
+//        ca-app-pub-7086711774077602~7150720809
+        MobileAds.initialize(this, getString(R.string.ad_unit_id_applicationCode));
         initializeInjector();
 
     }

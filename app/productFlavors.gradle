@@ -47,5 +47,4 @@ android {
             buildConfigField "int", "GATEGORYID", "210"
         }
     }
-
 }
