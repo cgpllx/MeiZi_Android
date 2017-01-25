@@ -68,16 +68,14 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
 
     public class ViewHolder extends FlexibleViewHolder {
         private ViewGroup containerView;
-        //        private static final String AD_UNIT_ID = "ca-app-pub-7086711774077602/2162118000";
-//        private final String AD_UNIT_ID = gets;
-        NativeExpressAdView mAdView;
+
         private boolean isLoaded = false;
 
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
             containerView = (ViewGroup) view.findViewById(R.id.containerView);
             if (containerView.getChildCount() <= 0) {
-                mAdView = new NativeExpressAdView(getContentView().getContext());
+                final NativeExpressAdView mAdView = new NativeExpressAdView(getContentView().getContext());
                 containerView.removeAllViews();
                 containerView.addView(mAdView);
                 mAdView.setAdListener(new AdListener() {

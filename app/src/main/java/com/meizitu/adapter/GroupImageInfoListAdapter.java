@@ -20,26 +20,6 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
         if (!ArrayUtils.isEmpty(items) && items.size() > 17) {
             items.add(10, new Item_GroupImageInfoList_AD());
         }
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
-//        items.add(new Item_GroupImageInfoList_AD());
         return super.addItems(items);
     }
 

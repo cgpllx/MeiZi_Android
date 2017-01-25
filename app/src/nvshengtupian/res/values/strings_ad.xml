@@ -3,4 +3,6 @@
     <string name="ad_unit_id_native">ca-app-pub-7086711774077602/5657391606</string>
     <string name="ad_unit_id_banner">ca-app-pub-7086711774077602/7912854005</string>
     <string name="ad_unit_id_applicationCode">ca-app-pub-7086711774077602~7552927202</string>
+
+    <string name="ad_unit_id_interstitial">ca-app-pub-7086711774077602/2789493600</string>
 </resources>

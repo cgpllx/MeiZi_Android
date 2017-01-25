@@ -20,8 +20,10 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
+import com.meizitu.R;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.Interceptor.DecodeInterceptor;
 import com.meizitu.service.RestApiAdapter;
@@ -93,5 +95,26 @@ public class ApplicationModule {
                 .build();
         return okHttpClient;
     }
+
+    @Provides
+    public InterstitialAd provideInterstitialAd(Context application) {
+        InterstitialAd mInterstitialAd = new InterstitialAd(application);
+        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
+        return mInterstitialAd;
+    }
+//    @Provides
+//    public InterstitialAd provideInterstitialAd(Context application) {
+//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
+//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
+//        return mInterstitialAd;
+//    }
+//    @Provides
+//    public InterstitialAd provideInterstitialAd(Context application) {
+//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
+//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
+//        return mInterstitialAd;
+//    }
+
+    ;
 
 }

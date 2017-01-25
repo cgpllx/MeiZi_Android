@@ -17,14 +17,15 @@ package com.meizitu.internal.di.components;
 
 import android.content.Context;
 
+import com.google.android.gms.ads.InterstitialAd;
 import com.meizitu.internal.di.modules.ApplicationModule;
 import com.meizitu.service.ImageApi;
 import com.meizitu.ui.activitys.BaseActivity;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 import okhttp3.OkHttpClient;
-
-import javax.inject.Singleton;
 
 
 @Singleton
@@ -37,5 +38,7 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
     ImageApi getImageApi();//如果其他module要使用，必须在这里暴露
 
     OkHttpClient getOkHttpClient();
+
+    InterstitialAd getInterstitialAd();
 
 }

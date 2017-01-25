@@ -3,9 +3,7 @@ package com.meizitu.ui.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.meizitu.R;
@@ -15,9 +13,19 @@ import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.internal.di.modules.ImageDetailsModule;
 import com.meizitu.ui.fragments.ImageDetailsFragment;
 
+import javax.inject.Inject;
+
 public class ImageDetailsActivity extends BaseActivity implements HasComponent<ImageDetailsComponent> {
     ImageDetailsComponent component;
+
     public static final String Imagecategory_ID = "Imagecategory_ID";
+
+    long DELAYED_TIME = 30 * 1000;
+
+    @Inject
+    InterstitialAd mInterstitialAd;
+
+    private long startTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +33,15 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
         setContentView(R.layout.activity_image_details);
         this.initializeInjector();
         initTitleBar();
-        replaceFragment(R.id.content,ImageDetailsFragment.newFragment(),"ImageDetails");
-        // Create the InterstitialAd and set the adUnitId.
-        mInterstitialAd = new InterstitialAd(this);
-        // Defined in res/values/strings.xml
-        mInterstitialAd.setAdUnitId("ca-app-pub-7086711774077602/4141802409");
+        replaceFragment(R.id.content, ImageDetailsFragment.newFragment(), "ImageDetails");
 
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                finish();
-            }
-        });
         if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
             AdRequest adRequest = new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build();
             mInterstitialAd.loadAd(adRequest);
         }
+        startTime = System.currentTimeMillis();
 
-}
+    }
 
     private void initializeInjector() {
         int id = getIntent().getIntExtra(Imagecategory_ID, 0);
@@ -52,7 +50,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
                 .imageDetailsModule(new ImageDetailsModule(id))
                 .activityModule(getActivityModule())
                 .build();
-
+        this.component.inject(this);// inject
     }
 
     public static Intent newIntent(Context context, int id) {
@@ -65,21 +63,24 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        showInterstitial();
+        if (showAd()) {
+            showInterstitial();
+        }
     }
-    private InterstitialAd mInterstitialAd;
+
+    boolean showAd() {
+        long endTime = System.currentTimeMillis();
+        return endTime - startTime > DELAYED_TIME;
+    }
+
     private void showInterstitial() {
-        // Show the ad if it's ready. Otherwise toast and restart the game.
         if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        } else {
-            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
-//            startGame();
         }
     }
 
     @Override
     public ImageDetailsComponent getComponent() {
-        return component;
+        return component;//
     }
 }
