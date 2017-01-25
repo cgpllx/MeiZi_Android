@@ -97,24 +97,11 @@ public class ApplicationModule {
     }
 
     @Provides
+    @Singleton
     public InterstitialAd provideInterstitialAd(Context application) {
         InterstitialAd mInterstitialAd = new InterstitialAd(application);
         mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
         return mInterstitialAd;
     }
-//    @Provides
-//    public InterstitialAd provideInterstitialAd(Context application) {
-//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
-//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
-//        return mInterstitialAd;
-//    }
-//    @Provides
-//    public InterstitialAd provideInterstitialAd(Context application) {
-//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
-//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
-//        return mInterstitialAd;
-//    }
-
-    ;
 
 }
