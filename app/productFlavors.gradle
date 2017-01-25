@@ -5,7 +5,7 @@ android {
             buildConfigField "int", "GATEGORYID", "80"
         }
 
-        xiaohua {
+        meinvxiaohua {
             applicationId = "com.meizitu.meinvxiaohua"
             buildConfigField "int", "GATEGORYID", "100"
         }

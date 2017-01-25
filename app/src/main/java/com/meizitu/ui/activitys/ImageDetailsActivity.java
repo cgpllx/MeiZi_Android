@@ -3,8 +3,11 @@ package com.meizitu.ui.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
-
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerImageDetailsComponent;
@@ -23,8 +26,24 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
         this.initializeInjector();
         initTitleBar();
         replaceFragment(R.id.content,ImageDetailsFragment.newFragment(),"ImageDetails");
+        // Create the InterstitialAd and set the adUnitId.
+        mInterstitialAd = new InterstitialAd(this);
+        // Defined in res/values/strings.xml
+        mInterstitialAd.setAdUnitId("ca-app-pub-7086711774077602/4141802409");
 
-    }
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                finish();
+            }
+        });
+        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build();
+            mInterstitialAd.loadAd(adRequest);
+        }
+
+}
 
     private void initializeInjector() {
         int id = getIntent().getIntExtra(Imagecategory_ID, 0);
@@ -41,6 +60,22 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
         intent.putExtra(Imagecategory_ID, id);
         return intent;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        showInterstitial();
+    }
+    private InterstitialAd mInterstitialAd;
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+//            startGame();
+        }
     }
 
     @Override
