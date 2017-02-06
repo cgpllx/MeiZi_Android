@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.service.ImageApi;
-import com.meizitu.service.Interceptor.DecodeInterceptor;
+import com.meizitu.service.interceptor.DecodeInterceptor;
 import com.meizitu.service.RestApiAdapter;
 
 import java.util.concurrent.TimeUnit;
@@ -35,6 +35,7 @@ import javax.inject.Singleton;
 import cc.easyandroid.easycache.EasyHttpCache;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.http.BridgeInterceptor;
 import retrofit2.Retrofit;
@@ -91,7 +92,8 @@ public class ApplicationModule {
                 .cookieJar(cookieJar)
                 .addInterceptor(new DecodeInterceptor())//decode
                 .addInterceptor(new BridgeInterceptor(cookieJar))//zip
-                .addNetworkInterceptor(new com.meizitu.service.Interceptor.CacheInterceptor())
+                .addNetworkInterceptor(new com.meizitu.service.interceptor.CacheInterceptor())
+                .cache(new Cache(application.getCacheDir(), 1024 * 1024 * 10))
                 .build();
         return okHttpClient;
     }

@@ -32,6 +32,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_details);
         this.initializeInjector();
+        this.component.inject(this);// inject
         initTitleBar();
         replaceFragment(R.id.content, ImageDetailsFragment.newFragment(), "ImageDetails");
 
@@ -50,7 +51,6 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
                 .imageDetailsModule(new ImageDetailsModule(id))
                 .activityModule(getActivityModule())
                 .build();
-        this.component.inject(this);// inject
     }
 
     public static Intent newIntent(Context context, int id) {
