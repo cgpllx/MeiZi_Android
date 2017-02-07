@@ -11,8 +11,8 @@ import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.View<T>> extends SimpleWorkPresenter<V> implements SimpleListContract.Presenter<T, V> {
 
     @Override
-    public void executeSimpleListRequest(int pulltype, int pageIndex) {
-        final EasyWorkUseCase.RequestValues<T> requestValues = getRequestValues(pulltype, pageIndex);
+    public void executeSimpleListRequest(int pulltype, int pageIndex,String cachecontrol) {
+        final EasyWorkUseCase.RequestValues<T> requestValues = getRequestValues(pulltype, pageIndex,cachecontrol);
         if (isViewAttached()) {
             getView().onSimpleListStart(requestValues.getTag());
         }
@@ -33,7 +33,7 @@ public abstract class AbsSimpleListPresenter<T, V extends SimpleListContract.Vie
         });
     }
 
-    protected abstract EasyWorkUseCase.RequestValues<T> getRequestValues(int pulltype, int pageIndex);
+    protected abstract EasyWorkUseCase.RequestValues<T> getRequestValues(int pulltype, int pageIndex,String cachecontrol);
 
     @Override
     public void attachView(V view) {

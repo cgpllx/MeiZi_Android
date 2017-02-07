@@ -8,6 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
@@ -21,16 +22,16 @@ public interface ImageApi {
     /**
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
-    @Headers({"Cache-Duration: 640000","Cache-Time: 100"})
+    @Headers({"Cache-Duration: 640000", "Cache-Time: 10000"})
     @GET("/groupImageInfoList?count=20")
-    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
+    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex, @Header("Cache-Control") String cachecontrol);
 
 
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
      */
-    @Headers({"Cache-Duration: 640000","Cache-Time: 100"})
+    @Headers({"Cache-Duration: 640000", "Cache-Time: 10000"})
     @GET("/groupImageInfoDetails")
-    Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
+    Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id, @Header("Cache-Control") String cachecontrol);
 
 }

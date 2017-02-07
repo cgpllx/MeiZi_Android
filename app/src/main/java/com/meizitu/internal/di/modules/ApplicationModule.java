@@ -25,8 +25,9 @@ import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.service.ImageApi;
-import com.meizitu.service.interceptor.DecodeInterceptor;
 import com.meizitu.service.RestApiAdapter;
+import com.meizitu.service.interceptor.CacheInterceptor;
+import com.meizitu.service.interceptor.DecodeInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -92,8 +93,8 @@ public class ApplicationModule {
                 .cookieJar(cookieJar)
                 .addInterceptor(new DecodeInterceptor())//decode
                 .addInterceptor(new BridgeInterceptor(cookieJar))//zip
-                .addNetworkInterceptor(new com.meizitu.service.interceptor.CacheInterceptor())
-                .cache(new Cache(application.getCacheDir(), 1024 * 1024 * 10))
+                .addNetworkInterceptor(new CacheInterceptor())
+                .cache(new Cache(application.getExternalCacheDir(), 1024 * 1024 * 10))
                 .build();
         return okHttpClient;
     }

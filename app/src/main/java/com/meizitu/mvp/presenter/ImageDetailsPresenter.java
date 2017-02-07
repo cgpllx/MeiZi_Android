@@ -113,8 +113,8 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     }
 
     @Override
-    public void execute() {
-        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid));
+    public void execute(String cacheControl) {
+        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid, cacheControl));
         EasyWorkUseCase.RequestValues<ResponseInfo<GroupImageInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         if (isViewAttached()) {
             getView().onStart(requestValues.getTag());

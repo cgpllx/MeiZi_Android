@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.meizitu.R;
+import com.meizitu.core.CacheControl;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.mvp.contract.SimpleListContract;
 import com.meizitu.pojo.Paging;
@@ -48,6 +49,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     protected int getResourceId() {
         return R.layout.fragment_simple_list;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,13 +63,23 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             @Override
             public void onRefresh() {
                 super.onRefresh();
-                execute(REFRESH);
+                execute(REFRESH, CacheControl.DEFAULT);
             }
 
             @Override
             public void onLoadMore(EasyRecyclerView.FooterHander footerHander) {
                 super.onLoadMore(footerHander);
-                execute(LOADMORE);
+                execute(LOADMORE, CacheControl.DEFAULT);
+            }
+
+            @Override
+            public void onEmptyViewClick() {
+                execute(LOADMORE, CacheControl.FORCE_NETWORK);
+            }
+
+            @Override
+            public void onErrorViewClick() {
+                execute(LOADMORE, CacheControl.FORCE_NETWORK);
             }
         };
         isPrepared = true;
@@ -153,13 +165,16 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         }
     }
 
+//    public static final String FORCE_NETWORK = "no-cache";
+//    public static final String DEFAULT="";
+
     protected void refesh() {
-        execute(EasyFlexibleRecyclerViewHelper.REFRESH);
+        execute(EasyFlexibleRecyclerViewHelper.REFRESH, CacheControl.FORCE_NETWORK);
     }
 
 
-    private void execute(int pulltype) {
-        presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1);
+    private void execute(int pulltype, String cachecontrol) {
+        presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1, cachecontrol);
     }
 
 
