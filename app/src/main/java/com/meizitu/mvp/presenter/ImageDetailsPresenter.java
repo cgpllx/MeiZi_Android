@@ -127,6 +127,7 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                     getView().onSuccess(responseInfo);
                 }
 
+                System.out.println();
             }
 
             @Override
