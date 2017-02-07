@@ -26,8 +26,8 @@ import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
-import com.meizitu.service.interceptor1.CacheInterceptor;
-import com.meizitu.service.interceptor1.DecodeInterceptor;
+import com.meizitu.service.interceptor.CacheInterceptor;
+import com.meizitu.service.interceptor.DecodeInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
