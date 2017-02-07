@@ -1,4 +1,4 @@
-package com.meizitu.service.interceptor1;
+package com.meizitu.service.interceptor;
 
 import android.text.TextUtils;
 
