@@ -44,6 +44,7 @@
 
     <style name="ImageDetailsTheme" parent="AppBaseTheme">
         <item name="colorPrimaryDark">@color/q88333333</item>
+        <item name="android:windowIsTranslucent">true</item>
         <!--<item name="colorPrimaryDark">#CF333333</item>-->
         <!--<item name="android:windowBackground">@color/q88333333</item>-->
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->

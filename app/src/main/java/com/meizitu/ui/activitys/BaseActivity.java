@@ -1,6 +1,7 @@
 package com.meizitu.ui.activitys;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,14 +20,13 @@ import com.meizitu.internal.di.modules.ActivityModule;
  */
 public class BaseActivity extends AppCompatActivity {
 
-
-    private final String TAG = getClass().getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
     }
+
+    private final String TAG = getClass().getSimpleName();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -52,7 +52,6 @@ public class BaseActivity extends AppCompatActivity {
         return toolbar;
     }
 
-
     protected ApplicationComponent getApplicationComponent() {
         return ((ImageApplication) getApplication()).getApplicationComponent();
     }
@@ -76,5 +75,23 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exist_anim);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exist_anim);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.pre_enter_anim, R.anim.pre_exist_anim);
     }
 }

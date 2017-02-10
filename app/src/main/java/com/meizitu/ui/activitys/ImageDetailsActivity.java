@@ -15,7 +15,7 @@ import com.meizitu.ui.fragments.ImageDetailsFragment;
 
 import javax.inject.Inject;
 
-public class ImageDetailsActivity extends BaseActivity implements HasComponent<ImageDetailsComponent> {
+public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasComponent<ImageDetailsComponent> {
     ImageDetailsComponent component;
 
     public static final String Imagecategory_ID = "Imagecategory_ID";
