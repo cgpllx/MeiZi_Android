@@ -56,7 +56,10 @@ public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Pagi
     @Override
     public void feedback(Activity activity) {
         Intent data = new Intent(Intent.ACTION_SENDTO);
+        data.setType("message/rfc822"); // 真机上使用这行
         data.setData(Uri.parse("cgpllx@gmail.com"));
+        data.putExtra(Intent.EXTRA_SUBJECT, "这是标题");
+        data.putExtra(Intent.EXTRA_TEXT, "这是内容");
         activity.startActivity(data);
     }
 
