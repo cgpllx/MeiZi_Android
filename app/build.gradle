@@ -27,7 +27,7 @@ android {
         }
         debug {
             signingConfig signingConfigs.config
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.6'
     compile 'com.google.dagger:dagger:2.6'
@@ -64,5 +63,6 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.google.android.gms:play-services-ads:8.3.0'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    compile 'com.github.cgpllx:EasyPermission:1.1.0'
 //    compile 'com.yanzhenjie:permission:1.0.5'
 }

@@ -22,6 +22,7 @@ import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
+import cc.easyandroid.easyutils.EasyToast;
 
 @PerActivity
 public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>, ImageListContract.View> implements ImageListContract.Presenter {
@@ -55,12 +56,15 @@ public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Pagi
 
     @Override
     public void feedback(Activity activity) {
-        Intent data = new Intent(Intent.ACTION_SENDTO);
-        data.setType("message/rfc822"); // 真机上使用这行
-        data.setData(Uri.parse("cgpllx@gmail.com"));
-        data.putExtra(Intent.EXTRA_SUBJECT, "这是标题");
-        data.putExtra(Intent.EXTRA_TEXT, "这是内容");
-        activity.startActivity(data);
+        try {
+            Intent data = new Intent(Intent.ACTION_SENDTO);
+            data.setData(Uri.parse("mailto:cgpllx@gmail.com"));
+            data.putExtra(Intent.EXTRA_SUBJECT, "");
+            data.putExtra(Intent.EXTRA_TEXT, "");
+            activity.startActivity(data);
+        } catch (Exception e) {
+            EasyToast.showShort(activity,"鏈娌掓湁鐧肩従閮电app");
+        }
     }
 
     public void favourablecomment(Context activity) {
