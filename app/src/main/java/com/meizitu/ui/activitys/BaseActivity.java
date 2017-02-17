@@ -9,10 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.modules.ActivityModule;
+
+import javax.inject.Inject;
 
 
 /**
@@ -20,10 +24,14 @@ import com.meizitu.internal.di.modules.ActivityModule;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    @Inject
+    Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
+        sendGa();
     }
 
     private final String TAG = getClass().getSimpleName();
@@ -93,5 +101,17 @@ public class BaseActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.pre_enter_anim, R.anim.pre_exist_anim);
+    }
+
+    /**
+     */
+    private void sendGa() {
+        try {
+            mTracker.setScreenName(TAG);
+            System.out.println("cgp 发送界面=" + TAG);
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

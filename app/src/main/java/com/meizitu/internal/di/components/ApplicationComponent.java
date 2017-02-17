@@ -18,6 +18,7 @@ package com.meizitu.internal.di.components;
 import android.content.Context;
 
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.Tracker;
 import com.meizitu.internal.di.modules.ApplicationModule;
 import com.meizitu.service.ImageApi;
 import com.meizitu.ui.activitys.BaseActivity;
@@ -31,6 +32,7 @@ import okhttp3.OkHttpClient;
 @Singleton
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {//要注入的对象必须在Component 中现实暴露出来，（或者是构造可以注入）
+
     void inject(BaseActivity baseActivity);//公用对象都注入到父Activity
 
     Context context();
@@ -40,5 +42,7 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
     OkHttpClient getOkHttpClient();
 
     InterstitialAd getInterstitialAd();
+
+    Tracker getTracker();
 
 }

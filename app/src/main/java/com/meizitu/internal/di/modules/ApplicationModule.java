@@ -21,6 +21,8 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
@@ -107,4 +109,17 @@ public class ApplicationModule {
         return mInterstitialAd;
     }
 
+
+    @Provides
+    @Singleton
+    public Tracker provideTracker(Context application) {
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(application);
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+//            mTracker = analytics.newTracker("UA-76794933-1");
+//        Tracker mTracker = analytics.newTracker(application.getString(R.string.google_ga_key));
+        Tracker mTracker = analytics.newTracker("UA-76794933-1");
+        mTracker.enableExceptionReporting(true);
+        mTracker.enableAutoActivityTracking(true);
+        return mTracker;
+    }
 }
