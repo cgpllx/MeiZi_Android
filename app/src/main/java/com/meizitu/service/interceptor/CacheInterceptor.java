@@ -21,6 +21,7 @@ public class CacheInterceptor implements Interceptor {
         Request request = chain.request();
         Response response = chain.proceed(request);
         String cache = request.header("Cache-Time");
+        String dd=response.header("");
         if (!TextUtils.isEmpty(cache)) {//缓存时间不为空
             Response cacheResponse = response.newBuilder()
                     .removeHeader("Pragma")

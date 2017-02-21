@@ -117,7 +117,7 @@ public class ApplicationModule {
         // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
 //            mTracker = analytics.newTracker("UA-76794933-1");
 //        Tracker mTracker = analytics.newTracker(application.getString(R.string.google_ga_key));
-        Tracker mTracker = analytics.newTracker("UA-76794933-1");
+        Tracker mTracker = analytics.newTracker("UA-92262187-1");
         mTracker.enableExceptionReporting(true);
         mTracker.enableAutoActivityTracking(true);
         return mTracker;
