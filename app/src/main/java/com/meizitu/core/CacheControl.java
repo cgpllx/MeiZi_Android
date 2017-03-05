@@ -5,5 +5,5 @@ package com.meizitu.core;
  */
 public interface CacheControl {
     String FORCE_NETWORK = "no-cache";
-    String DEFAULT = "";
+    String DEFAULT = "public";
 }

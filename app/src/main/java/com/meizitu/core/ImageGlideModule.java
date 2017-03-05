@@ -28,11 +28,17 @@ public class ImageGlideModule implements GlideModule {
         builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
     }
 
+    /**
+     * OkHttpClient的cache 会因为glide的缓存导致okhttp缓存失败，所以这里下载图片的时候不使用okhttp缓存
+     * @param context
+     * @param glide
+     */
     @Override
     public void registerComponents(Context context, Glide glide) {
         //小米手机在这里注册没有效果，在app中有注册
         ImageApplication applicationp = (ImageApplication) context.getApplicationContext();
         OkHttpClient okHttpClient= applicationp.getApplicationComponent().getOkHttpClient();
+        okHttpClient=okHttpClient.newBuilder().cache(null).build();
         glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(okHttpClient));
     }
 }

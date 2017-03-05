@@ -2,6 +2,8 @@ package com.meizitu.core;
 
 
 
+import android.support.v7.util.DiffUtil;
+
 import com.meizitu.pojo.Paging;
 import com.meizitu.ui.views.SimpleRecyclerView;
 
@@ -63,6 +65,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
 
 
     public void setDatas(final Paging<List<T>> pagingResult) {
+
         final List<T> datas = pagingResult.getData();
         int pageIndex = pagingResult.getCurrentPageNo();
         int pageCount = pagingResult.getTotalPage();
@@ -113,6 +116,44 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
 //            mListview.stopPull();//
             mEasyRecyclerView.finishLoadMore(-1);
             mEasyRecyclerView.finishRefresh(true);
+        }
+    }
+
+    public void xxx(){
+
+//        List<T> old_students = mEasyRecyclerAdapter.getItems();
+//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(old_students, students), true);
+//        mEasyRecyclerAdapter.setItems(students);
+//                 result.dispatchUpdatesTo(mEasyRecyclerAdapter);
+    }
+
+    class MyCallback extends DiffUtil.Callback{
+        List<T> old_students;
+        List<T> students;
+
+        public MyCallback(List<T> old_students, List<T> students) {
+            this.old_students = old_students;
+            this.students = students;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return old_students.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return students.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return false;
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            return false;
         }
     }
 

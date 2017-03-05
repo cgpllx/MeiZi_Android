@@ -31,6 +31,7 @@ import com.meizitu.service.RestApiAdapter;
 import com.meizitu.service.interceptor.CacheInterceptor;
 import com.meizitu.service.interceptor.DecodeInterceptor;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -89,14 +90,14 @@ public class ApplicationModule {
     public OkHttpClient provideOkHttpClient(Context application) {
         PersistentCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
         cookieJar.clear();
-        OkHttpClient okHttpClient = (new OkHttpClient.Builder()).connectTimeout(15000L, TimeUnit.MILLISECONDS)
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(15000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 .followRedirects(true)
                 .cookieJar(cookieJar)
                 .addInterceptor(new DecodeInterceptor())//decode
-                .addInterceptor(new BridgeInterceptor(cookieJar))//zip
-                .addNetworkInterceptor(new CacheInterceptor())
-                .cache(new Cache(application.getExternalCacheDir(), 1024 * 1024 * 10))
+                .addNetworkInterceptor(new BridgeInterceptor(cookieJar))
+//                .addNetworkInterceptor(new CacheInterceptor())
+                .cache(new Cache(new File(application.getCacheDir(),"okhttpcache"), 1024 * 1024 * 10))
                 .build();
         return okHttpClient;
     }

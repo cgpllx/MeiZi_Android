@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.meizitu.R;
 import com.meizitu.utils.ImageUtils;
 

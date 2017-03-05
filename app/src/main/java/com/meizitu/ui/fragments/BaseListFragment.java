@@ -63,7 +63,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             @Override
             public void onRefresh() {
                 super.onRefresh();
-                execute(REFRESH, CacheControl.DEFAULT);
+                execute(REFRESH, CacheControl.FORCE_NETWORK);
             }
 
             @Override

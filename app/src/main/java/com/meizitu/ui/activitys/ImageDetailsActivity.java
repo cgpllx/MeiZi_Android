@@ -62,10 +62,10 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (showAd()) {
             showInterstitial();
         }
+        super.onBackPressed();
     }
 
     boolean showAd() {
