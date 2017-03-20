@@ -2,7 +2,7 @@ android {
     productFlavors {
         qizhi {
             applicationId = "com.meizitu.qizhi"
-            buildConfigField "int", "GATEGORYID", "300"
+            buildConfigField "int", "GATEGORYID", "80"
         }
 
         meinvxiaohua {
@@ -45,6 +45,10 @@ android {
         meinvmeihuo {
             applicationId = "com.meizitu.meinvmeihuo"
             buildConfigField "int", "GATEGORYID", "210"
+        }
+        weimeixiezhen {
+            applicationId = "com.meizitu.weimeixiezhen_1"
+            buildConfigField "int", "GATEGORYID", "300"
         }
     }
 }

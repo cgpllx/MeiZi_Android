@@ -3,6 +3,7 @@ package com.meizitu.core;
 
 
 import android.support.v7.util.DiffUtil;
+import android.support.v7.util.SortedList;
 
 import com.meizitu.pojo.Paging;
 import com.meizitu.ui.views.SimpleRecyclerView;
@@ -21,7 +22,7 @@ import cc.easyandroid.easyutils.ArrayUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLoadMoreListener, OnRefreshListener, OnEasyProgressClickListener {
+public class EasyFlexibleRecyclerViewHelper<T extends IFlexible>   implements OnLoadMoreListener, OnRefreshListener, OnEasyProgressClickListener {
 
     private SimpleRecyclerView mEasyRecyclerView;
     private EasyFlexibleAdapter<T> mEasyRecyclerAdapter;
@@ -50,6 +51,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
     public void setRefreshEnabled(boolean enabled) {
         mShouldPullRefresh = enabled;
         mEasyRecyclerView.setRefreshEnabled(enabled);
+        SortedList sortedList;
 
     }
 
@@ -82,6 +84,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
                     mEasyRecyclerView.post(new Runnable() {
                         @Override
                         public void run() {
+
                             mEasyRecyclerAdapter.setItems(datas);
                             mEasyRecyclerView.flipPage();
                         }
@@ -122,37 +125,56 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
     public void xxx(){
 
 //        List<T> old_students = mEasyRecyclerAdapter.getItems();
-//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(old_students, students), true);
+//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(this,), true);
 //        mEasyRecyclerAdapter.setItems(students);
 //                 result.dispatchUpdatesTo(mEasyRecyclerAdapter);
     }
 
-    class MyCallback extends DiffUtil.Callback{
-        List<T> old_students;
-        List<T> students;
 
-        public MyCallback(List<T> old_students, List<T> students) {
-            this.old_students = old_students;
-            this.students = students;
+    public int getOldListSize() {
+        return mEasyRecyclerAdapter.getItemCount();
+    }
+
+
+
+
+    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+        return false;
+    }
+
+
+    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+        return false;
+    }
+
+    class MyCallback extends DiffUtil.Callback{
+        List<T> newData;
+        EasyFlexibleRecyclerViewHelper helper;
+
+        public MyCallback(EasyFlexibleRecyclerViewHelper helper,List<T> newData) {
+            this.helper = helper;
+            this.newData = newData;
         }
 
         @Override
         public int getOldListSize() {
-            return old_students.size();
+            return helper.getOldListSize();
         }
 
         @Override
         public int getNewListSize() {
-            return students.size();
+            return newData.size();
         }
 
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            System.out.println("areItemsTheSame:oldItemPosition="+oldItemPosition+"   newItemPosition="+newItemPosition);
             return false;
         }
 
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            System.out.println("areContentsTheSame:oldItemPosition="+oldItemPosition+"   newItemPosition="+newItemPosition);
             return false;
         }
     }
