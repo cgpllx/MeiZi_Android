@@ -26,7 +26,7 @@ public class BannerAdapter<T extends IQfangBanner> extends AbstractViewPagerAdap
         final ImageView imageView = new ImageView(container.getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         IQfangBanner qfangBanner = getItem(position);
-        ImageUtils.load(container.getContext(), imageView, qfangBanner.getImageUrl(), R.drawable.imagebackground);
+        ImageUtils.load(container.getContext(), imageView, qfangBanner.getImageUrl(), R.drawable.image_detail_placeholder);
         if (itemClickListener != null) {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

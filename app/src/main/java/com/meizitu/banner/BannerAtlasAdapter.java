@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.bumptech.glide.Glide;
 import com.meizitu.R;
 import com.meizitu.utils.ImageUtils;
-
 
 import java.util.ArrayList;
 
@@ -36,7 +34,7 @@ public class BannerAtlasAdapter<T extends IQfangBanner> extends AbstractViewPage
 //        imageView.setScale(4f);
 
         frameLayout.addView(imageView);
-        ImageUtils.load(container.getContext(), imageView, qfangBanner.getImageUrl(), R.drawable.imagebackground);
+        ImageUtils.load(container.getContext(), imageView, qfangBanner.getImageUrl(), R.drawable.image_detail_placeholder);
 //        Glide.with(container.getContext()).load(qfangBanner.getImageUrl()).placeholder(R.mipmap.qfang_default_big_image).dontAnimate().into(imageView);
 //     android.R.drawable.ic
         return frameLayout;

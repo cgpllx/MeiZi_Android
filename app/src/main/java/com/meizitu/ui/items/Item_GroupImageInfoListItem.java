@@ -109,7 +109,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             } catch (Exception e) {
                 setImageDefaultLayoutParams();
             }
-            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
             title.setText(imageInfo.getTitle());
         }
 
