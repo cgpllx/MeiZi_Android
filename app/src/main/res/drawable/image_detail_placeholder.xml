@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/q333333" />
     <item
-        android:width="150dp"
-        android:height="150dp"
+        android:width="300dp"
+        android:height="100dp"
         android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/image_loading"/>
+            android:src="@drawable/image_loading"/>
     </item>
 
 </layer-list>
