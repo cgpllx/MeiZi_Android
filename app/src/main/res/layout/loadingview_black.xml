@@ -7,29 +7,21 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:visibility="visible">
-    <com.github.ybq.android.spinkit.SpinKitView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/loading_view"
-        android:padding="20dp"
-        style="@style/SpinKitView.Wave"
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminateTint="@color/qFFFFFF"
+        android:indeterminateTintMode="src_atop" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@android:color/white" />
-    <!--<ProgressBar-->
-        <!--style="?android:attr/progressBarStyleLarge"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:indeterminateTint="@color/qFFFFFF"-->
-        <!--android:indeterminateTintMode="src_atop" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="10dp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:text="@string/loading"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:textColor="@color/qFFFFFF" />-->
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/loading"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/qFFFFFF" />
 
 </LinearLayout>
