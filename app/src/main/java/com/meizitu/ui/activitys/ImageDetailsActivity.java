@@ -20,7 +20,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
 
     public static final String Imagecategory_ID = "Imagecategory_ID";
 
-    long DELAYED_TIME = 30 * 1000;
+    long DELAYED_TIME = 15 * 1000;
 
     @Inject
     InterstitialAd mInterstitialAd;
