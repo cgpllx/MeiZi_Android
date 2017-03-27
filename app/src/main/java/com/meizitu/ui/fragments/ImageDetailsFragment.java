@@ -17,7 +17,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.banner.BannerAtlasAdapter;
-import com.meizitu.core.CacheControl;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
@@ -85,7 +84,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
             @Override
             public void onErrorViewClick() {
-                execute(CacheControl.FORCE_NETWORK);
+                execute();
             }
         });
         adView.loadAd(new AdRequest.Builder().build());
@@ -95,7 +94,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     public void onStart() {
         super.onStart();
         if (noData()) {
-            execute(CacheControl.DEFAULT);
+            execute();
         }
 
     }
@@ -104,8 +103,8 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         return viewPager.getChildCount() <= 0;
     }
 
-    public void execute(String cacheControl) {
-        presenter.execute(cacheControl);
+    public void execute() {
+        presenter.execute();
     }
 
     @Override

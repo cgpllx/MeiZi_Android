@@ -34,18 +34,6 @@ public abstract class ImageBaseFragment extends EasyLazyLoadFragment {
     protected void lazyLoad() {
     }
 
-    ProgressDialogFragment dialog;
-
-    public void hideLoading() {
-        if (dialog != null && dialog.isResumed()) {
-            dialog.dismiss();
-        }
-    }
-
-    public void showLoading(String message) {
-        dialog = ProgressDialogFragment.newInstance(message);
-        dialog.show(getChildFragmentManager(), "pro");
-    }
 
     public void onError(Object i, Throwable throwable) {
         EasyToast.showShort(getContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());

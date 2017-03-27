@@ -36,7 +36,5 @@ public interface ImageDetailsContract {
 
         void exeShare(String imageUrl);
 
-        void execute(String cacheControl);
-
     }
 }
