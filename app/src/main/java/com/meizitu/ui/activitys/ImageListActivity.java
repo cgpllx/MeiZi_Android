@@ -15,7 +15,7 @@ import com.meizitu.ui.fragments.ImageListFragment;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class PublicMainActivity extends BaseActivity implements HasComponent<ImageListComponent> {
+public class ImageListActivity extends BaseActivity implements HasComponent<ImageListComponent> {
 
     ImageListComponent component;
     public static final String IMAGELISTTAG = "imagelist_tag";
@@ -23,7 +23,7 @@ public class PublicMainActivity extends BaseActivity implements HasComponent<Ima
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_imagelist);
         initTitleBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initializeInjector();

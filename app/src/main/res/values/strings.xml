@@ -7,4 +7,8 @@
     <string name="saveAddress">Save picture successfully, save path as：%1$s</string>
     <string name="downloadError">Download error</string>
     <string name="shareError">Share error</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
