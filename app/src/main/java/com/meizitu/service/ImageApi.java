@@ -1,7 +1,9 @@
 package com.meizitu.service;
 
+import com.meizitu.pojo.Category;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
+import com.meizitu.ui.items.Item_CategoryInfoItem;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.util.List;
@@ -35,4 +37,7 @@ public interface ImageApi {
     @GET("/groupImageInfoDetails")
     Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
 
+    @Headers({"Cache-Control: max-age=640000"})
+    @GET("/categoryList")
+    Call<ResponseInfo<List<Item_CategoryInfoItem>>> categoryList(@Query("id") int id);
 }
