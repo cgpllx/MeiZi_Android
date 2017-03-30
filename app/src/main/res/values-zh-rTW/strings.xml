@@ -8,4 +8,10 @@
     <string name="saveAddress">圖片保存成功，保存路徑爲：%1$s</string>
     <string name="downloadError">下載出錯了</string>
     <string name="shareError">分享出錯了</string>
+    <string name="home">首頁</string>
+    <string name="favorites">收藏</string>
+    <string name="score_encouragement">評分鼓勵</string>
+    <string name="share">分享</string>
+    <string name="userfeedback">用戶反饋</string>
+    <string name="about_us">關於我們</string>
 </resources>

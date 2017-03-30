@@ -8,7 +8,12 @@
     <string name="downloadError">Download error</string>
     <string name="shareError">Share error</string>
     <string name="title_activity_main">MainActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">home</string>
+    <string name="favorites">favorites</string>
+    <string name="score_encouragement">score</string>
+    <string name="share">share</string>
+    <string name="userfeedback">user feedback</string>
+    <string name="about_us">about us</string>
 </resources>
