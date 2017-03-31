@@ -102,7 +102,7 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                                     public void run() {
                                         if (mAdView.getAdSize() == null) {
                                             final float density = getContentView().getContext().getResources().getDisplayMetrics().density;
-                                            AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, 300);/**/
+                                            AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, (int) (containerView.getWidth() / density) - 4);/**/
                                             mAdView.setAdSize(adSize);
                                             mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
                                         }

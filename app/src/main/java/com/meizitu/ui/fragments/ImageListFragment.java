@@ -64,7 +64,7 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
                     item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
                     staggeredGridLayoutManager.setSpanCount(1);
                 }
-                ((Animatable) item.getIcon()).start();
+//                ((Animatable) item.getIcon()).start();
 //                helper.getRecyclerAdapter().notifyDataSetChanged();
                 helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());
                 break;

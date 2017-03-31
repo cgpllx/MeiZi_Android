@@ -83,14 +83,11 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         public void setData(final Item_GroupImageInfoListItem imageInfo) {
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
-
             imagecount.setText(imageInfo.getPiccount() + "pics");
             int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
-           System.out.println("cgp1=" + getContentView().getWidth());
             getContentView().post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("cgp1111=" + getContentView().getWidth());
                     int   widthPixels = getContentView().getWidth();
                     try {
                         String pixelString = imageInfo.getPixel();
@@ -117,33 +114,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                     }
                 }
             });
-           System.out.println("cgp2="+widthPixels);
-
-
-//            try {
-//                String pixelString = imageInfo.getPixel();
-//                if (!TextUtils.isEmpty(pixelString)) {
-//                    String[] pixelStringArray = pixelString.split("\\*");
-//                    if (pixelStringArray.length == 2) {
-//                        String pixel_x = pixelStringArray[0];
-//                        String pixel_y = pixelStringArray[1];
-//                        int x = Integer.parseInt(pixel_x);
-//                        int y = Integer.parseInt(pixel_y);
-//                        double ratio = widthPixels * 1.0 / (x);
-//                        int height = (int) (y * ratio);
-//                        ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
-//                        layoutParams.height = height;
-//                        image.setLayoutParams(layoutParams);
-//                    } else {
-//                        setImageDefaultLayoutParams();
-//                    }
-//                } else {
-//                    setImageDefaultLayoutParams();
-//                }
-//            } catch (Exception e) {
-//                setImageDefaultLayoutParams();
-//            }
-//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
             title.setText(imageInfo.getTitle());
         }
 
