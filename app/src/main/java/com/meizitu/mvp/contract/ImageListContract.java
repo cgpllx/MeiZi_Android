@@ -1,8 +1,5 @@
 package com.meizitu.mvp.contract;
 
-import android.app.Activity;
-import android.content.Context;
-
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
@@ -22,8 +19,6 @@ public interface ImageListContract {
 
     interface Presenter extends EasyIPresenter<View> {
 
-        void share(Activity activity);
-        void feedback(Activity activity);
-        void favourablecomment(Context context);
+
     }
 }

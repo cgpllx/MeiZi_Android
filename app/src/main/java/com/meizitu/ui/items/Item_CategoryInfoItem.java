@@ -2,9 +2,6 @@ package com.meizitu.ui.items;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcel;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,7 @@ import android.widget.TextView;
 
 import com.meizitu.R;
 import com.meizitu.pojo.Category;
-import com.meizitu.pojo.GroupImageInfo;
-import com.meizitu.ui.activitys.ImageDetailsActivity;
-import com.meizitu.utils.ImageUtils;
+import com.meizitu.ui.activitys.ImageListActivity;
 
 import java.util.List;
 
@@ -23,9 +18,6 @@ import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
-import cc.easyandroid.easyutils.DisplayUtils;
-import cc.easyandroid.easyutils.WindowUtil;
-
 
 @SuppressLint("ParcelCreator")
 public class Item_CategoryInfoItem extends Category implements IFlexible<Item_CategoryInfoItem.ViewHolder> {
@@ -52,7 +44,7 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
 
     @Override
     public int getLayoutRes() {
-        return R.layout.item_groupimageinfolist;
+        return R.layout.item_categorylist;
     }
 
     @Override
@@ -72,7 +64,6 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
         TextView imagecount;
 
 
-
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
             image = EasyViewUtil.findViewById(view, R.id.image);
@@ -80,11 +71,12 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
             imagecount = EasyViewUtil.findViewById(view, R.id.imagecount);
         }
 
+        Category category;
+
         //-------------------
-        public void setData(final Category imageInfo) {
-
+        public void setData(Category category) {
+            this.category = category;
         }
-
 
 
         //-------------------
@@ -92,10 +84,14 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
             return getContentView().getContext();
         }
 
-
+        @Override
+        public void onClick(View view) {
+            super.onClick(view);
+            if (category != null) {
+                getContext().startActivity(ImageListActivity.newIntent(getContext(), category));
+            }
+        }
     }
-
-
 
 
 }

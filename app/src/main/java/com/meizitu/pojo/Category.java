@@ -1,8 +1,12 @@
 package com.meizitu.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+public class Category implements Parcelable {
+
     @SerializedName("category_code")
     private int category_code;
 
@@ -36,4 +40,34 @@ public class Category {
         this.category_pinyin = category_pinyin;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.category_code);
+        dest.writeString(this.category_name);
+        dest.writeString(this.category_pinyin);
+    }
+
+    public Category() {
+    }
+
+    protected Category(Parcel in) {
+        this.category_code = in.readInt();
+        this.category_name = in.readString();
+        this.category_pinyin = in.readString();
+    }
+
+    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }

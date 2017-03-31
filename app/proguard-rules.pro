@@ -73,6 +73,11 @@
 -keep interface com.squareup.okhttp.** {*;}
 -dontwarn okio.**
 
+# easyandroid
+# easyrecyclerview
+-dontwarn cc.easyandroid.**
+-keep class cc.easyandroid.easyrecyclerview.** {*;}
+
 #-------------------------------------------------------------------------
 
 #---------------------------------3.与js互相调用的类------------------------

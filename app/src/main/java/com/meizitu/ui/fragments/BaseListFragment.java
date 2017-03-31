@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.meizitu.R;
@@ -38,6 +39,9 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     protected SimpleRecyclerView simpleRecyclerView;
 
     protected EasyFlexibleRecyclerViewHelper<T> helper;
+
+    protected StaggeredGridLayoutManager staggeredGridLayoutManager;
+
     /**
      * 标志位，标志已经初始化完成
      */
@@ -55,8 +59,17 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        //simpleRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        simpleRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                staggeredGridLayoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
+            }
+        });
+        simpleRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+//        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
         helper = new EasyFlexibleRecyclerViewHelper<T>(simpleRecyclerView, adapter) {

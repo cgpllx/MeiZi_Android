@@ -14,4 +14,21 @@
     <string name="share">分享</string>
     <string name="userfeedback">用戶反饋</string>
     <string name="about_us">關於我們</string>
+
+    <string name="easyrecyclerview_pull_down_to_refresh">下拉刷新</string>
+    <string name="easyrecyclerview_release_to_refresh">松開刷新數據</string>
+    <string name="easyrecyclerview_refreshing">正在刷新...</string>
+    <string name="easyrecyclerview_refresh_success">刷新成功</string>
+    <string name="easyrecyclerview_refresh_fail">刷新失敗</string>
+    <string name="easyrecyclerview_click_to_loadmore">點擊加載更多</string>
+    <string name="easyrecyclerview_loadmoreing">正在加載中...</string>
+    <string name="easyrecyclerview_loadmorefail_click_to_loadmore">加載失敗，點擊重新加載</string>
+    <string name="easyrecyclerview_loadmore_fullcompleted">已經全部加載完成</string>
+
+    <string name="easyrecyclerview_last_update">上次更新時間：&#160;</string>
+    <string name="easyrecyclerview_just">&#160;剛剛</string>
+    <string name="easyrecyclerview_minutes_ago">&#160;分鐘前</string>
+    <string name="easyrecyclerview_hours_ago">&#160;小時前</string>
+    <string name="easyrecyclerview_day_ago">&#160;天前</string>
+    <string name="no_email">本機沒有發現郵箱app</string>
 </resources>
