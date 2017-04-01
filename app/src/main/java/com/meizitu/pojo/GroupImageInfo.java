@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupImageInfo implements Parcelable {
+import cc.easyandroid.easydb.core.EasyDbObject;
+
+public class GroupImageInfo implements Parcelable, EasyDbObject {
     @SerializedName("id")
     private int id;
     @SerializedName("title")
@@ -108,4 +110,9 @@ public class GroupImageInfo implements Parcelable {
             return new GroupImageInfo[size];
         }
     };
+
+    @Override
+    public String buildKeyColumn() {
+        return id + "";
+    }
 }

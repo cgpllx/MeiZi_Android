@@ -13,32 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.meizitu.internal.di.modules;
+package com.meizitu.internal.di.components;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.pojo.GroupImageInfo;
+import com.meizitu.internal.di.modules.ActivityModule;
+import com.meizitu.internal.di.modules.FavoritesModule;
+import com.meizitu.ui.fragments.FavoritesFragment;
 
-import dagger.Module;
-import dagger.Provides;
-
-/**
- * Dagger module that provides user related collaborators.
- */
-@Module
-public class ImageDetailsModule {
-
-    private GroupImageInfo groupImageInfo;
+import dagger.Component;
 
 
-    public ImageDetailsModule(GroupImageInfo groupImageInfo) {
-        this.groupImageInfo = groupImageInfo;
-    }
+@PerActivity
+@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, FavoritesModule.class})
+public interface FavoritesComponent extends ActivityComponent {//只会继承方法
 
-    @Provides
-    @PerActivity
-    public GroupImageInfo provideGroupImageInfo() {
-        return groupImageInfo;
-    }
+    void inject(FavoritesFragment favoritesFragment);
 
 }

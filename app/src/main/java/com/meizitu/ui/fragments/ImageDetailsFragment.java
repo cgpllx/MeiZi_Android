@@ -1,12 +1,9 @@
 package com.meizitu.ui.fragments;
 
 
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,14 +22,11 @@ import com.meizitu.pojo.Image;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.views.ViewpagerIndicator;
 
-import java.io.File;
-
 import javax.inject.Inject;
 
 import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout;
 import cc.easyandroid.easyrecyclerview.listener.OnEasyProgressClickListener;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
-import cc.easyandroid.easyutils.EasyToast;
 
 public class ImageDetailsFragment extends ImageBaseFragment implements ImageDetailsContract.View {
     ViewPager viewPager;
@@ -108,35 +102,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     }
 
     @Override
-    public void onDownloadSuccess(File imageFile) {
-        if (imageFile != null) {
-            MediaScannerConnection.scanFile(getContext(), new String[]{imageFile.getAbsolutePath()}, null, null);
-            EasyToast.showShort(getContext(), getString(R.string.saveAddress, imageFile.getAbsolutePath()));
-        }
-    }
-
-    @Override
-    public void onDownloadError(Throwable throwable) {
-        throwable.printStackTrace();
-        EasyToast.showLong(getContext(), getString(R.string.downloadError));
-    }
-
-    @Override
-    public void onShare(File imageFile) {
-        ShareCompat.IntentBuilder.from(getActivity())
-                .setType("image/*")//
-                .setStream(Uri.fromFile(imageFile))
-                .setChooserTitle(getString(R.string.app_name))
-                .startChooser();
-    }
-
-    @Override
-    public void onShareError(Throwable var2) {
-        var2.printStackTrace();
-        EasyToast.showLong(getContext(), getString(R.string.shareError));
-    }
-
-    @Override
     public void onStart(Object tag) {
         easyProgress.showLoadingView();
     }
@@ -195,21 +160,10 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.down:
-                if (bannerAdapter != null) {
-                    int current = viewPager.getCurrentItem();
-                    String imageurl = bannerAdapter.getItem(current).getImageUrl();
-                    presenter.exeDownloadRequest(imageurl);
-                }
-                break;
-            case R.id.share:
-                if (bannerAdapter != null) {
-                    int current = viewPager.getCurrentItem();
-                    String imageurl = bannerAdapter.getItem(current).getImageUrl();
-                    presenter.exeShare(imageurl);
-                }
-                break;
+        if (bannerAdapter != null) {
+            int current = viewPager.getCurrentItem();
+            String imageurl = bannerAdapter.getItem(current).getImageUrl();
+            presenter.handleNavigationItemSelected(item, getActivity(), imageurl);
         }
 
         return super.onOptionsItemSelected(item);

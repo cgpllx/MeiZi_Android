@@ -35,5 +35,6 @@
 
     <string name="title_list_to_grid">list to grid</string>
     <string name="no_email">no email app</string>
+    <string name="title_activity_favorites">我的收藏</string>
 
 </resources>

@@ -1,20 +1,13 @@
 package com.meizitu.banner;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.meizitu.R;
 
 import java.util.ArrayList;
 
-import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import uk.co.senab.photoview.PhotoView;
 
@@ -36,11 +29,11 @@ public class BannerAtlasAdapter<T extends IQfangBanner> extends AbstractViewPage
 //        final EasyProgressFrameLayout progressLayout = EasyViewUtil.findViewById(contentView, R.id.progressView);
 //        progressLayout.showLoadingView();
         IQfangBanner qfangBanner = getItem(position);
-        Glide.with(container.getContext())//
-                .load(qfangBanner.getImageUrl())//
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//
-                .placeholder(R.drawable.image_detail_placeholder)//
-                .dontAnimate().into(imageView);
+//        Glide.with(container.getContext())//
+//                .load(qfangBanner.getImageUrl())//
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)//
+//                .placeholder(R.drawable.image_detail_placeholder)//
+//                .dontAnimate().into(imageView);
         return contentView;
     }
 }

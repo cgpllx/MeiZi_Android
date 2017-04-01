@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.meizitu.R;
 import com.meizitu.mvp.contract.MainActivityContract;
+import com.meizitu.ui.activitys.FavoritesActivity;
 
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -25,6 +26,7 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
             // no handle
         } else if (id == R.id.nav_favorites) {
             //TODO: my favorites
+            activity.startActivity(new Intent(activity, FavoritesActivity.class));
         } else if (id == R.id.nav_score) {
             favourablecomment(activity);
         } else if (id == R.id.nav_share) {

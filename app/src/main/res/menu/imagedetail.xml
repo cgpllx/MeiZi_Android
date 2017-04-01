@@ -2,15 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/down"
+        android:id="@+id/detailmenu_down"
         android:orderInCategory="100"
         android:title="download"
         android:icon="@mipmap/ic_download_white_24dp"
         app:showAsAction="always" />
     <item
-        android:id="@+id/share"
+        android:id="@+id/detailmenu_share"
         android:orderInCategory="100"
         android:icon="@mipmap/ic_share_white_24dp"
+        android:title="share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/detailmenu_favorites"
+        android:orderInCategory="100"
+        android:icon="@mipmap/image_favorites_normal"
         android:title="share"
         app:showAsAction="always" />
 </menu>

@@ -1,11 +1,18 @@
 package com.meizitu.mvp.presenter;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.support.v4.app.ShareCompat;
+import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.target.Target;
+import com.meizitu.R;
+import com.meizitu.core.ImageDB;
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.pojo.GroupImageInfo;
@@ -26,24 +33,24 @@ import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
+import cc.easyandroid.easyutils.EasyToast;
 
 @PerActivity
 public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContract.View> implements ImageDetailsContract.Presenter {
 
 
     final ImageApi imageApi;
-    final int imageid;
+    final GroupImageInfo groupImageInfo;
     final Context context;
 
     @Inject
-    public ImageDetailsPresenter(Context context, ImageApi imageApi, int imageid) {
+    public ImageDetailsPresenter(Context context, ImageApi imageApi, GroupImageInfo groupImageInfo) {
         this.context = context;
         this.imageApi = imageApi;
-        this.imageid = imageid;
+        this.groupImageInfo = groupImageInfo;
     }
 
-    @Override
-    public void exeDownloadRequest(String imageurl) {
+    private void exeDownloadRequest(String imageurl, final Activity activity) {
         final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
@@ -51,19 +58,15 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 return down(future);
             }
         }), "");
-//        if (isViewAttached())
-//            getView().onDownLoadRequestStart();
         handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<File>>() {
             @Override
             public void onSuccess(EasyWorkUseCase.ResponseValue<File> responseValue) {
-                if (isViewAttached())
-                    getView().onDownloadSuccess(responseValue.getData());
+                onDownloadSuccess(responseValue.getData(), activity);
             }
 
             @Override
             public void onError(Throwable throwable) {
-                if (isViewAttached())
-                    getView().onDownloadError(throwable);
+                onDownloadError(throwable, activity);
             }
         });
     }
@@ -85,8 +88,7 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
         return null;
     }
 
-    @Override
-    public void exeShare(String imageurl) {//分享和下载是一样额，都必须先下载
+    private void exeShare(String imageurl, final Activity activity) {//分享和下载是一样额，都必须先下载
         final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
@@ -94,27 +96,49 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 return down(future);
             }
         }), "");
-//        if (isViewAttached())
-//            getView().onDownLoadRequestStart();
         handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<File>>() {
             @Override
             public void onSuccess(EasyWorkUseCase.ResponseValue<File> responseValue) {
-                if (isViewAttached())
-                    getView().onShare(responseValue.getData());
+                onShare(responseValue.getData(), activity);
             }
 
             @Override
             public void onError(Throwable throwable) {
-                if (isViewAttached())
-                    getView().onShareError(throwable);
+                onShareError(throwable, activity);
             }
         });
-
     }
+
+    public void onDownloadError(Throwable throwable, Activity activity) {
+        throwable.printStackTrace();
+        EasyToast.showLong(activity, activity.getString(R.string.downloadError));
+    }
+
+    public void onShareError(Throwable var2, Activity activity) {
+        var2.printStackTrace();
+        EasyToast.showLong(activity, activity.getString(R.string.shareError));
+    }
+
+
+    private void onShare(File imageFile, Activity activity) {
+        ShareCompat.IntentBuilder.from(activity)
+                .setType("image/*")//
+                .setStream(Uri.fromFile(imageFile))
+                .setChooserTitle(activity.getString(R.string.app_name))
+                .startChooser();
+    }
+
+    private void onDownloadSuccess(File imageFile, Activity activity) {
+        if (imageFile != null) {
+            MediaScannerConnection.scanFile(activity, new String[]{imageFile.getAbsolutePath()}, null, null);
+            EasyToast.showShort(activity, activity.getString(R.string.saveAddress, imageFile.getAbsolutePath()));
+        }
+    }
+
 
     @Override
     public void execute() {
-        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(imageid));
+        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(groupImageInfo.getId()));
         EasyWorkUseCase.RequestValues<ResponseInfo<GroupImageInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         if (isViewAttached()) {
             getView().onStart(requestValues.getTag());
@@ -137,5 +161,30 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 }
             }
         });
+    }
+
+    @Override
+    public void handleNavigationItemSelected(MenuItem item, Activity activity, String imageurl) {
+        switch (item.getItemId()) {
+            case R.id.detailmenu_down:
+                exeDownloadRequest(imageurl, activity);
+                break;
+            case R.id.detailmenu_share:
+                exeShare(imageurl, activity);
+                break;
+            case R.id.detailmenu_favorites:
+//                if (item.getActionView().isSelected()) {
+//                    item.getActionView().setSelected(true);
+//                } else {
+//                    item.getActionView().setSelected(false);
+//                }
+                try {
+                    ImageDB.getInstance(activity).getDao(ImageDB.TABNAME_GROUPIMAGEINFO).insert(groupImageInfo);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
     }
 }
