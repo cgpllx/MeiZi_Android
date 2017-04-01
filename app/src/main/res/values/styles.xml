@@ -36,15 +36,21 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.SwipeBack">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="AppTheme.Splash">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/splashbg</item>
     </style>
 
-    <style name="ImageDetailsTheme" parent="AppBaseTheme">
+    <style name="ImageDetailsTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/q88333333</item>
-        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowIsTranslucent">true</item>
         <!--<item name="colorPrimaryDark">#CF333333</item>-->
         <!--<item name="android:windowBackground">@color/q88333333</item>-->
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->

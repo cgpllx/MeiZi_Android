@@ -17,6 +17,7 @@ import com.meizitu.core.ImageDB;
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
+import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.pojo.GroupImageInfo;
@@ -27,6 +28,7 @@ import com.meizitu.utils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -38,6 +40,7 @@ import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
+import cc.easyandroid.easyutils.ArrayUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
 @PerActivity
@@ -54,19 +57,19 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
 
     final DeleteByIdFromDbUseCase mDeleteByIdFromDbUseCase;
 
-    final GetDatasFromDbUseCase<Item_GroupImageInfoListItem> mGetDatasFromDbUseCase;
+    final GetDataFromDbUseCase<Item_GroupImageInfoListItem> mGetDataFromDbUseCase;
 
     @Inject
     public ImageDetailsPresenter(Context mContext, ImageApi imageApi, Item_GroupImageInfoListItem mGroupImageInfo,//
                                  InsertDataFromDbUseCase<Item_GroupImageInfoListItem> insertDataFromDbUseCase,//
-                                 GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getDatasFromDbUseCase,//
+                                 GetDataFromDbUseCase<Item_GroupImageInfoListItem> getDataFromDbUseCase,//
                                  DeleteByIdFromDbUseCase deleteByIdFromDbUseCase) {
         this.mContext = mContext;
         this.mImageApi = imageApi;
         this.mGroupImageInfo = mGroupImageInfo;
         this.mInsertDataFromDbUseCase = insertDataFromDbUseCase;
         this.mDeleteByIdFromDbUseCase = deleteByIdFromDbUseCase;
-        this.mGetDatasFromDbUseCase = getDatasFromDbUseCase;
+        this.mGetDataFromDbUseCase = getDataFromDbUseCase;
     }
 
     private void exeDownloadRequest(String imageurl, final Activity activity) {
@@ -201,18 +204,23 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     }
 
     @Override
-    public void initFavoriteMenu(ImageDetailsContract.View actionView) {
-//        mUseCaseHandler.execute(mGetDatasFromDbUseCase, new GetDatasFromDbUseCase.RequestValues<>(ImageDB.TABNAME_GROUPIMAGEINFO, groupImageInfo), new UseCase.UseCaseCallback<GetDatasFromDbUseCase.ResponseValue>() {
-//            @Override
-//            public void onSuccess(InsertDataFromDbUseCase.ResponseValue responseValue) {
-//                if (actionView != null)
-//                    actionView.setSelected(true);
-//            }
-//
-//            @Override
-//            public void onError(Throwable throwable) {
-//            }
-//        });
+    public void initFavoriteMenu(final View actionView) {
+        mUseCaseHandler.execute(mGetDataFromDbUseCase, new GetDataFromDbUseCase.RequestValues(ImageDB.TABNAME_GROUPIMAGEINFO, Item_GroupImageInfoListItem.class,mGroupImageInfo.buildKeyColumn()), new UseCase.UseCaseCallback<GetDataFromDbUseCase.ResponseValue<Item_GroupImageInfoListItem>>() {
+            @Override
+            public void onSuccess(GetDataFromDbUseCase.ResponseValue<Item_GroupImageInfoListItem> responseValue) {
+                Item_GroupImageInfoListItem item_groupImageInfoListItem= responseValue.getDatas();
+                if(item_groupImageInfoListItem!=null){
+                    actionView.setSelected(true);
+                }else{
+                    actionView.setSelected(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                actionView.setSelected(false);
+            }
+        });
     }
 
     private void executeAddFavorites(Item_GroupImageInfoListItem groupImageInfo, final View actionView) {

@@ -28,6 +28,7 @@ import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.mvp.repository.DbRepository;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
+import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.service.ImageApi;
@@ -144,5 +145,11 @@ public class ApplicationModule {
     @Singleton
     public DeleteByIdFromDbUseCase provideDeleteByIdFromDbUseCase(Context application) {
         return new DeleteByIdFromDbUseCase(new DbRepository(application));
+    }
+
+    @Provides
+    @Singleton
+    public GetDataFromDbUseCase<Item_GroupImageInfoListItem> provideGetDataFromDbUseCase(Context application) {
+        return new GetDataFromDbUseCase<>(new DbRepository(application));
     }
 }

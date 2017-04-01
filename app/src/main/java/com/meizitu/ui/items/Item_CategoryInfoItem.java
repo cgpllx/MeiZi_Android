@@ -76,6 +76,7 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
         //-------------------
         public void setData(Category category) {
             this.category = category;
+            title.setText(category.getCategory_name());
         }
 
 

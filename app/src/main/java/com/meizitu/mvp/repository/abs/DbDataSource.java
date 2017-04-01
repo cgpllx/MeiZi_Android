@@ -13,6 +13,8 @@ public interface DbDataSource {
 
     <T extends EasyDbObject> void getAll(String tabName, Type type, DbDataSource.LoadDatasCallback<T> callback);
 
+    <T extends EasyDbObject> void getSingle(String tabName, Type type, String key,DbDataSource.LoadDataCallback<T> callback);
+
     <T extends EasyDbObject> boolean deleteAll(String tabName);
 
     <T extends EasyDbObject> boolean deleteById(String tabName, String id);
@@ -23,7 +25,13 @@ public interface DbDataSource {
 
     interface LoadDatasCallback<T> {
 
-        void ondDatasLoaded(ArrayList<T> datas);
+        void onDatasLoaded(ArrayList<T> datas);
+
+        void onDataNotAvailable();
+    }
+    interface LoadDataCallback<T> {
+
+        void onDatasLoaded(T datas);
 
         void onDataNotAvailable();
     }

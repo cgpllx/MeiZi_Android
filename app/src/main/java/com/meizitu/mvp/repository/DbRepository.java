@@ -27,9 +27,25 @@ public class DbRepository implements DbDataSource {
         DataAccesObject<T> dataAccesObject = imageDB.getDao(tabName);
         try {
             if(type==null){
-                callback.ondDatasLoaded(dataAccesObject.findAllFromTabName("DESC LIMIT 0,10"));
+                callback.onDatasLoaded(dataAccesObject.findAllFromTabName("DESC"));
             }else{
-                callback.ondDatasLoaded(dataAccesObject.findAllFromTabName("DESC LIMIT 0,10",type));
+                callback.onDatasLoaded(dataAccesObject.findAllFromTabName("DESC",type));
+            }
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callback.onDataNotAvailable();
+    }
+
+    @Override
+    public <T extends EasyDbObject> void getSingle(String tabName, Type type, String key, LoadDataCallback<T> callback) {
+        DataAccesObject<T> dataAccesObject = imageDB.getDao(tabName);
+        try {
+            if(type==null){
+                callback.onDatasLoaded(dataAccesObject.findById(key));
+            }else{
+                callback.onDatasLoaded(dataAccesObject.findById(key,type));
             }
             return;
         } catch (Exception e) {

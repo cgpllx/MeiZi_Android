@@ -83,7 +83,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         public void setData(final Item_GroupImageInfoListItem imageInfo) {
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
-//            imagecount.setText(imageInfo.getPiccount() + "pics");
+            imagecount.setText(imageInfo.getPiccount() + "pics");
             int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
             getContentView().post(new Runnable() {
                 @Override
@@ -114,8 +114,8 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                     }
                 }
             });
-//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
-//            title.setText(imageInfo.getTitle());
+            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+            title.setText(imageInfo.getTitle());
         }
 
         void setImageDefaultLayoutParams() {

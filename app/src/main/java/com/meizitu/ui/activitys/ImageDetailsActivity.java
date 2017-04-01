@@ -17,10 +17,9 @@ import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Inject;
 
-public class ImageDetailsActivity extends BaseActivity implements HasComponent<ImageDetailsComponent> {
+public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasComponent<ImageDetailsComponent> {
     ImageDetailsComponent component;
 
-    public static final String Imagecategory_ID = "Imagecategory_ID";
     public static final String ITEM_GROUPIMAGEINFOLISTITEM_EXTRA = "Item_GroupImageInfoListItem";
 
     long DELAYED_TIME = 15 * 1000;

@@ -2,6 +2,8 @@ package com.meizitu.mvp.contract;
 
 import android.app.Activity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
@@ -26,6 +28,6 @@ public interface ImageDetailsContract {
     interface Presenter extends EasyIPresenter<View> {
         void handleNavigationItemSelected(MenuItem item, Activity activity,String imageUrl);
 
-        void initFavoriteMenu(View actionView);
+        void initFavoriteMenu(android.view.View  actionView);
     }
 }

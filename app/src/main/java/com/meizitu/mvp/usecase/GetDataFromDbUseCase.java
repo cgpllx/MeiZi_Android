@@ -12,18 +12,18 @@ import cc.easyandroid.easydb.core.EasyDbObject;
 /**
  * Created by cgpllx on 2016/8/16.
  */
-public class GetDatasFromDbUseCase<T extends EasyDbObject> extends UseCase<GetDatasFromDbUseCase.RequestValues, GetDatasFromDbUseCase.ResponseValue<T>> {
+public class GetDataFromDbUseCase<T extends EasyDbObject> extends UseCase<GetDataFromDbUseCase.RequestValues, GetDataFromDbUseCase.ResponseValue<T>> {
     public final DbDataSource mDbDataSource;
 
-    public GetDatasFromDbUseCase(DbDataSource dbDataSource) {
+    public GetDataFromDbUseCase(DbDataSource dbDataSource) {
         this.mDbDataSource = dbDataSource;
     }
 
     @Override
     protected void executeUseCase(final RequestValues values) {
-        this.mDbDataSource.getAll(values.getTabeName(), values.getType(),new DbDataSource.LoadDatasCallback<T>() {
+        this.mDbDataSource.getSingle(values.getTabeName(), values.getType(),values.getKey(),new DbDataSource.LoadDataCallback<T>() {
             @Override
-            public void onDatasLoaded(ArrayList<T> tasks) {
+            public void onDatasLoaded(T tasks) {
                 ResponseValue responseValue = new ResponseValue(tasks);
                 getUseCaseCallback().onSuccess(responseValue);
             }
@@ -39,10 +39,12 @@ public class GetDatasFromDbUseCase<T extends EasyDbObject> extends UseCase<GetDa
 
         private final String mTabeName;
         private final Type mType;
+        private final String mKey;
 
-        public RequestValues(String tabeName, Type type) {
+        public RequestValues(String tabeName, Type type,String key) {
             mTabeName = tabeName;
             this.mType = type;
+            this.mKey = key;
         }
 
         public Type getType() {
@@ -52,18 +54,22 @@ public class GetDatasFromDbUseCase<T extends EasyDbObject> extends UseCase<GetDa
         public String getTabeName() {
             return mTabeName;
         }
+
+        public String getKey(){
+            return mKey;
+        }
     }
 
     public static final class ResponseValue<T extends EasyDbObject> implements UseCase.ResponseValue {
 
-        private ArrayList<T> mList;
+        private T mData;
 
-        public ResponseValue(ArrayList<T> list) {
-            this.mList = list;
+        public ResponseValue(T data) {
+            this.mData = data;
         }
 
-        public ArrayList<T> getDatas() {
-            return mList;
+        public T getDatas() {
+            return mData;
         }
     }
 }

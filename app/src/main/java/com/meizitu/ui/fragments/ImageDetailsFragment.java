@@ -140,6 +140,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
                 onOptionsItemSelected(item);
             }
         });
+        presenter.initFavoriteMenu(item.getActionView());
     }
 
     @Override

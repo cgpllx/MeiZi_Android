@@ -15,7 +15,7 @@ import com.meizitu.pojo.Category;
 import com.meizitu.ui.fragments.ImageListFragment;
 
 
-public class ImageListActivity extends BaseActivity implements HasComponent<ImageListComponent> {
+public class ImageListActivity extends BaseSwipeBackActivity implements HasComponent<ImageListComponent> {
 
     ImageListComponent component;
     public static final String IMAGELISTTAG = "imagelist_tag";

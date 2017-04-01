@@ -8,7 +8,7 @@ import com.meizitu.internal.di.components.DaggerFavoritesComponent;
 import com.meizitu.internal.di.components.FavoritesComponent;
 import com.meizitu.ui.fragments.FavoritesFragment;
 
-public class FavoritesActivity extends BaseActivity implements HasComponent<FavoritesComponent> {
+public class FavoritesActivity extends BaseSwipeBackActivity implements HasComponent<FavoritesComponent> {
     FavoritesComponent favoritesComponent;
 
     @Override
