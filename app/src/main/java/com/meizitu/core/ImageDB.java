@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.meizitu.pojo.GroupImageInfo;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import cc.easyandroid.easydb.EasySqliteHelper;
 import cc.easyandroid.easydb.core.TableManager;
@@ -27,7 +27,7 @@ public class ImageDB extends EasySqliteHelper {
     public void onCreate(SQLiteDatabase db, TableManager tableManager) {
         System.out.println("easyandroid ImageDB onCreate=" + "ImageDB onCreate");
         try {
-            tableManager.createTable(TABNAME_GROUPIMAGEINFO, GroupImageInfo.class);//
+            tableManager.createTable(TABNAME_GROUPIMAGEINFO, Item_GroupImageInfoListItem.class);//
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class ImageDB extends EasySqliteHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion, TableManager tableManager) {
         try {
-            tableManager.dropTable(db, TABNAME_GROUPIMAGEINFO, GroupImageInfo.class);//
+            tableManager.dropTable(db, TABNAME_GROUPIMAGEINFO, Item_GroupImageInfoListItem.class);//
             onCreate(db);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -16,8 +16,6 @@ import com.meizitu.mvp.contract.FavoritesListContract;
 import com.meizitu.mvp.presenter.FavoritesListPresenter;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
@@ -65,8 +63,6 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
                     item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
                     staggeredGridLayoutManager.setSpanCount(1);
                 }
-//                ((Animatable) item.getIcon()).start();
-//                helper.getRecyclerAdapter().notifyDataSetChanged();
                 helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());
                 break;
         }
@@ -82,8 +78,4 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
         }
     }
 
-    @Override
-    public void onSimpleListSuccess(Object o, ArrayList<Item_GroupImageInfoListItem> responseInfo) {
-
-    }
 }
