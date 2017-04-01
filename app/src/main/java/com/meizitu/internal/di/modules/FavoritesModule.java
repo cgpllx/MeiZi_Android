@@ -16,30 +16,13 @@
 package com.meizitu.internal.di.modules;
 
 
-import android.content.Context;
-
-import com.meizitu.internal.di.PerActivity;
-import com.meizitu.mvp.repository.DbRepository;
-import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
-import com.meizitu.ui.items.Item_GroupImageInfoListItem;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Dagger module that provides user related collaborators.
  */
 @Module
 public class FavoritesModule {
-    final GetDatasFromDbUseCase<Item_GroupImageInfoListItem> groupImageInfoListItemGetDatasFromDbUseCase;
-
-    public FavoritesModule(Context context) {
-        groupImageInfoListItemGetDatasFromDbUseCase = new GetDatasFromDbUseCase<>(new DbRepository(context));
-    }
-
-    @Provides
-    @PerActivity
-    public GetDatasFromDbUseCase<Item_GroupImageInfoListItem> provideGetDatasFromDbUseCase() {
-        return groupImageInfoListItemGetDatasFromDbUseCase;
+    public FavoritesModule() {
     }
 }

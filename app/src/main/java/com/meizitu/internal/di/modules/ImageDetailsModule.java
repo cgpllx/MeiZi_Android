@@ -17,7 +17,7 @@ package com.meizitu.internal.di.modules;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.pojo.GroupImageInfo;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,17 +28,17 @@ import dagger.Provides;
 @Module
 public class ImageDetailsModule {
 
-    private GroupImageInfo groupImageInfo;
+    private Item_GroupImageInfoListItem item_groupImageInfoListItem;
 
 
-    public ImageDetailsModule(GroupImageInfo groupImageInfo) {
-        this.groupImageInfo = groupImageInfo;
+    public ImageDetailsModule(Item_GroupImageInfoListItem item_groupImageInfoListItem) {
+        this.item_groupImageInfoListItem = item_groupImageInfoListItem;
     }
 
     @Provides
     @PerActivity
-    public GroupImageInfo provideGroupImageInfo() {
-        return groupImageInfo;
+    public Item_GroupImageInfoListItem provideItem_GroupImageInfoListItem() {
+        return item_groupImageInfoListItem;
     }
 
 }

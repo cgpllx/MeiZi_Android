@@ -70,7 +70,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         TextView title;
         TextView imagecount;
 
-        GroupImageInfo imageInfo;
+        Item_GroupImageInfoListItem imageInfo;
 
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);

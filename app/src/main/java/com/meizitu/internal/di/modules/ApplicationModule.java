@@ -26,10 +26,14 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
+import com.meizitu.mvp.repository.DbRepository;
+import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
+import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
+import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
-import com.meizitu.service.interceptor.CacheInterceptor;
 import com.meizitu.service.interceptor.DecodeInterceptor;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +101,7 @@ public class ApplicationModule {
                 .addInterceptor(new DecodeInterceptor())//decode
                 .addNetworkInterceptor(new BridgeInterceptor(cookieJar))
 //                .addNetworkInterceptor(new CacheInterceptor())
-                .cache(new Cache(new File(application.getCacheDir(),"okhttpcache"), 1024 * 1024 * 10))
+                .cache(new Cache(new File(application.getCacheDir(), "okhttpcache"), 1024 * 1024 * 10))
                 .build();
         return okHttpClient;
     }
@@ -122,5 +126,23 @@ public class ApplicationModule {
         mTracker.enableExceptionReporting(true);
         mTracker.enableAutoActivityTracking(true);
         return mTracker;
+    }
+
+    @Provides
+    @Singleton
+    public GetDatasFromDbUseCase<Item_GroupImageInfoListItem> provideGetDatasFromDbUseCase(Context application) {
+        return new GetDatasFromDbUseCase<>(new DbRepository(application));
+    }
+
+    @Provides
+    @Singleton
+    public InsertDataFromDbUseCase<Item_GroupImageInfoListItem> provideInsertDataFromDbUseCase(Context application) {
+        return new InsertDataFromDbUseCase<>(new DbRepository(application));
+    }
+
+    @Provides
+    @Singleton
+    public DeleteByIdFromDbUseCase provideDeleteByIdFromDbUseCase(Context application) {
+        return new DeleteByIdFromDbUseCase(new DbRepository(application));
     }
 }

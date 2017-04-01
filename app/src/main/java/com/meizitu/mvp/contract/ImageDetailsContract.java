@@ -25,5 +25,7 @@ public interface ImageDetailsContract {
 
     interface Presenter extends EasyIPresenter<View> {
         void handleNavigationItemSelected(MenuItem item, Activity activity,String imageUrl);
+
+        void initFavoriteMenu(View actionView);
     }
 }

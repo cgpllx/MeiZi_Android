@@ -13,6 +13,7 @@ import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.internal.di.modules.ImageDetailsModule;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.fragments.ImageDetailsFragment;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Inject;
 
@@ -20,7 +21,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
     ImageDetailsComponent component;
 
     public static final String Imagecategory_ID = "Imagecategory_ID";
-    public static final String GROUPIMAGEINFO_EXTRA = "GroupImageInfo";
+    public static final String ITEM_GROUPIMAGEINFOLISTITEM_EXTRA = "Item_GroupImageInfoListItem";
 
     long DELAYED_TIME = 15 * 1000;
 
@@ -48,7 +49,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
 
     private void initializeInjector() {
 //        int id = getIntent().getIntExtra(Imagecategory_ID, 0);
-        GroupImageInfo groupImageInfo = getIntent().getParcelableExtra(GROUPIMAGEINFO_EXTRA);
+        Item_GroupImageInfoListItem groupImageInfo = getIntent().getParcelableExtra(ITEM_GROUPIMAGEINFOLISTITEM_EXTRA);
         this.component = DaggerImageDetailsComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .imageDetailsModule(new ImageDetailsModule(groupImageInfo))
@@ -58,7 +59,7 @@ public class ImageDetailsActivity extends BaseActivity implements HasComponent<I
 
     public static Intent newIntent(Context context, GroupImageInfo groupImageInfo) {
         Intent intent = new Intent(context, ImageDetailsActivity.class);
-        intent.putExtra(GROUPIMAGEINFO_EXTRA, groupImageInfo);
+        intent.putExtra(ITEM_GROUPIMAGEINFOLISTITEM_EXTRA, groupImageInfo);
         return intent;
 
     }

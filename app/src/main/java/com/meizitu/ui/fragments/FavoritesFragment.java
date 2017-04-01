@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 
 
-public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements  FavoritesListContract.View {
+public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements FavoritesListContract.View {
 
     @Inject
     FavoritesListPresenter presenter;
@@ -48,19 +48,31 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.imagelistmenu, menu);
     }
 
-
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.secondhandhousedetails_options, menu);
+//        final MenuItem item = menu.findItem(R.id.follow);
+//        item.getActionView().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onOptionsItemSelected(item);
+//            }
+//        });
+//        return super.onCreateOptionsMenu(menu);
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_list_to_grid:
                 if (staggeredGridLayoutManager.getSpanCount() == 1) {
-                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
+                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
                     staggeredGridLayoutManager.setSpanCount(2);
                 } else {
-                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
+                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
                     staggeredGridLayoutManager.setSpanCount(1);
                 }
                 helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.meizitu.ui.activitys.ImageDetailsActivity">
+    tools:mContext="com.meizitu.ui.activitys.ImageDetailsActivity">
 
     <include layout="@layout/content_image_details" />
 

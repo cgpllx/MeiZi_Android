@@ -6,7 +6,6 @@ import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerFavoritesComponent;
 import com.meizitu.internal.di.components.FavoritesComponent;
-import com.meizitu.internal.di.modules.FavoritesModule;
 import com.meizitu.ui.fragments.FavoritesFragment;
 
 public class FavoritesActivity extends BaseActivity implements HasComponent<FavoritesComponent> {
@@ -24,7 +23,6 @@ public class FavoritesActivity extends BaseActivity implements HasComponent<Favo
     private void initializeInjector() {
         this.favoritesComponent = DaggerFavoritesComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .favoritesModule(new FavoritesModule(this))
                 .activityModule(getActivityModule())
                 .build();
     }

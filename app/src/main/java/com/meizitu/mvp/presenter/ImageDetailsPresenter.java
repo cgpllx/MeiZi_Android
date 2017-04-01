@@ -7,6 +7,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.support.v4.app.ShareCompat;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
@@ -15,9 +16,13 @@ import com.meizitu.R;
 import com.meizitu.core.ImageDB;
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract;
+import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
+import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
+import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.ImageApi;
+import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import com.meizitu.utils.FileUtil;
 
 import java.io.File;
@@ -39,19 +44,33 @@ import cc.easyandroid.easyutils.EasyToast;
 public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContract.View> implements ImageDetailsContract.Presenter {
 
 
-    final ImageApi imageApi;
-    final GroupImageInfo groupImageInfo;
-    final Context context;
+    final ImageApi mImageApi;
+
+    final Item_GroupImageInfoListItem mGroupImageInfo;
+
+    final Context mContext;
+
+    final InsertDataFromDbUseCase<Item_GroupImageInfoListItem> mInsertDataFromDbUseCase;
+
+    final DeleteByIdFromDbUseCase mDeleteByIdFromDbUseCase;
+
+    final GetDatasFromDbUseCase<Item_GroupImageInfoListItem> mGetDatasFromDbUseCase;
 
     @Inject
-    public ImageDetailsPresenter(Context context, ImageApi imageApi, GroupImageInfo groupImageInfo) {
-        this.context = context;
-        this.imageApi = imageApi;
-        this.groupImageInfo = groupImageInfo;
+    public ImageDetailsPresenter(Context mContext, ImageApi imageApi, Item_GroupImageInfoListItem mGroupImageInfo,//
+                                 InsertDataFromDbUseCase<Item_GroupImageInfoListItem> insertDataFromDbUseCase,//
+                                 GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getDatasFromDbUseCase,//
+                                 DeleteByIdFromDbUseCase deleteByIdFromDbUseCase) {
+        this.mContext = mContext;
+        this.mImageApi = imageApi;
+        this.mGroupImageInfo = mGroupImageInfo;
+        this.mInsertDataFromDbUseCase = insertDataFromDbUseCase;
+        this.mDeleteByIdFromDbUseCase = deleteByIdFromDbUseCase;
+        this.mGetDatasFromDbUseCase = getDatasFromDbUseCase;
     }
 
     private void exeDownloadRequest(String imageurl, final Activity activity) {
-        final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        final FutureTarget<File> future = Glide.with(mContext).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
@@ -89,7 +108,7 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     }
 
     private void exeShare(String imageurl, final Activity activity) {//分享和下载是一样额，都必须先下载
-        final FutureTarget<File> future = Glide.with(context).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        final FutureTarget<File> future = Glide.with(mContext).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
             public File loadInBackground() throws Exception {
@@ -138,7 +157,7 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
 
     @Override
     public void execute() {
-        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoDetails(groupImageInfo.getId()));
+        EasyCall<ResponseInfo<GroupImageInfo>> easyCall = new RetrofitCallToEasyCall<>(mImageApi.queryGroupImageInfoDetails(mGroupImageInfo.getId()));
         EasyWorkUseCase.RequestValues<ResponseInfo<GroupImageInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         if (isViewAttached()) {
             getView().onStart(requestValues.getTag());
@@ -150,8 +169,6 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 if (isViewAttached()) {
                     getView().onSuccess(responseInfo);
                 }
-
-                System.out.println();
             }
 
             @Override
@@ -173,18 +190,57 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 exeShare(imageurl, activity);
                 break;
             case R.id.detailmenu_favorites:
-//                if (item.getActionView().isSelected()) {
-//                    item.getActionView().setSelected(true);
-//                } else {
-//                    item.getActionView().setSelected(false);
-//                }
-                try {
-                    ImageDB.getInstance(activity).getDao(ImageDB.TABNAME_GROUPIMAGEINFO).insert(groupImageInfo);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (item.getActionView().isSelected()) {
+                    executeDeleteFavorites(mGroupImageInfo, item.getActionView());
+                } else {
+                    executeAddFavorites(mGroupImageInfo, item.getActionView());
                 }
                 break;
         }
 
     }
+
+    @Override
+    public void initFavoriteMenu(ImageDetailsContract.View actionView) {
+//        mUseCaseHandler.execute(mGetDatasFromDbUseCase, new GetDatasFromDbUseCase.RequestValues<>(ImageDB.TABNAME_GROUPIMAGEINFO, groupImageInfo), new UseCase.UseCaseCallback<GetDatasFromDbUseCase.ResponseValue>() {
+//            @Override
+//            public void onSuccess(InsertDataFromDbUseCase.ResponseValue responseValue) {
+//                if (actionView != null)
+//                    actionView.setSelected(true);
+//            }
+//
+//            @Override
+//            public void onError(Throwable throwable) {
+//            }
+//        });
+    }
+
+    private void executeAddFavorites(Item_GroupImageInfoListItem groupImageInfo, final View actionView) {
+        mUseCaseHandler.execute(mInsertDataFromDbUseCase, new InsertDataFromDbUseCase.RequestValues<>(ImageDB.TABNAME_GROUPIMAGEINFO, groupImageInfo), new UseCase.UseCaseCallback<InsertDataFromDbUseCase.ResponseValue>() {
+            @Override
+            public void onSuccess(InsertDataFromDbUseCase.ResponseValue responseValue) {
+                if (actionView != null)
+                    actionView.setSelected(true);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+        });
+    }
+
+    private void executeDeleteFavorites(GroupImageInfo groupImageInfo, final View actionView) {
+        mUseCaseHandler.execute(mDeleteByIdFromDbUseCase, new DeleteByIdFromDbUseCase.RequestValues(ImageDB.TABNAME_GROUPIMAGEINFO, groupImageInfo.buildKeyColumn()), new UseCase.UseCaseCallback<DeleteByIdFromDbUseCase.ResponseValue>() {
+            @Override
+            public void onSuccess(DeleteByIdFromDbUseCase.ResponseValue responseValue) {
+                if (actionView != null)
+                    actionView.setSelected(false);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+        });
+    }
+
 }

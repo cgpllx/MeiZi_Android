@@ -133,6 +133,13 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.imagedetail, menu);
+        final MenuItem item = menu.findItem(R.id.detailmenu_favorites);
+        item.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(item);
+            }
+        });
     }
 
     @Override
