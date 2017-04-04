@@ -84,37 +84,44 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
             imagecount.setText(imageInfo.getPiccount() + "pics");
-            int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels - DisplayUtils.dp2Px(getContext(), 10);
+            final int widthPixels = WindowUtil.getDisplayMetrics(getContext()).widthPixels;
             getContentView().post(new Runnable() {
                 @Override
                 public void run() {
-                    int   widthPixels = getContentView().getWidth();
-                    try {
-                        String pixelString = imageInfo.getPixel();
-                        if (!TextUtils.isEmpty(pixelString)) {
-                            String[] pixelStringArray = pixelString.split("\\*");
-                            if (pixelStringArray.length == 2) {
-                                String pixel_x = pixelStringArray[0];
-                                String pixel_y = pixelStringArray[1];
-                                int x = Integer.parseInt(pixel_x);
-                                int y = Integer.parseInt(pixel_y);
-                                double ratio = widthPixels * 1.0 / (x);
-                                int height = (int) (y * ratio);
-                                ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
-                                layoutParams.height = height;
-                                image.setLayoutParams(layoutParams);
+                    int viewwidthPixels = getContentView().getWidth();
+                    if (viewwidthPixels <= widthPixels / 2) {
+                        setImageDefaultLayoutParams();
+                        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    } else {
+                        try {
+                            String pixelString = imageInfo.getPixel();
+                            if (!TextUtils.isEmpty(pixelString)) {
+                                String[] pixelStringArray = pixelString.split("\\*");
+                                if (pixelStringArray.length == 2) {
+                                    String pixel_x = pixelStringArray[0];
+                                    String pixel_y = pixelStringArray[1];
+                                    int x = Integer.parseInt(pixel_x);
+                                    int y = Integer.parseInt(pixel_y);
+                                    double ratio = viewwidthPixels * 1.0 / (x);
+                                    int height = (int) (y * ratio);
+                                    ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
+                                    layoutParams.height = height;
+                                    image.setLayoutParams(layoutParams);
+                                    image.setScaleType(ImageView.ScaleType.FIT_XY);
+                                } else {
+                                    setImageDefaultLayoutParams();
+                                }
                             } else {
                                 setImageDefaultLayoutParams();
                             }
-                        } else {
+                        } catch (Exception e) {
                             setImageDefaultLayoutParams();
                         }
-                    } catch (Exception e) {
-                        setImageDefaultLayoutParams();
                     }
                 }
             });
-            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.imagebackground);
+            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.levellist);
+            image.setImageLevel(getAdapterPosition()%9);
             title.setText(imageInfo.getTitle());
         }
 

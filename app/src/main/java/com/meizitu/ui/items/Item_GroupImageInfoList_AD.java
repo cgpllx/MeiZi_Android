@@ -22,10 +22,11 @@ import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
+import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 
 
 @SuppressLint("ParcelCreator")
-public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder> {
+public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder> ,IHeaderSpanFill{
 
     @Override
     public boolean isEnabled() {
@@ -84,6 +85,11 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                         super.onAdLoaded();
                         isLoaded = true;
                     }
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        super.onAdFailedToLoad(errorCode);
+                    }
                 });
                 adapter.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
@@ -102,11 +108,12 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                                     public void run() {
                                         if (mAdView.getAdSize() == null) {
                                             final float density = getContentView().getContext().getResources().getDisplayMetrics().density;
-                                            AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, (int) (containerView.getWidth() / density) - 4);/**/
+                                            AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, 300);/**/
                                             mAdView.setAdSize(adSize);
                                             mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
                                         }
                                         mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+//                                        mAdView.setBackgroundResource(R.color.q8FA3A7);
 
                                     }
                                 });

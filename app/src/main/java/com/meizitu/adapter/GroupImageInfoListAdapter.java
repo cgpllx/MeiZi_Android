@@ -17,18 +17,18 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
 
     @Override
     public boolean addItems(List items) {
-        if (!ArrayUtils.isEmpty(items) && items.size() > 17) {
-            items.add(5, new Item_GroupImageInfoList_AD());
-            items.add(15, new Item_GroupImageInfoList_AD());
+        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
+            items.add(10, new Item_GroupImageInfoList_AD());
+            items.add(19, new Item_GroupImageInfoList_AD());
         }
         return super.addItems(items);
     }
 
     @Override
     public void setItems(List items) {
-        if (!ArrayUtils.isEmpty(items) && items.size() > 17) {
-            items.add(5, new Item_GroupImageInfoList_AD());
-            items.add(15, new Item_GroupImageInfoList_AD());
+        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
+            items.add(10, new Item_GroupImageInfoList_AD());
+            items.add(19, new Item_GroupImageInfoList_AD());
         }
         super.setItems(items);
     }

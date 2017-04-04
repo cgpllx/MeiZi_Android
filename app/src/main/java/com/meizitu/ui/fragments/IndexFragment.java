@@ -46,8 +46,10 @@ public class IndexFragment extends ImageBaseFragment implements IndexFragmentCon
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
+        simpleRecyclerView.setLoadMoreEnabled(false);
+        simpleRecyclerView.setRefreshEnabled(false);
 //        simpleRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        simpleRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        simpleRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
 //        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         simpleRecyclerView.setHasFixedSize(true);
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.meizitu.R;
 import com.meizitu.pojo.Category;
 import com.meizitu.ui.activitys.ImageListActivity;
+import com.meizitu.utils.ImageUtils;
 
 import java.util.List;
 
@@ -61,14 +62,12 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
     public class ViewHolder extends FlexibleViewHolder {
         ImageView image;
         TextView title;
-        TextView imagecount;
 
 
         public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
             super(view, adapter);
             image = EasyViewUtil.findViewById(view, R.id.image);
             title = EasyViewUtil.findViewById(view, R.id.title);
-            imagecount = EasyViewUtil.findViewById(view, R.id.imagecount);
         }
 
         Category category;
@@ -77,6 +76,7 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
         public void setData(Category category) {
             this.category = category;
             title.setText(category.getCategory_name());
+            ImageUtils.load(getContext(),image,R.mipmap.list1png);
         }
 
 

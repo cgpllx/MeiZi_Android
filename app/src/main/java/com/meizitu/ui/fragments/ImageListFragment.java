@@ -57,12 +57,12 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_list_to_grid:
-                if (staggeredGridLayoutManager.getSpanCount() == 1) {
-                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
-                    staggeredGridLayoutManager.setSpanCount(2);
-                } else {
+                if (gridLayoutManager.getSpanCount() == 1) {
                     item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
-                    staggeredGridLayoutManager.setSpanCount(1);
+                    gridLayoutManager.setSpanCount(2);
+                } else {
+                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
+                    gridLayoutManager.setSpanCount(1);
                 }
 //                ((Animatable) item.getIcon()).start();
 //                helper.getRecyclerAdapter().notifyDataSetChanged();

@@ -8,7 +8,14 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="q10dp">10dp</dimen>
+    <dimen name="q2dp">2dp</dimen>
+    <dimen name="q3dp">3dp</dimen>
     <dimen name="q8dp">8dp</dimen>
     <dimen name="q5dp">5dp</dimen>
     <dimen name="q15dp">15dp</dimen>
+    <dimen name="q20dp">20dp</dimen>
+    <dimen name="q25dp">25dp</dimen>
+    <dimen name="q30dp">30dp</dimen>
+    <dimen name="q35dp">35dp</dimen>
+    <dimen name="q40dp">40dp</dimen>
 </resources>

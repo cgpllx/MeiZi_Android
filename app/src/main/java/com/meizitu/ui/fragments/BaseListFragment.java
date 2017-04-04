@@ -3,6 +3,7 @@ package com.meizitu.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -40,7 +41,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
     protected EasyFlexibleRecyclerViewHelper<T> helper;
 
-    protected StaggeredGridLayoutManager staggeredGridLayoutManager;
+    protected GridLayoutManager gridLayoutManager;
 
     /**
      * 标志位，标志已经初始化完成
@@ -59,16 +60,16 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        simpleRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                staggeredGridLayoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
-            }
-        });
-        simpleRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+//        gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+//        simpleRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                staggeredGridLayoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
+//            }
+//        });
+        simpleRecyclerView.setLayoutManager(gridLayoutManager);
 //        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
