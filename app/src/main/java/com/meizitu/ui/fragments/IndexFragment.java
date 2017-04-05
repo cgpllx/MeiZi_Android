@@ -13,6 +13,7 @@ import com.meizitu.mvp.contract.IndexFragmentContract;
 import com.meizitu.mvp.presenter.IndexFragmentPresenter;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
+import com.meizitu.ui.items.Item_Index_LatestImage;
 import com.meizitu.ui.views.SimpleRecyclerView;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class IndexFragment extends ImageBaseFragment implements IndexFragmentCon
         System.out.println(responseInfo);
         System.out.println(list);
         adapter.addItems(new ArrayList<>(list));
+        adapter.addFooterItem(new Item_Index_LatestImage());
     }
 
     public void onCompleted(Object o) {

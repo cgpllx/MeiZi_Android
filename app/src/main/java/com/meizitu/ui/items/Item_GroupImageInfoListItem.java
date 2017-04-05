@@ -120,9 +120,9 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                     }
                 }
             });
-            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.levellist);
+//            ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.levellist);
             image.setImageLevel(getAdapterPosition()%9);
-            title.setText(imageInfo.getTitle());
+//            title.setText(imageInfo.getTitle());
         }
 
         void setImageDefaultLayoutParams() {
