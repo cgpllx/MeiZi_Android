@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
@@ -22,6 +23,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     IndexFragmentComponent component;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
+    ImageView imageView;
 
     MainActivityPresenter presenter = new MainActivityPresenter();
 
@@ -31,6 +33,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
         initTitleBar();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        imageView = (ImageView) findViewById(R.id.image);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -85,6 +88,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onDestroy();
         if (drawer != null) {
             drawer.removeDrawerListener(toggle);
+        }
+        if(presenter!=null){
+            presenter.detachView();
         }
     }
 }

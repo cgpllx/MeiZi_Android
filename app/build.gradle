@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply from: 'productFlavors.gradle'
+apply plugin: 'com.antfortune.freeline'
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.2"
@@ -39,6 +40,17 @@ android {
     }
     productFlavors {
     }
+    freeline {
+        hack true
+        autoDependency true
+        productFlavor 'qizhi' // 渠道名
+     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
 }
 
 dependencies {
@@ -62,5 +74,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.3.0'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
-
+    debugCompile 'com.antfortune.freeline:runtime:0.8.7'
+    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.7'
+    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.7'
 }
