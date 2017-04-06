@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
+import cc.easyandroid.easyclean.repository.EasyWorkRepository;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
@@ -37,7 +38,7 @@ public class IndexFragmentPresenter extends AbsSimpleListPresenter<ResponseInfo<
         if (isViewAttached()) {
             getView().onCategoryListStart(requestValues.getTag());
         }
-        handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<List<Item_CategoryInfoItem>>>>() {
+        handleRequest(new EasyWorkUseCase(new EasyWorkRepository()), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<List<Item_CategoryInfoItem>>>>() {
             @Override
             public void onSuccess(EasyWorkUseCase.ResponseValue<ResponseInfo<List<Item_CategoryInfoItem>>> responseInfoResponseValue) {
                 if (isViewAttached()) {

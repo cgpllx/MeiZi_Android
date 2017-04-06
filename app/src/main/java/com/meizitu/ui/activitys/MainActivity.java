@@ -2,6 +2,7 @@ package com.meizitu.ui.activitys;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import com.meizitu.internal.di.components.DaggerIndexFragmentComponent;
 import com.meizitu.internal.di.components.IndexFragmentComponent;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
+import com.meizitu.ui.fragments.ImageListFragment;
 import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 
@@ -27,6 +29,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     ImageView imageView;
 
     MainActivityPresenter presenter = new MainActivityPresenter();
+
+    public static final String IndexFragmentTag="IndexFragmentTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initializeInjector();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, IndexFragment.newInstance()).commitAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, IndexFragment.newInstance()).commitAllowingStateLoss();
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(IndexFragmentTag);
+        if (fragment == null) {
+            replaceFragment(R.id.content_main, IndexFragment.newInstance(), IndexFragmentTag);
+        }
     }
 
     @Override

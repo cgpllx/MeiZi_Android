@@ -3,19 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/q5dp"
+    android:paddingTop="@dimen/q5dp"
+    android:paddingBottom="@dimen/q15dp"
+    android:background="?selectableItemBackground"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="256px"
-        android:layout_height="256px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/q15dp"
-        android:layout_marginBottom="@dimen/q5dp"
-        android:scaleType="centerInside"
-        android:background="@mipmap/image_detail_loading"
-         />
+        android:layout_margin="@dimen/q2dp"
+        android:scaleType="centerInside" />
     <!--android:background="@mipmap/list1png"-->
     <TextView
         android:id="@+id/title"

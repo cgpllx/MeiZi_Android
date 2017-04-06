@@ -76,9 +76,9 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
         public void setData(Category category) {
             this.category = category;
             title.setText("title");
-//            title.setText(category.getCategory_name());
-//            ImageUtils.load(getContext(),image,R.mipmap.list1png);
-            ImageUtils.load(getContext(),image,R.mipmap.aaa);
+            title.setText(category.getCategory_name());
+            ImageUtils.load(getContext(),image,R.mipmap.listbut2);
+//            ImageUtils.load(getContext(),image,R.mipmap.aaa);
         }
 
 

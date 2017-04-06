@@ -29,6 +29,8 @@
         <!--<item name="EasyListFilterMenuStyle">@style/QfamgEasyListFilterMenuStyle</item>-->
         <!--<item name="kProgressLayoutsStyle">@style/qfang_KProgressLayoutStyle</item>-->
         <item name="EasyRecyclerViewStyle">@style/easyRecyclerViewStyle_white</item>
+
+        <item name="android:windowBackground">@color/qF5F5F9</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

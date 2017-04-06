@@ -2,18 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/q10dp"
+    android:background="@color/qF5F5F9"
     android:orientation="horizontal">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/q15dp"
-        android:layout_marginLeft="@dimen/q10dp"
-        android:layout_marginTop="@dimen/q15dp"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/q15dp"
+        android:paddingTop="@dimen/q15dp"
+        android:paddingLeft="@dimen/q10dp"
+        android:layout_marginTop="@dimen/q10dp"
+        android:background="@color/qFFFFFF"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="新盤最新消息"
+        android:text="新盤美图"
         android:textColor="@color/q333333"
         android:textSize="@dimen/q18sp" />
 
