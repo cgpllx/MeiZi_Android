@@ -15,6 +15,7 @@ import com.meizitu.internal.di.components.IndexFragmentComponent;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
 import com.meizitu.ui.fragments.IndexFragment;
+import com.meizitu.ui.fragments.SplashFragment;
 
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -30,6 +31,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportFragmentManager().beginTransaction()
+                .add(android.R.id.content, SplashFragment.newInstance()).commitAllowingStateLoss();
+        setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         initTitleBar();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -41,6 +45,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
         initializeInjector();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main, IndexFragment.newInstance()).commitAllowingStateLoss();
+    }
+
+    @Override
+    public void reportFullyDrawn() {
+        super.reportFullyDrawn();
+
     }
 
     private void initializeInjector() {

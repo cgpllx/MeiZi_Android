@@ -1,7 +1,6 @@
 package com.meizitu.ui.fragments;
 
 
-import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;

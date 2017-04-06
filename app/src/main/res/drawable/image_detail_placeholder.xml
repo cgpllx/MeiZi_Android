@@ -7,7 +7,7 @@
         android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/image_loading" />
+            android:src="@mipmap/image_detail_loading" />
     </item>
 
 </layer-list>

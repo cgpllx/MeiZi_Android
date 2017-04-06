@@ -5,12 +5,12 @@
         <item
             android:id="@+id/nav_home"
             android:checked="true"
-            android:icon="@mipmap/image_home"
+            android:icon="@mipmap/image_nav_home"
             android:title="@string/home" />
     </group>
     <item
         android:id="@+id/nav_favorites"
-        android:icon="@mipmap/image_favorites"
+        android:icon="@mipmap/image_nav_favorites"
         android:title="@string/favorites" />
     <group
         android:id="@+id/nav_common"
@@ -18,19 +18,19 @@
         android:menuCategory="secondary">
         <item
             android:id="@+id/nav_score"
-            android:icon="@mipmap/image_score"
+            android:icon="@mipmap/image_nav_score"
             android:title="@string/score_encouragement" />
         <item
             android:id="@+id/nav_share"
-            android:icon="@mipmap/image_share"
+            android:icon="@mipmap/image_nav_share"
             android:title="@string/share" />
         <item
             android:id="@+id/nav_feedback"
-            android:icon="@mipmap/image_edit"
+            android:icon="@mipmap/image_nav_edit"
             android:title="@string/userfeedback" />
         <item
             android:id="@+id/nav_about_us"
-            android:icon="@mipmap/image_about"
+            android:icon="@mipmap/image_nav_about"
             android:title="@string/about_us" />
     </group>
 

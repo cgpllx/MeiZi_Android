@@ -3,7 +3,6 @@ package com.meizitu;
 import android.app.Application;
 import android.content.Context;
 
-import com.antfortune.freeline.FreelineCore;
 import com.google.android.gms.ads.MobileAds;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.components.DaggerApplicationComponent;
@@ -19,7 +18,6 @@ public class ImageApplication extends Application {
         //LeakCanary.install(this);
         MobileAds.initialize(this, getString(R.string.ad_unit_id_applicationCode));
         initializeInjector();
-        FreelineCore.init(this);
 
     }
 

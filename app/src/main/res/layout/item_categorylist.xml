@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/q15dp"
         android:layout_marginBottom="@dimen/q5dp"
         android:scaleType="centerInside"
-        android:background="@mipmap/image_loading"
+        android:background="@mipmap/image_detail_loading"
          />
     <!--android:background="@mipmap/list1png"-->
     <TextView

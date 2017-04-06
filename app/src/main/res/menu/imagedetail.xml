@@ -5,7 +5,7 @@
         android:id="@+id/detailmenu_down"
         android:orderInCategory="100"
         android:title="download"
-        android:icon="@mipmap/image_down"
+        android:icon="@mipmap/image_detail_down"
         app:showAsAction="always" />
     <item
         android:id="@+id/detailmenu_share"

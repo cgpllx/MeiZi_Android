@@ -12,8 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--android:theme="@style/AppTheme.Splash"-->
         <activity
-            android:name=".ui.activitys.SplashActivity"
+            android:name=".ui.activitys.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -34,12 +35,11 @@
         <meta-data
             android:name="com.meizitu.core.ImageGlideModule"
             android:value="GlideModule" />
-
-        <activity
-            android:name=".ui.activitys.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-
+        <!--android:label="@string/app_name"-->
+        <!--<activity-->
+            <!--android:name=".ui.activitys.MainActivity"-->
+            <!--android:label="DEMO"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".ui.activitys.FavoritesActivity"
             android:label="@string/title_activity_favorites"

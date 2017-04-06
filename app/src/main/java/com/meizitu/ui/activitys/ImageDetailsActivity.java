@@ -47,7 +47,6 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
     }
 
     private void initializeInjector() {
-//        int id = getIntent().getIntExtra(Imagecategory_ID, 0);
         Item_GroupImageInfoListItem groupImageInfo = getIntent().getParcelableExtra(ITEM_GROUPIMAGEINFOLISTITEM_EXTRA);
         this.component = DaggerImageDetailsComponent.builder()
                 .applicationComponent(getApplicationComponent())
