@@ -77,7 +77,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(containerViewId, fragment, tag);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -114,4 +114,6 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 }

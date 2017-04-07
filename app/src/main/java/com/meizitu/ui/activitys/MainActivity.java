@@ -1,5 +1,6 @@
 package com.meizitu.ui.activitys;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,9 +16,9 @@ import com.meizitu.internal.di.components.DaggerIndexFragmentComponent;
 import com.meizitu.internal.di.components.IndexFragmentComponent;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
-import com.meizitu.ui.fragments.ImageListFragment;
 import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
+import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -30,13 +31,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     MainActivityPresenter presenter = new MainActivityPresenter();
 
-    public static final String IndexFragmentTag="IndexFragmentTag";
+    public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction()
-                .add(android.R.id.content, SplashFragment.newInstance()).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().add(android.R.id.content, SplashFragment.newInstance()).commitAllowingStateLoss();
         setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
         initTitleBar();
@@ -48,11 +48,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initializeInjector();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, IndexFragment.newInstance()).commitAllowingStateLoss();
-
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(IndexFragmentTag);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(INDEXFRAGMENT_TAG);
         if (fragment == null) {
-            replaceFragment(R.id.content_main, IndexFragment.newInstance(), IndexFragmentTag);
+            replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
     }
 
@@ -70,6 +68,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private long startTime = 0;
+    public static final String CONTROLEVALUATION = "Controlevaluation";
 
     @Override
     public void onBackPressed() {
@@ -79,7 +78,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             long endTime = System.currentTimeMillis();
             if (startTime > (endTime - 2000)) {
-                moveTaskToBack(true);
+
+                SharedPreferences sharedPreferences = getSharedPreferences(CONTROLEVALUATION, MODE_PRIVATE);
+                int exitCount = sharedPreferences.getInt(CONTROLEVALUATION, 0);
+                if (exitCount == 3) {
+                    SimpleDialogFragment.newInstance("title", "massagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassage").show(getSupportFragmentManager(), "tag");
+                } else {
+                    moveTaskToBack(true);
+                }
+                SimpleDialogFragment.newInstance("title", "massagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassage").show(getSupportFragmentManager(), "tag");
+                if (exitCount <= 3) {
+                    sharedPreferences.edit().putInt(CONTROLEVALUATION, exitCount + 1).commit();
+                }
             } else {
                 startTime = endTime;
                 EasyToast.showShort(getApplicationContext(), getString(R.string.pressAnotherExit));
@@ -108,7 +118,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (drawer != null) {
             drawer.removeDrawerListener(toggle);
         }
-        if(presenter!=null){
+        if (presenter != null) {
             presenter.detachView();
         }
     }

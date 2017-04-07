@@ -8,19 +8,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/q15dp"
-        android:paddingTop="@dimen/q15dp"
-        android:paddingLeft="@dimen/q10dp"
         android:layout_marginTop="@dimen/q10dp"
         android:background="@drawable/bottom_line"
         android:gravity="center_vertical"
+        android:paddingBottom="@dimen/q15dp"
+        android:paddingLeft="@dimen/q10dp"
+        android:paddingTop="@dimen/q15dp"
         android:singleLine="true"
-        android:text="最新美图"
+        android:text="类别"
         android:textColor="@color/q333333"
-        android:textSize="@dimen/q20dp" />
+        android:textSize="@dimen/q20sp" />
+
     <View
         android:layout_width="match_parent"
-        android:background="@color/qFFFFFF"
-        android:layout_height="@dimen/q10dp"/>
-
+        android:layout_height="@dimen/q10dp"
+        android:background="@color/qFFFFFF" />
 </LinearLayout>

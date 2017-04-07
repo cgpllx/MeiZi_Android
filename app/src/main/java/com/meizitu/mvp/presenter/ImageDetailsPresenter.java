@@ -1,6 +1,7 @@
 package com.meizitu.mvp.presenter;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.media.MediaScannerConnection;
@@ -18,7 +19,6 @@ import com.meizitu.internal.di.PerActivity;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
-import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.ResponseInfo;
@@ -28,7 +28,6 @@ import com.meizitu.utils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -40,7 +39,9 @@ import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import cc.easyandroid.easymvp.PresenterLoader;
 import cc.easyandroid.easymvp.call.EasyThreadCall;
-import cc.easyandroid.easyutils.ArrayUtils;
+import cc.easyandroid.easypermission.EasyPermission;
+import cc.easyandroid.easypermission.Rationale;
+import cc.easyandroid.easypermission.RationaleListener;
 import cc.easyandroid.easyutils.EasyToast;
 
 @PerActivity
@@ -73,6 +74,7 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     }
 
     private void exeDownloadRequest(String imageurl, final Activity activity) {
+
         final FutureTarget<File> future = Glide.with(mContext).load(imageurl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         EasyWorkUseCase.RequestValues<File> requestValues = new EasyWorkUseCase.RequestValues<>("", new EasyThreadCall<>(new PresenterLoader<File>() {
             @Override
@@ -183,11 +185,28 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
         });
     }
 
-    @Override
-    public void handleNavigationItemSelected(MenuItem item, Activity activity, String imageurl) {
+    public static final int DOWNPERMISSIONREQUESTCODE = 100;
+
+    public void handleNavigationItemSelected(MenuItem item, final Activity activity, String imageurl) {
         switch (item.getItemId()) {
             case R.id.detailmenu_down:
-                exeDownloadRequest(imageurl, activity);
+                // 先判断是否有权限。
+                if (EasyPermission.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    // 有权限，直接do anything.
+                    exeDownloadRequest(imageurl, activity);
+                } else {
+                    // 申请权限。
+                    EasyPermission.with(activity)
+                            .requestCode(DOWNPERMISSIONREQUESTCODE)
+                            .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .rationale(new RationaleListener() {
+                                @Override
+                                public void showRequestPermissionRationale(int i, Rationale rationale) {
+                                    EasyPermission.rationaleDialog(activity, rationale).show();
+                                }
+                            }).send();
+                }
+
                 break;
             case R.id.detailmenu_share:
                 exeShare(imageurl, activity);
@@ -204,14 +223,33 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     }
 
     @Override
+    public void handleDownLoadImage(Activity activity, String imageUrl) {
+        exeDownloadRequest(imageUrl, activity);
+    }
+
+    @Override
+    public void handleShareImage(Activity activity, String imageUrl) {
+        exeShare(imageUrl, activity);
+    }
+
+    @Override
+    public void handleFavorite(MenuItem item) {
+        if (item.getActionView().isSelected()) {
+            executeDeleteFavorites(mGroupImageInfo, item.getActionView());
+        } else {
+            executeAddFavorites(mGroupImageInfo, item.getActionView());
+        }
+    }
+
+    @Override
     public void initFavoriteMenu(final View actionView) {
-        mUseCaseHandler.execute(mGetDataFromDbUseCase, new GetDataFromDbUseCase.RequestValues(ImageDB.TABNAME_GROUPIMAGEINFO, Item_GroupImageInfoListItem.class,mGroupImageInfo.buildKeyColumn()), new UseCase.UseCaseCallback<GetDataFromDbUseCase.ResponseValue<Item_GroupImageInfoListItem>>() {
+        mUseCaseHandler.execute(mGetDataFromDbUseCase, new GetDataFromDbUseCase.RequestValues(ImageDB.TABNAME_GROUPIMAGEINFO, Item_GroupImageInfoListItem.class, mGroupImageInfo.buildKeyColumn()), new UseCase.UseCaseCallback<GetDataFromDbUseCase.ResponseValue<Item_GroupImageInfoListItem>>() {
             @Override
             public void onSuccess(GetDataFromDbUseCase.ResponseValue<Item_GroupImageInfoListItem> responseValue) {
-                Item_GroupImageInfoListItem item_groupImageInfoListItem= responseValue.getDatas();
-                if(item_groupImageInfoListItem!=null){
+                Item_GroupImageInfoListItem item_groupImageInfoListItem = responseValue.getDatas();
+                if (item_groupImageInfoListItem != null) {
                     actionView.setSelected(true);
-                }else{
+                } else {
                     actionView.setSelected(false);
                 }
             }
@@ -250,5 +288,6 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
             }
         });
     }
+
 
 }
