@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -45,6 +46,9 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     AdView adView;
 
+    ImageView up;
+    ImageView next;
+
     @Inject
     ImageDetailsPresenter presenter;
 
@@ -75,6 +79,20 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
         easyProgress = EasyViewUtil.findViewById(view, R.id.easyProgress);
         viewpagerIndicator = EasyViewUtil.findViewById(view, R.id.viewpagerIndicator);
+        up = EasyViewUtil.findViewById(view, R.id.up, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentItem = viewPager.getCurrentItem();
+                viewPager.setCurrentItem(currentItem - 1);
+            }
+        });
+        next = EasyViewUtil.findViewById(view, R.id.next, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentItem = viewPager.getCurrentItem();
+                viewPager.setCurrentItem(currentItem + 1);
+            }
+        });
         easyProgress.setOnEasyProgressClickListener(new OnEasyProgressClickListener() {
             @Override
             public void onLoadingViewClick() {

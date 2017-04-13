@@ -49,6 +49,14 @@ public class ImageUtils {
         Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).transform(new GlideCircleTransform(context)).into(imageView);
     }
 
+    public static void loadGlideCircle(Context context, ImageView imageView, String imageUrl) {
+        Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).transform(new GlideCircleTransform(context)).into(imageView);
+    }
+
+    public static void loadGlideCircle(Context context, ImageView imageView, int resourceId) {
+        Glide.with(context).load(resourceId).diskCacheStrategy(DiskCacheStrategy.ALL).transform(new GlideCircleTransform(context)).into(imageView);
+    }
+
     public static void loadGlideRound(Context context, ImageView imageView, String imageUrl, int placeholder) {
         Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().transform(new CenterCrop(context), new GlideRoundTransform(context, 4)).placeholder(placeholder).into(imageView);
     }
@@ -56,10 +64,11 @@ public class ImageUtils {
     public static void load(Context context, ImageView imageView, String imageUrl, int placeholder) {
         Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).dontAnimate().into(imageView);
     }
+
     public static void load1(Context context, ImageView imageView, String imageUrl, int placeholder) {
 //        Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
         Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).dontAnimate().into(imageView);
-        Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).dontAnimate().into(new GlideDrawableImageViewTarget(imageView){
+        Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).dontAnimate().into(new GlideDrawableImageViewTarget(imageView) {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
                 super.onResourceReady(resource, animation);

@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerIndexFragmentComponent;
@@ -20,6 +22,7 @@ import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
+import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.EasyToast;
 
 
@@ -28,7 +31,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     ImageView imageView;
-
+    AdView adView;
     MainActivityPresenter presenter = new MainActivityPresenter();
 
     public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (fragment == null) {
             replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
+
     }
 
     @Override
@@ -63,7 +67,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initializeInjector() {
         this.component = DaggerIndexFragmentComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .indexFragmentModule(new IndexFragmentModule(30))
+                .indexFragmentModule(new IndexFragmentModule(40))
                 .build();
     }
 
@@ -82,11 +86,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 SharedPreferences sharedPreferences = getSharedPreferences(CONTROLEVALUATION, MODE_PRIVATE);
                 int exitCount = sharedPreferences.getInt(CONTROLEVALUATION, 0);
                 if (exitCount == 3) {
-                    SimpleDialogFragment.newInstance("title", "massagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassage").show(getSupportFragmentManager(), "tag");
+                    SimpleDialogFragment.newInstance("thank you for helping us !", "we appreciate if you rate our free app and give us G+1 \n" +
+                            "\n" +
+                            "come back tomorrow for new girls").show(getSupportFragmentManager(), "tag");
                 } else {
                     moveTaskToBack(true);
                 }
-                SimpleDialogFragment.newInstance("title", "massagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassagemassage").show(getSupportFragmentManager(), "tag");
                 if (exitCount <= 3) {
                     sharedPreferences.edit().putInt(CONTROLEVALUATION, exitCount + 1).commit();
                 }
@@ -120,6 +125,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         if (presenter != null) {
             presenter.detachView();
+        }
+        if (adView != null) {
+            adView.destroy();
         }
     }
 }

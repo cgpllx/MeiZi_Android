@@ -72,6 +72,12 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     }
 
     @Override
+    protected void refesh() {
+        super.refesh();
+        presenter.execute();
+    }
+
+    @Override
     public void onCategoryListSuccess(Object o, ResponseInfo<List<Item_CategoryInfoItem>> responseInfo) {
         deliverCategoryResult(o, responseInfo);
     }
@@ -79,11 +85,12 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     public void deliverCategoryResult(Object i, ResponseInfo<List<Item_CategoryInfoItem>> responseInfo) {
         helper.getRecyclerAdapter().addHeaderItem(new Item_Index_HotCategory());
         ArrayList list = new ArrayList<>(responseInfo.getData());
-        list.remove(0);
-        list.remove(0);
+//        list.remove(0);
+//        list.remove(0);
         helper.getRecyclerAdapter().addHeaderItems(list);
         helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());
 
     }
+
 
 }

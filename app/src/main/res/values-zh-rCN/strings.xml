@@ -32,4 +32,7 @@
     <string name="easyrecyclerview_day_ago">&#160;天前</string>
 
     <string name="no_email">本機沒有發現郵箱app</string>
+    <string name="category">类别</string>
+    <string name="latestbeautiful">热门美图</string>
+    <string name="app_name_desc">美麗 性感  模特 清純</string>
 </resources>

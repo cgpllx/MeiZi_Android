@@ -14,6 +14,8 @@ import com.meizitu.internal.di.modules.ImageListModule;
 import com.meizitu.pojo.Category;
 import com.meizitu.ui.fragments.ImageListFragment;
 
+import java.util.Locale;
+
 
 public class ImageListActivity extends BaseSwipeBackActivity implements HasComponent<ImageListComponent> {
 
@@ -35,17 +37,16 @@ public class ImageListActivity extends BaseSwipeBackActivity implements HasCompo
         Category category = getIntent().getParcelableExtra(CATEGORY_EXTRA);
         int gategoryId = category.getCategory_code();
         initializeInjector(gategoryId);
-        setTitle(category.getCategory_name());
-
+        if (new Locale("zh").getLanguage().equals(Locale.getDefault().getLanguage())) {
+            setTitle(category.getCategory_name());
+        } else {
+            setTitle(category.getCategory_en_name());
+        }
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(IMAGELISTTAG);
         if (fragment == null) {
             replaceFragment(R.id.fragmentContainer, ImageListFragment.newInstance(), IMAGELISTTAG);
         }
 
-//        Locale.getDefault().getLanguage()
-//        System.out.println("Locale.getDefault().getLanguage()="+ Locale.getDefault().getLanguage());
-//        new Locale("zh").getLanguage().equals(Locale.getDefault().getLanguage()))
-//        getResources().getConfiguration().getLocales()
     }
 
     private void initializeInjector(int gategoryId) {

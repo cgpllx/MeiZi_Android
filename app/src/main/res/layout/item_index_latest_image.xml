@@ -15,7 +15,7 @@
         android:background="@drawable/bottom_line"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="最新美图"
+        android:text="@string/latestbeautiful"
         android:textColor="@color/q333333"
         android:textSize="@dimen/q20dp" />
     <View

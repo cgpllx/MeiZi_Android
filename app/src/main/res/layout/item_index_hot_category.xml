@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/q10dp"
         android:paddingTop="@dimen/q15dp"
         android:singleLine="true"
-        android:text="类别"
+        android:text="@string/category"
         android:textColor="@color/q333333"
         android:textSize="@dimen/q20sp" />
 

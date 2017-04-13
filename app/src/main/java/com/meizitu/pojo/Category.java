@@ -16,6 +16,30 @@ public class Category implements Parcelable {
     @SerializedName("category_pinyin")
     private String category_pinyin;
 
+    @SerializedName("category_en_name")
+    private String category_en_name;
+
+    @SerializedName("category_icon")
+    private String category_icon;
+
+    public String getCategory_icon() {
+        return category_icon;
+    }
+
+    public void setCategory_icon(String category_icon) {
+        this.category_icon = category_icon;
+    }
+
+    public String getCategory_en_name() {
+        return category_en_name;
+    }
+
+    public void setCategory_en_name(String category_en_name) {
+        this.category_en_name = category_en_name;
+    }
+
+
+
     public int getCategory_code() {
         return category_code;
     }
@@ -40,6 +64,9 @@ public class Category implements Parcelable {
         this.category_pinyin = category_pinyin;
     }
 
+    public Category() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -50,22 +77,25 @@ public class Category implements Parcelable {
         dest.writeInt(this.category_code);
         dest.writeString(this.category_name);
         dest.writeString(this.category_pinyin);
-    }
-
-    public Category() {
+        dest.writeString(this.category_en_name);
+        dest.writeString(this.category_icon);
     }
 
     protected Category(Parcel in) {
         this.category_code = in.readInt();
         this.category_name = in.readString();
         this.category_pinyin = in.readString();
+        this.category_en_name = in.readString();
+        this.category_icon = in.readString();
     }
 
-    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
         public Category createFromParcel(Parcel source) {
             return new Category(source);
         }
 
+        @Override
         public Category[] newArray(int size) {
             return new Category[size];
         }

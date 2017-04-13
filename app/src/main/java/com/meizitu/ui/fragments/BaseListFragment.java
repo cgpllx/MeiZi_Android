@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.core.CacheControl;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
@@ -61,16 +63,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
-//        gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-//        simpleRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                staggeredGridLayoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
-//            }
-//        });
         simpleRecyclerView.setLayoutManager(gridLayoutManager);
-//        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
         helper = new EasyFlexibleRecyclerViewHelper<T>(simpleRecyclerView, adapter) {
@@ -98,7 +91,12 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
+
+        adView = EasyViewUtil.findViewById(view, R.id.adView);
+        adView.loadAd(new AdRequest.Builder().build());
     }
+
+    AdView adView;
 
     /**
      * 恢复数据
@@ -178,9 +176,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             simpleRecyclerView.autoRefresh();
         }
     }
-
-//    public static final String FORCE_NETWORK = "no-cache";
-//    public static final String DEFAULT="";
 
     protected void refesh() {
         execute(EasyFlexibleRecyclerViewHelper.REFRESH, CacheControl.FORCE_NETWORK);

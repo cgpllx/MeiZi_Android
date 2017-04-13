@@ -71,4 +71,9 @@ public class IndexListAdapter extends EasyFlexibleAdapter {
             super.onScrollStateChanged(recyclerView, newState);
         }
     };
+
+    @Override
+    public boolean isEmpty() {
+        return getHeaderItemCount()<1;
+    }
 }

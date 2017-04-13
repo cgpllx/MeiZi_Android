@@ -22,7 +22,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.config
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -59,7 +59,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
-    compile 'com.github.cgpllx:EasyRecyclerView:1.6.3'
+    compile 'com.github.cgpllx:EasyRecyclerView:1.6.4'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
@@ -69,5 +69,4 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     compile 'com.github.cgpllx:EasyPermission:1.1.0'
-
 }

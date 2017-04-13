@@ -14,6 +14,7 @@ import com.meizitu.ui.activitys.ImageListActivity;
 import com.meizitu.utils.ImageUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
@@ -75,10 +76,13 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
         //-------------------
         public void setData(Category category) {
             this.category = category;
-            title.setText("title");
-//            title.setText(category.getCategory_name());
-//            ImageUtils.load(getContext(), image, R.mipmap.listbut2);
-            ImageUtils.load(getContext(),image,R.mipmap.aaa);
+            if (new Locale("zh").getLanguage().equals(Locale.getDefault().getLanguage())) {
+                title.setText(category.getCategory_name());
+            } else {
+                title.setText(category.getCategory_en_name());
+            }
+            System.out.println("cgp="+category.getCategory_en_name());
+            ImageUtils.loadGlideCircle(getContext(), image, category.getCategory_icon(),R.mipmap.image_girl);
         }
 
 

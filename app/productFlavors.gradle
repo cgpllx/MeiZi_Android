@@ -50,5 +50,9 @@ android {
             applicationId = "com.meizitu.weimeixiezhen_1"
             buildConfigField "int", "GATEGORYID", "300"
         }
+        asianbeauty {
+            applicationId = "com.meizitu.asianbeauty"
+            buildConfigField "int", "GATEGORYID", "300"
+        }
     }
 }
