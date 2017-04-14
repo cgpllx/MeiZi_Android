@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
@@ -22,7 +21,6 @@ import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
-import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.EasyToast;
 
 
@@ -58,12 +56,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-    @Override
-    public void reportFullyDrawn() {
-        super.reportFullyDrawn();
-
-    }
-
     private void initializeInjector() {
         this.component = DaggerIndexFragmentComponent.builder()
                 .applicationComponent(getApplicationComponent())
@@ -84,15 +76,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (startTime > (endTime - 2000)) {
 
                 SharedPreferences sharedPreferences = getSharedPreferences(CONTROLEVALUATION, MODE_PRIVATE);
-                int exitCount = sharedPreferences.getInt(CONTROLEVALUATION, 0);
-                if (exitCount == 3) {
-                    SimpleDialogFragment.newInstance("thank you for helping us !", "we appreciate if you rate our free app and give us G+1 \n" +
-                            "\n" +
-                            "come back tomorrow for new girls").show(getSupportFragmentManager(), "tag");
+                int exitCount = sharedPreferences.getInt(CONTROLEVALUATION, -1);
+                if (exitCount % 3 == 0) {
+                    SimpleDialogFragment.newInstance(getResources().getString(R.string.dialogTitle), getResources().getString(R.string.dialogMessage)).show(getSupportFragmentManager(), "tag");
                 } else {
                     moveTaskToBack(true);
                 }
-                if (exitCount <= 3) {
+                if (exitCount <= 9) {
                     sharedPreferences.edit().putInt(CONTROLEVALUATION, exitCount + 1).commit();
                 }
             } else {

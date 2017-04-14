@@ -42,4 +42,9 @@
     <string name="latestbeautiful">Hot</string>
     <string name="action_settings">Settings</string>
 
+    <string name="confirm">confirm</string>
+    <string name="cancel">later</string>
+    <string name="dialogTitle">thank you for helping us !</string>
+    <string name="dialogMessage">we appreciate if you rate our free app and give us G+1 come back tomorrow for new girls</string>
+
 </resources>

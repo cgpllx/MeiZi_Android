@@ -16,9 +16,12 @@ import retrofit2.http.Query;
  * 接口公共方法
  */
 public interface ImageApi {
-//    String DOMAIN = "www.ffvvv.cc";
+    //    String DOMAIN = "www.ffvvv.cc";
 //    String DOMAIN = "192.168.1.105:8080";
-    String DOMAIN = "192.168.3.9:8080";
+//    String DOMAIN = "192.168.3.9:8080";
+    String DOMAIN = "api.ffvvv.cc";
+//    String PATH = "/meizitu";
+    String PATH = "";
 
     //public, max-age=10 请求中带有max-age 响应中也可以有，测试发现是以少的为准，
 
@@ -27,7 +30,7 @@ public interface ImageApi {
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET("/meizitu/groupImageInfoList?count=20")
+    @GET(PATH + "/groupImageInfoList?count=20")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex);
 
 
@@ -35,14 +38,14 @@ public interface ImageApi {
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
      */
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET("/meizitu/groupImageInfoDetails")
+    @GET(PATH + "/groupImageInfoDetails")
     Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET("/meizitu/categoryList")
+    @GET(PATH + "/categoryList")
     Call<ResponseInfo<List<Item_CategoryInfoItem>>> categoryList(@Query("id") int id);
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET("/meizitu/groupImageInfoListByHot?count=20")
+    @GET(PATH + "/groupImageInfoListByHot?count=20")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex);
 }

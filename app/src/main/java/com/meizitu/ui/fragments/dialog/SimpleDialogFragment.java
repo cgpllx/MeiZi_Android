@@ -47,14 +47,14 @@ public class SimpleDialogFragment extends DialogFragment {
         if(!TextUtils.isEmpty(message)){
             builder.setMessage(message);
         }
-        builder.setPositiveButton("確定", new OnClickListener() {
+        builder.setPositiveButton(R.string.confirm, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (buttonOnClickListener != null) {
                     buttonOnClickListener.positiveOnClick();
                 }
             }
-        }).setNegativeButton("取消", null);
+        }).setNegativeButton(R.string.cancel, null);
         return builder.create();
     }
 
