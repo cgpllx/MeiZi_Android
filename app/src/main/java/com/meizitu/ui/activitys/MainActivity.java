@@ -1,5 +1,6 @@
 package com.meizitu.ui.activitys;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,10 +27,15 @@ import cc.easyandroid.easyutils.EasyToast;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<IndexFragmentComponent> {
     IndexFragmentComponent component;
+
     DrawerLayout drawer;
+
     ActionBarDrawerToggle toggle;
+
     ImageView imageView;
+
     AdView adView;
+
     MainActivityPresenter presenter = new MainActivityPresenter();
 
     public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
@@ -74,15 +80,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             long endTime = System.currentTimeMillis();
             if (startTime > (endTime - 2000)) {
-
                 SharedPreferences sharedPreferences = getSharedPreferences(CONTROLEVALUATION, MODE_PRIVATE);
                 int exitCount = sharedPreferences.getInt(CONTROLEVALUATION, -1);
-                if (exitCount % 3 == 0) {
-                    SimpleDialogFragment.newInstance(getResources().getString(R.string.dialogTitle), getResources().getString(R.string.dialogMessage)).show(getSupportFragmentManager(), "tag");
+                if (exitCount == 3) {
+                    SimpleDialogFragment.newInstance(getResources().getString(R.string.dialogTitle), getResources().getString(R.string.dialogMessage)).setPositiveButtonOnClickListener(new SimpleDialogFragment.PositiveButtonOnClickListener() {
+                        @Override
+                        public void positiveOnClick() {
+                            presenter.favourableComment(MainActivity.this);
+                        }
+                    }).show(getSupportFragmentManager(), "tag");
                 } else {
                     moveTaskToBack(true);
                 }
-                if (exitCount <= 9) {
+                if (exitCount <= 3) {
                     sharedPreferences.edit().putInt(CONTROLEVALUATION, exitCount + 1).commit();
                 }
             } else {
@@ -96,9 +106,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        presenter.handleNavigationItemSelected(item, this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        int id = item.getItemId();
+        if (id == R.id.nav_home) {
+            // no handle
+        } else if (id == R.id.nav_favorites) {
+            //TODO: my favorites
+            startActivity(new Intent(this, FavoritesActivity.class));
+        } else if (id == R.id.nav_score) {
+            presenter.favourableComment(this);
+        } else if (id == R.id.nav_share) {
+            presenter.share(this);
+        } else if (id == R.id.nav_feedback) {
+            presenter.feedback(this);
+        } else if (id == R.id.nav_about_us) {
+            presenter.favourableComment(this);
+        }
         return true;
     }
 
