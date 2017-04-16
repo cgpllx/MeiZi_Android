@@ -65,10 +65,12 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
 
     @Override
     public void onCategoryListStart(Object o) {
+        onSimpleListStart(o);
     }
 
     @Override
     public void onCategoryListError(Object o, Throwable t) {
+        onSimpleListError(o,t);
     }
 
     @Override
@@ -83,14 +85,12 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     }
 
     public void deliverCategoryResult(Object i, ResponseInfo<List<Item_CategoryInfoItem>> responseInfo) {
-        helper.getRecyclerAdapter().addHeaderItem(new Item_Index_HotCategory());
-        ArrayList list = new ArrayList<>(responseInfo.getData());
-//        list.remove(0);
-//        list.remove(0);
-        helper.getRecyclerAdapter().addHeaderItems(list);
-        helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());
-
+        if(responseInfo!=null){
+            helper.getRecyclerAdapter().addHeaderItem(new Item_Index_HotCategory());
+            ArrayList list = new ArrayList<>(responseInfo.getData());
+            helper.getRecyclerAdapter().addHeaderItems(list);
+            helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());
+        }
     }
-
 
 }

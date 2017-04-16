@@ -51,7 +51,7 @@ android {
             buildConfigField "int", "GATEGORYID", "300"
         }
         asianbeauty {
-            applicationId = "com.meizitu.asianbeauty"
+            applicationId = "com.meizitu.asianbeauty_2"
             buildConfigField "int", "GATEGORYID", "300"
         }
     }

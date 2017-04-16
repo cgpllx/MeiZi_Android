@@ -56,16 +56,14 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_list_to_grid:
-                if (!simpleRecyclerView.isLoadIng()&&!simpleRecyclerView.isRefreshIng()) {
-                    if (gridLayoutManager.getSpanCount() == 1) {
-                        item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
-                        gridLayoutManager.setSpanCount(2);
-                    } else {
-                        item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
-                        gridLayoutManager.setSpanCount(1);
-                    }
-                    helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());
+                if (gridLayoutManager.getSpanCount() == 1) {
+                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
+                    gridLayoutManager.setSpanCount(2);
+                } else {
+                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
+                    gridLayoutManager.setSpanCount(1);
                 }
+                helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount() - 2);
                 break;
         }
         return super.onOptionsItemSelected(item);

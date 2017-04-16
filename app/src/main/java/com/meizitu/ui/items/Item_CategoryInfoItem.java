@@ -82,7 +82,7 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
                 title.setText(category.getCategory_en_name());
             }
             System.out.println("cgp="+category.getCategory_en_name());
-            ImageUtils.loadGlideCircle(getContext(), image, category.getCategory_icon(),R.mipmap.image_girl);
+            ImageUtils.loadGlideCircle(getContext(), image, category.getCategory_icon(),R.mipmap.listbut2);
         }
 
 
