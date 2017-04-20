@@ -35,6 +35,7 @@ public class BannerAtlasAdapter<T extends IQfangBanner> extends AbstractViewPage
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//
                 .placeholder(R.drawable.image_detail_placeholder)//
                 .dontAnimate().into(imageView);
+//        Glide.with(container.getContext()).;//
         return contentView;
     }
 }

@@ -17,6 +17,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.banner.BannerAtlasAdapter;
+import com.meizitu.core.DepthPageTransformer;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
@@ -77,6 +78,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         presenter.attachView(this);
         adView = EasyViewUtil.findViewById(view, R.id.adView);
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
         easyProgress = EasyViewUtil.findViewById(view, R.id.easyProgress);
         viewpagerIndicator = EasyViewUtil.findViewById(view, R.id.viewpagerIndicator);
         up = EasyViewUtil.findViewById(view, R.id.up, new View.OnClickListener() {
