@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
-import com.meizitu.banner.BannerAtlasAdapter;
+import com.meizitu.banner.BannerImageDetailAdapter;
 import com.meizitu.core.DepthPageTransformer;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
@@ -53,7 +53,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     @Inject
     ImageDetailsPresenter presenter;
 
-    BannerAtlasAdapter<Image> bannerAdapter;
+    BannerImageDetailAdapter<Image> bannerAdapter;
 
     public static Fragment newFragment() {
         ImageDetailsFragment fragment = new ImageDetailsFragment();
@@ -145,7 +145,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         if (groupImageInfoResponseInfo != null && groupImageInfoResponseInfo.isSuccess()) {
             GroupImageInfo groupImageInfo = groupImageInfoResponseInfo.getData();
             if (groupImageInfo != null) {
-                bannerAdapter = new BannerAtlasAdapter();
+                bannerAdapter = new BannerImageDetailAdapter();
                 viewPager.setOffscreenPageLimit(3);
                 bannerAdapter.addItems(groupImageInfo.getImages());
                 viewPager.setAdapter(bannerAdapter);

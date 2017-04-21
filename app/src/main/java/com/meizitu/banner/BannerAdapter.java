@@ -10,7 +10,7 @@ import com.meizitu.utils.ImageUtils;
 
 import java.util.ArrayList;
 
-public class BannerAdapter<T extends IQfangBanner> extends AbstractViewPagerAdapter<T> {
+public class BannerAdapter<T extends IBanner> extends AbstractViewPagerAdapter<T> {
 
 //    public BannerAdapter(ArrayList<T> data) {
 //        super(data);
@@ -25,7 +25,7 @@ public class BannerAdapter<T extends IQfangBanner> extends AbstractViewPagerAdap
         System.out.println("newView position =" + position);
         final ImageView imageView = new ImageView(container.getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        IQfangBanner qfangBanner = getItem(position);
+        IBanner qfangBanner = getItem(position);//需要设置一个tag ，看看是否已经加载过了，加载后的就不用再加载了
         ImageUtils.load(container.getContext(), imageView, qfangBanner.getImageUrl(), R.drawable.image_detail_placeholder);
         if (itemClickListener != null) {
             imageView.setOnClickListener(new View.OnClickListener() {

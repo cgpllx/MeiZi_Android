@@ -1,13 +1,14 @@
 package com.meizitu.pojo;
 
 import com.google.gson.annotations.SerializedName;
-import com.meizitu.banner.IQfangBanner;
+import com.meizitu.banner.IBanner;
 
-public class Image implements IQfangBanner{
+public class Image implements IBanner {
 	@SerializedName("imageurl")
 	private String imageurl;
 	@SerializedName("groupimageinfo_id")
 	private int groupimageinfo_id;
+
 
 	public String getImageurl() {
 		return imageurl;
@@ -24,7 +25,6 @@ public class Image implements IQfangBanner{
 	public void setGroupimageinfo_id(int groupimageinfo_id) {
 		this.groupimageinfo_id = groupimageinfo_id;
 	}
-
 
 	@Override
 	public String getImageUrl() {
