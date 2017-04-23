@@ -9,21 +9,23 @@ public class Image implements IBanner {
 	@SerializedName("groupimageinfo_id")
 	private int groupimageinfo_id;
 
+	boolean loaded;
+
+	public boolean isLoaded() {
+		return loaded;
+	}
+
+	public void setLoaded(boolean loaded) {
+		this.loaded = loaded;
+	}
 
 	public String getImageurl() {
 		return imageurl;
 	}
 
-	public void setImageurl(String imageurl) {
-		this.imageurl = imageurl;
-	}
 
 	public int getGroupimageinfo_id() {
 		return groupimageinfo_id;
-	}
-
-	public void setGroupimageinfo_id(int groupimageinfo_id) {
-		this.groupimageinfo_id = groupimageinfo_id;
 	}
 
 	@Override

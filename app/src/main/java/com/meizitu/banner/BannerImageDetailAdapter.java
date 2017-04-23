@@ -20,11 +20,6 @@ import uk.co.senab.photoview.PhotoView;
 
 public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPagerAdapter<T> {
 
-
-    public BannerImageDetailAdapter(ArrayList<T> data) {
-        super(data);
-    }
-
     public BannerImageDetailAdapter() {
         super();
     }
@@ -34,8 +29,8 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
         View contentView = LayoutInflater.from(container.getContext()).inflate(R.layout.viewpager_eachpage_layout, null);
         PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
         final EasyProgressFrameLayout progressLayout = EasyViewUtil.findViewById(contentView, R.id.progressView);
-        progressLayout.showLoadingView();
-        IBanner banner = getItem(position);
+
+        final IBanner banner = getItem(position);
         Glide.with(container.getContext())//
                 .load(banner.getImageUrl())//
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//
@@ -46,12 +41,25 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
                 super.onResourceReady(resource, animation);
                 progressLayout.showContentView();
+                banner.setLoaded(true);
             }
 
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
                 progressLayout.showContentView();
+                banner.setLoaded(true);
+            }
+
+
+            @Override
+            public void onLoadStarted(Drawable placeholder) {
+                super.onLoadStarted(placeholder);
+                if (!banner.isLoaded()) {
+                    progressLayout.showLoadingView();
+                }else{
+                    progressLayout.showContentView();
+                }
             }
         });
         return contentView;

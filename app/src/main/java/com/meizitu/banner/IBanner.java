@@ -5,4 +5,8 @@ package com.meizitu.banner;
  */
 public interface IBanner {
     String getImageUrl();
+
+    boolean isLoaded();
+
+    void setLoaded(boolean loaded);
 }

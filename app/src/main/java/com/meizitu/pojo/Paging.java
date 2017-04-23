@@ -19,32 +19,16 @@ public class Paging<T> {
         return totalCount;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
     public int getCurrentPageNo() {
         return currentPageNo;
-    }
-
-    public void setCurrentPageNo(int currentPageNo) {
-        this.currentPageNo = currentPageNo;
     }
 
     public int getTotalPage() {
         return totalPage;
     }
 
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-    }
-
     public int getPageSize() {
         return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
     }
 
     public T getData() {

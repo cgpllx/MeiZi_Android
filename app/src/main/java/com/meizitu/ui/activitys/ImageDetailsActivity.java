@@ -22,7 +22,7 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
 
     public static final String ITEM_GROUPIMAGEINFOLISTITEM_EXTRA = "Item_GroupImageInfoListItem";
 
-    long DELAYED_TIME = 15 * 1000;
+    long DELAYED_TIME = 30 * 1000;
 
     @Inject
     InterstitialAd mInterstitialAd;

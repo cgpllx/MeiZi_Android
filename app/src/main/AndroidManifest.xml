@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.activitys.ImageDetailsActivity"
             android:label="@string/app_name"
-            android:theme="@style/ImageDetailsTheme" />
+            android:theme="@style/AppTheme.ImageDetailsTheme" />
 
         <meta-data
             android:name="com.meizitu.core.ImageGlideModule"
