@@ -27,7 +27,7 @@ import dagger.Component;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, IndexFragmentModule.class})
-public interface IndexFragmentComponent {//只会继承方法
+public interface MainActivityComponent {//只会继承方法
 
     void inject(IndexFragment indexFragment);
 

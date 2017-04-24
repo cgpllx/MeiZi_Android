@@ -58,7 +58,7 @@ public class IndexFragment1 extends ImageBaseFragment implements IndexFragmentCo
 
         simpleRecyclerView.setAdapter(adapter);
         setUserVisibleHint(true);
-//        getComponent(IndexFragmentComponent.class).inject(this);
+//        getComponent(MainActivityComponent.class).inject(this);
         presenter.attachView(this);
         presenter.execute();
     }

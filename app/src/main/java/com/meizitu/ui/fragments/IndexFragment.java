@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.meizitu.adapter.IndexListAdapter;
-import com.meizitu.internal.di.components.IndexFragmentComponent;
+import com.meizitu.internal.di.components.MainActivityComponent;
 import com.meizitu.mvp.contract.IndexFragmentContract;
 import com.meizitu.mvp.presenter.IndexFragmentPresenter;
 import com.meizitu.pojo.ResponseInfo;
@@ -46,7 +46,7 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
         setUserVisibleHint(true);
-        getComponent(IndexFragmentComponent.class).inject(this);
+        getComponent(MainActivityComponent.class).inject(this);
         presenter.attachView(this);
     }
 

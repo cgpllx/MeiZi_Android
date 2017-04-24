@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
-import com.meizitu.internal.di.components.DaggerIndexFragmentComponent;
-import com.meizitu.internal.di.components.IndexFragmentComponent;
+import com.meizitu.internal.di.components.DaggerMainActivityComponent;
+import com.meizitu.internal.di.components.MainActivityComponent;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
 import com.meizitu.ui.fragments.IndexFragment;
@@ -27,8 +27,8 @@ import javax.inject.Inject;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<IndexFragmentComponent> {
-    IndexFragmentComponent component;
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<MainActivityComponent> {
+    MainActivityComponent component;
 
     DrawerLayout drawer;
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     AdView adView;
 
     @Inject
-    MainActivityPresenter presenter;// = new MainActivityPresenter();
+    MainActivityPresenter presenter;
 
     public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
 
@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void initializeInjector() {
-        this.component = DaggerIndexFragmentComponent.builder()
+        this.component = DaggerMainActivityComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .indexFragmentModule(new IndexFragmentModule(40))
                 .build();
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public IndexFragmentComponent getComponent() {
+    public MainActivityComponent getComponent() {
         return component;
     }
 
