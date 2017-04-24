@@ -18,9 +18,8 @@ package com.meizitu.internal.di.components;
 
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.internal.di.modules.ActivityModule;
-import com.meizitu.internal.di.modules.ImageListModule;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
-import com.meizitu.ui.fragments.ImageListFragment;
+import com.meizitu.ui.activitys.MainActivity;
 import com.meizitu.ui.fragments.IndexFragment;
 
 import dagger.Component;
@@ -31,5 +30,7 @@ import dagger.Component;
 public interface IndexFragmentComponent {//只会继承方法
 
     void inject(IndexFragment indexFragment);
+
+    void inject(MainActivity mainActivity);
 
 }

@@ -14,6 +14,7 @@ import com.meizitu.adapter.GroupImageInfoListAdapter;
 import com.meizitu.internal.di.components.ImageListComponent;
 import com.meizitu.mvp.contract.ImageListContract;
 import com.meizitu.mvp.presenter.ImageListPresenter;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Inject;
@@ -26,12 +27,17 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Inject
     ImageListPresenter presenter;
 
+    @Inject
+    GroupImageInfoListAdapter adapter;
+
+    ADInfoProvide adInfoProvide;
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
         setUserVisibleHint(true);
         setHasOptionsMenu(true);
         getComponent(ImageListComponent.class).inject(this);
+
         presenter.attachView(this);
     }
 
@@ -42,7 +48,7 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
-        return new GroupImageInfoListAdapter();
+        return adapter;
     }
 
     @Override

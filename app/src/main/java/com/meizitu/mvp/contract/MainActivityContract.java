@@ -17,5 +17,7 @@ public interface MainActivityContract {
         void share(Activity activity);
 
         void feedback(Activity activity);
+
+        void executeAdInfoRequest();
     }
 }

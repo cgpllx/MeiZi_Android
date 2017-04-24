@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.meizitu.ui.items.Item_CategoryInfoItem;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
-import com.meizitu.ui.items.Item_GroupImageInfoList_AD;
 
 import java.util.List;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
-import cc.easyandroid.easyutils.ArrayUtils;
 
 /**
  * Created by chenguoping on 16/10/26.
@@ -22,10 +20,10 @@ public class IndexListAdapter extends EasyFlexibleAdapter {
 
     @Override
     public boolean addItems(List items) {
-        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
-            items.add(10, new Item_GroupImageInfoList_AD());
-            items.add(19, new Item_GroupImageInfoList_AD());
-        }
+//        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
+//            items.add(10, new Item_GroupImageInfoList_AD());
+//            items.add(19, new Item_GroupImageInfoList_AD());
+//        }
         return super.addItems(items);
     }
 

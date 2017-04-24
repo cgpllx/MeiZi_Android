@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/ad_unit_id_banner" />
+       />
+    <!--app:adSize="SMART_BANNER"-->
+    <!--app:adUnitId="@string/ad_unit_id_banner"-->
 </RelativeLayout>

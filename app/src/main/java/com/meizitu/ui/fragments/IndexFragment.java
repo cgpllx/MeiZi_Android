@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.meizitu.R;
 import com.meizitu.adapter.IndexListAdapter;
 import com.meizitu.internal.di.components.IndexFragmentComponent;
 import com.meizitu.mvp.contract.IndexFragmentContract;
@@ -32,13 +31,6 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         IndexFragment fragment = new IndexFragment();
         return fragment;
     }
-
-    @Override
-    protected int getResourceId() {
-        return R.layout.fragment_simple_list;
-    }
-
-
 
     @Override
     protected void onQfangViewPrepared(View view, Bundle savedInstanceState) {

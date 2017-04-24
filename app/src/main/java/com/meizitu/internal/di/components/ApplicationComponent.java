@@ -17,13 +17,13 @@ package com.meizitu.internal.di.components;
 
 import android.content.Context;
 
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.Tracker;
 import com.meizitu.internal.di.modules.ApplicationModule;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.service.ImageApi;
 import com.meizitu.ui.activitys.BaseActivity;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
@@ -46,7 +46,7 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
 
     OkHttpClient getOkHttpClient();
 
-    InterstitialAd getInterstitialAd();
+//    InterstitialAd getInterstitialAd();
 
     Tracker getTracker();
 
@@ -58,5 +58,6 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
 
     GetDataFromDbUseCase<Item_GroupImageInfoListItem> getGetDataFromDbUseCase();
 
+    ADInfoProvide getADInfoProvide();
 
 }

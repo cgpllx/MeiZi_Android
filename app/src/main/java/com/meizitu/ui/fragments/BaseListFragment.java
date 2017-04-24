@@ -6,21 +6,25 @@ import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.core.CacheControl;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.mvp.contract.SimpleListContract;
+import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.views.SimpleRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.EasyRecycleViewDivider;
@@ -44,6 +48,9 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     protected EasyFlexibleRecyclerViewHelper<T> helper;
 
     protected GridLayoutManager gridLayoutManager;
+
+    @Inject
+    ADInfoProvide adInfoProvide;//Subclasses will be injected if needed
 
     /**
      * 标志位，标志已经初始化完成
@@ -91,13 +98,19 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
-
-        adView = EasyViewUtil.findViewById(view, R.id.adView);
-        adView.loadAd(new AdRequest.Builder().build());
+        ADInfo adInfo = null;
+        System.out.println("adInfoProvide="+adInfoProvide);
+        if (adInfoProvide != null) {
+            adInfo = adInfoProvide.provideADInfo();
+        }
+        if (adInfo != null) {
+            adView = EasyViewUtil.findViewById(view, R.id.adView);
+            adView.setAdUnitId(adInfo.getAd_unit_id_banner());
+            adView.setAdSize(AdSize.BANNER);
+            adView.loadAd(new AdRequest.Builder().build());
+        }
     }
-
     AdView adView;
-
     /**
      * 恢复数据
      */

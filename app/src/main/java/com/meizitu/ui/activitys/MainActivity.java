@@ -22,6 +22,8 @@ import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
+import javax.inject.Inject;
+
 import cc.easyandroid.easyutils.EasyToast;
 
 
@@ -36,7 +38,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     AdView adView;
 
-    MainActivityPresenter presenter = new MainActivityPresenter();
+    @Inject
+    MainActivityPresenter presenter;// = new MainActivityPresenter();
 
     public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
 
@@ -59,7 +62,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (fragment == null) {
             replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
-
+        presenter.executeAdInfoRequest();
     }
 
     private void initializeInjector() {
@@ -67,6 +70,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .applicationComponent(getApplicationComponent())
                 .indexFragmentModule(new IndexFragmentModule(40))
                 .build();
+        this.component.inject(this);
     }
 
     private long startTime = 0;

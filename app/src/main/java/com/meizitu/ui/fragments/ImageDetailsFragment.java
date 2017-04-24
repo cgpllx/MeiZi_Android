@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.banner.BannerImageDetailAdapter;
@@ -21,6 +22,8 @@ import com.meizitu.core.DepthPageTransformer;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.mvp.presenter.ImageDetailsPresenter;
+import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.pojo.Image;
 import com.meizitu.pojo.ResponseInfo;
@@ -39,6 +42,7 @@ import cc.easyandroid.easyrecyclerview.listener.OnEasyProgressClickListener;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 
 public class ImageDetailsFragment extends ImageBaseFragment implements ImageDetailsContract.View {
+
     ViewPager viewPager;
 
     EasyProgressFrameLayout easyProgress;
@@ -48,10 +52,14 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     AdView adView;
 
     ImageView up;
+
     ImageView next;
 
     @Inject
     ImageDetailsPresenter presenter;
+
+    @Inject
+    ADInfoProvide adInfoProvide;
 
     BannerImageDetailAdapter<Image> bannerAdapter;
 
@@ -76,7 +84,8 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         super.onViewCreated(view, savedInstanceState);
         this.getComponent(ImageDetailsComponent.class).inject(this);
         presenter.attachView(this);
-        adView = EasyViewUtil.findViewById(view, R.id.adView);
+
+
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         easyProgress = EasyViewUtil.findViewById(view, R.id.easyProgress);
@@ -109,6 +118,23 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
                 execute();
             }
         });
+
+        initAd(view);
+    }
+
+    private void initAd(View view) {
+        //----ad
+        adView = EasyViewUtil.findViewById(view, R.id.adView);
+        ADInfo adInfo = null;
+        if (adInfoProvide != null) {
+            adInfo = adInfoProvide.provideADInfo();
+        }
+        if (adInfo != null) {
+            adView = EasyViewUtil.findViewById(view, R.id.adView);
+            adView.setAdUnitId(adInfo.getAd_unit_id_banner());
+            adView.setAdSize(AdSize.BANNER);
+            adView.loadAd(new AdRequest.Builder().build());
+        }
         adView.loadAd(new AdRequest.Builder().build());
     }
 
@@ -118,7 +144,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         if (noData()) {
             execute();
         }
-
     }
 
     private boolean noData() {

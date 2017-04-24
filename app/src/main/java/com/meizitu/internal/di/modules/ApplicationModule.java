@@ -20,17 +20,16 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
-import com.meizitu.R;
 import com.meizitu.mvp.repository.DbRepository;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
 import com.meizitu.service.interceptor.DecodeInterceptor;
@@ -80,6 +79,12 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
+    public ADInfoProvide provideADInfoProvide() {
+        return new ADInfoProvide();
+    }
+
+    @Provides
+    @Singleton
     public Gson provideGson() {
         return new Gson();
     }
@@ -107,22 +112,19 @@ public class ApplicationModule {
         return okHttpClient;
     }
 
-    @Provides
-    @Singleton
-    public InterstitialAd provideInterstitialAd(Context application) {
-        InterstitialAd mInterstitialAd = new InterstitialAd(application);
-        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
-        return mInterstitialAd;
-    }
+//    @Provides
+//    @Singleton
+//    public InterstitialAd provideInterstitialAd(Context application) {
+//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
+//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
+//        return mInterstitialAd;
+//    }
 
 
     @Provides
     @Singleton
     public Tracker provideTracker(Context application) {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(application);
-        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-//            mTracker = analytics.newTracker("UA-76794933-1");
-//        Tracker mTracker = analytics.newTracker(application.getString(R.string.google_ga_key));
         Tracker mTracker = analytics.newTracker("UA-92262187-1");
         mTracker.enableExceptionReporting(true);
         mTracker.enableAutoActivityTracking(true);

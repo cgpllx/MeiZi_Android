@@ -1,8 +1,6 @@
 package com.meizitu.ui.items;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.Parcel;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +12,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.meizitu.R;
-import com.meizitu.pojo.GroupImageInfo;
+import com.meizitu.pojo.ADInfo;
 
 import java.util.List;
 
@@ -23,10 +21,16 @@ import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
+import cc.easyandroid.easyrecyclerview.items.IHolder;
 
 
-@SuppressLint("ParcelCreator")
-public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder> ,IHeaderSpanFill{
+public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder>, IHeaderSpanFill, IHolder<ADInfo> {
+
+    final ADInfo adInfo;
+
+    public Item_GroupImageInfoList_AD(ADInfo adInfo) {
+        this.adInfo = adInfo;
+    }
 
     @Override
     public boolean isEnabled() {
@@ -48,10 +52,6 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
 
     }
 
-
-    public Item_GroupImageInfoList_AD() {
-    }
-
     @Override
     public int getLayoutRes() {
         return R.layout.item_groupimageinfolist_ad;
@@ -59,7 +59,7 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
 
     @Override
     public Item_GroupImageInfoList_AD.ViewHolder createViewHolder(EasyFlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        return new ViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter, this);
     }
 
     @Override
@@ -67,13 +67,19 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
         // not user
     }
 
+    @Override
+    public ADInfo getModel() {
+        return adInfo;
+    }
+
     public class ViewHolder extends FlexibleViewHolder {
         private ViewGroup containerView;
 
         private boolean isLoaded = false;
 
-        public ViewHolder(final View view, EasyFlexibleAdapter adapter) {
+        public ViewHolder(final View view, EasyFlexibleAdapter adapter, IHolder<ADInfo> iHolder) {
             super(view, adapter);
+            final ADInfo adInfo = iHolder.getModel();
             containerView = (ViewGroup) view.findViewById(R.id.containerView);
             if (containerView.getChildCount() <= 0) {
                 final NativeExpressAdView mAdView = new NativeExpressAdView(getContentView().getContext());
@@ -110,7 +116,8 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
                                             final float density = getContentView().getContext().getResources().getDisplayMetrics().density;
                                             AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, 300);/**/
                                             mAdView.setAdSize(adSize);
-                                            mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
+//                                            mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
+                                            mAdView.setAdUnitId(adInfo.getAd_unit_id_native());
                                         }
                                         mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
 //                                        mAdView.setBackgroundResource(R.color.q8FA3A7);
@@ -134,28 +141,4 @@ public class Item_GroupImageInfoList_AD extends GroupImageInfo implements IFlexi
         }
 
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    protected Item_GroupImageInfoList_AD(Parcel in) {
-        super(in);
-    }
-
-    public static final Creator<Item_GroupImageInfoList_AD> CREATOR = new Creator<Item_GroupImageInfoList_AD>() {
-        public Item_GroupImageInfoList_AD createFromParcel(Parcel source) {
-            return new Item_GroupImageInfoList_AD(source);
-        }
-
-        public Item_GroupImageInfoList_AD[] newArray(int size) {
-            return new Item_GroupImageInfoList_AD[size];
-        }
-    };
 }

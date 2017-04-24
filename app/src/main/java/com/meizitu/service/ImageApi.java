@@ -1,5 +1,6 @@
 package com.meizitu.service;
 
+import com.meizitu.pojo.ADInfo;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
@@ -24,7 +25,6 @@ public interface ImageApi {
     String PATH = "";
 
     //public, max-age=10 请求中带有max-age 响应中也可以有，测试发现是以少的为准，
-
     /**
      * "Cache-Control: public, max-age=3600
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
@@ -48,4 +48,8 @@ public interface ImageApi {
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/groupImageInfoListByHot?count=20")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex);
+
+    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+    @GET(PATH + "/queryAdInfo")
+    Call<ResponseInfo<ADInfo>> queryAdInfo();
 }

@@ -26,6 +26,9 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Inject
     FavoritesListPresenter presenter;
 
+    @Inject
+    GroupImageInfoListAdapter adapter;
+
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
@@ -42,7 +45,7 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
-        return new GroupImageInfoListAdapter();
+        return adapter;
     }
 
     @Override

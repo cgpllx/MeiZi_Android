@@ -17,14 +17,7 @@ package com.meizitu.internal.di.modules;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.service.ImageApi;
 
-import javax.inject.Named;
-
-import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
-import cc.easyandroid.easycore.EasyCall;
-import cc.easyandroid.easyhttp.core.CacheMode;
-import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
 import dagger.Module;
 import dagger.Provides;
 
@@ -43,7 +36,5 @@ public class ImageListModule {
     public int provideGategoryId() {
         return gategoryId;
     }
-
-
 
 }

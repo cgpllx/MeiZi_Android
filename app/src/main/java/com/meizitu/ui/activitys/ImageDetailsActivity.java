@@ -11,6 +11,8 @@ import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerImageDetailsComponent;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.internal.di.modules.ImageDetailsModule;
+import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.fragments.ImageDetailsFragment;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
@@ -24,8 +26,10 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
 
     long DELAYED_TIME = 30 * 1000;
 
-    @Inject
     InterstitialAd mInterstitialAd;
+
+    @Inject
+    ADInfoProvide adInfoProvide;
 
     private long startTime = 0;
 
@@ -38,7 +42,10 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
         initTitleBar();
         replaceFragment(R.id.content, ImageDetailsFragment.newFragment(), "ImageDetails");
 
-        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+        ADInfo adInfo = adInfoProvide.provideADInfo();
+        if (adInfo != null) {
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(adInfo.getAd_unit_id_interstitial());
             AdRequest adRequest = new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build();
             mInterstitialAd.loadAd(adRequest);
         }
