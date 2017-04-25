@@ -12,7 +12,7 @@ import com.meizitu.mvp.presenter.IndexFragmentPresenter;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
-import com.meizitu.ui.items.Item_Index_HotCategory;
+import com.meizitu.ui.items.Item_Index_NewCategory;
 import com.meizitu.ui.items.Item_Index_LatestImage;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
 
     public void deliverCategoryResult(Object i, ResponseInfo<List<Item_CategoryInfoItem>> responseInfo) {
         if(responseInfo!=null){
-            helper.getRecyclerAdapter().addHeaderItem(new Item_Index_HotCategory());
+            helper.getRecyclerAdapter().addHeaderItem(new Item_Index_NewCategory());
             ArrayList list = new ArrayList<>(responseInfo.getData());
             helper.getRecyclerAdapter().addHeaderItems(list);
             helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());

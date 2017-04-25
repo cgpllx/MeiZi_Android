@@ -3,21 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/photoview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout
-            android:id="@+id/progressView"
-            style="@style/easyRecyclerViewStyle_imageblack"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/progressView"
+        style="@style/easyRecyclerViewStyle_imageblack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--在里面的view会被隐藏，很多方法不会执行-->
+    </cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout>
 
-            <uk.co.senab.photoview.PhotoView
-                android:id="@+id/photoview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout>
-    <!--<uk.co.senab.photoview.PhotoView-->
-        <!--android:id="@+id/photoview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
 
 </FrameLayout>

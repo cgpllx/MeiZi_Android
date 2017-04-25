@@ -16,7 +16,7 @@ public class ImageApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //LeakCanary.install(this);
-        MobileAds.initialize(this, getString(R.string.ad_unit_id_applicationCode));
+//        MobileAds.initialize(this, getString(R.string.ad_unit_id_applicationCode));
         initializeInjector();
 
     }

@@ -75,7 +75,8 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible>   implements On
         try {
             if (mEasyRecyclerView.isRefreshIng()) {// 刷新 成功
                 if (!ArrayUtils.isEmpty(datas)) {// 有数据
-                    if (mShouldPullLoad && pageIndex < pageCount) {
+                    if (mShouldPullLoad && pageIndex <= pageCount) {
+
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_COMPLETED);
                     } else {
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FULLCOMPLETED);

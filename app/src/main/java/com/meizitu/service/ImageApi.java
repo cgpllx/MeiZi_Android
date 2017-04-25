@@ -18,11 +18,11 @@ import retrofit2.http.Query;
  */
 public interface ImageApi {
     //    String DOMAIN = "www.ffvvv.cc";
-//    String DOMAIN = "192.168.1.105:8080";
+    String DOMAIN = "192.168.1.100:8080";
 //    String DOMAIN = "192.168.3.9:8080";
-    String DOMAIN = "api.ffvvv.cc";
-//    String PATH = "/meizitu";
-    String PATH = "";
+//    String DOMAIN = "api.ffvvv.cc";
+    String PATH = "/meizitu";
+//    String PATH = "";
 
     //public, max-age=10 请求中带有max-age 响应中也可以有，测试发现是以少的为准，
     /**
@@ -46,10 +46,10 @@ public interface ImageApi {
     Call<ResponseInfo<List<Item_CategoryInfoItem>>> categoryList(@Query("id") int id);
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET(PATH + "/groupImageInfoListByHot?count=20")
+    @GET(PATH + "/groupImageInfoListByNew?count=20")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex);
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
-    @GET(PATH + "/queryAdInfo")
+    @GET(PATH + "/adInfo")
     Call<ResponseInfo<ADInfo>> queryAdInfo();
 }

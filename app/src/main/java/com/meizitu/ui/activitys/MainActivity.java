@@ -12,12 +12,16 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerMainActivityComponent;
 import com.meizitu.internal.di.components.MainActivityComponent;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
+import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
+import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
@@ -27,7 +31,7 @@ import javax.inject.Inject;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<MainActivityComponent> {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<MainActivityComponent>,MainActivityContract.View {
     MainActivityComponent component;
 
     DrawerLayout drawer;
@@ -40,6 +44,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Inject
     MainActivityPresenter presenter;
+
+    @Inject
+    ADInfoProvide adInfoProvide;
 
     public static final String INDEXFRAGMENT_TAG = "IndexFragmentTag";
 
@@ -58,11 +65,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initializeInjector();
+        presenter.attachView(this);
+        presenter.executeAdInfoRequest();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(INDEXFRAGMENT_TAG);
         if (fragment == null) {
             replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
-        presenter.executeAdInfoRequest();
+
     }
 
     private void initializeInjector() {
@@ -147,5 +156,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (adView != null) {
             adView.destroy();
         }
+    }
+
+    @Override
+    public void onAdInfoSuccess(ADInfo adInfo) {
+        adInfoProvide.setAdInfo(adInfo);
+        MobileAds.initialize(this,adInfo.getAd_unit_id_applicationCode());
     }
 }

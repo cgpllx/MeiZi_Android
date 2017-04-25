@@ -51,7 +51,6 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
                 banner.setLoaded(true);
             }
 
-
             @Override
             public void onLoadStarted(Drawable placeholder) {
                 super.onLoadStarted(placeholder);

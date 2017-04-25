@@ -23,12 +23,10 @@ import cc.easyandroid.easyutils.EasyToast;
 
 public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContract.View> implements MainActivityContract.Presenter {
     final ImageApi imageApi;
-    final ADInfoProvide adInfoProvide;
 
     @Inject
-    public MainActivityPresenter(ImageApi imageApi, ADInfoProvide adInfoProvide) {
+    public MainActivityPresenter(ImageApi imageApi) {
         this.imageApi = imageApi;
-        this.adInfoProvide = adInfoProvide;
     }
 
     @Override
@@ -64,7 +62,9 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
                 if (responseInfo != null) {
                     ADInfo adInfo = responseInfo.getData();
                     if (adInfo != null) {
-                        adInfoProvide.setAdInfo(adInfo);
+                        if(isViewAttached())
+                            getView().onAdInfoSuccess(adInfo);
+
                     }
                 }
             }

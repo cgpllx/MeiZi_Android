@@ -1,6 +1,8 @@
 package com.meizitu.ui.items;
 
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +26,7 @@ import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 import cc.easyandroid.easyrecyclerview.items.IHolder;
 
 
-public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder>, IHeaderSpanFill, IHolder<ADInfo> {
+public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder>, IHeaderSpanFill, IHolder<ADInfo>,Parcelable {
 
     final ADInfo adInfo;
 
@@ -113,15 +115,11 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
                                     @Override
                                     public void run() {
                                         if (mAdView.getAdSize() == null) {
-                                            final float density = getContentView().getContext().getResources().getDisplayMetrics().density;
-                                            AdSize adSize = new AdSize((int) (containerView.getWidth() / density) - 4, 300);/**/
+                                            AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
                                             mAdView.setAdSize(adSize);
-//                                            mAdView.setAdUnitId(mAdView.getResources().getString(R.string.ad_unit_id_native));
                                             mAdView.setAdUnitId(adInfo.getAd_unit_id_native());
                                         }
                                         mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
-//                                        mAdView.setBackgroundResource(R.color.q8FA3A7);
-
                                     }
                                 });
                             } else {
@@ -141,4 +139,30 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
         }
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.adInfo, flags);
+    }
+
+    protected Item_GroupImageInfoList_AD(Parcel in) {
+        this.adInfo = in.readParcelable(ADInfo.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Item_GroupImageInfoList_AD> CREATOR = new Parcelable.Creator<Item_GroupImageInfoList_AD>() {
+        @Override
+        public Item_GroupImageInfoList_AD createFromParcel(Parcel source) {
+            return new Item_GroupImageInfoList_AD(source);
+        }
+
+        @Override
+        public Item_GroupImageInfoList_AD[] newArray(int size) {
+            return new Item_GroupImageInfoList_AD[size];
+        }
+    };
 }

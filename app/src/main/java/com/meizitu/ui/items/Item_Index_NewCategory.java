@@ -13,7 +13,7 @@ import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 
-public class Item_Index_HotCategory implements IFlexible<Item_Index_HotCategory.ViewHolder> ,IHeaderSpanFill{
+public class Item_Index_NewCategory implements IFlexible<Item_Index_NewCategory.ViewHolder> ,IHeaderSpanFill{
 
     @Override
     public boolean isEnabled() {
@@ -41,12 +41,12 @@ public class Item_Index_HotCategory implements IFlexible<Item_Index_HotCategory.
     }
 
     @Override
-    public Item_Index_HotCategory.ViewHolder createViewHolder(EasyFlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    public Item_Index_NewCategory.ViewHolder createViewHolder(EasyFlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
         return new ViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
     @Override
-    public void bindViewHolder(EasyFlexibleAdapter adapter, Item_Index_HotCategory.ViewHolder holder, int position, List payloads) {
+    public void bindViewHolder(EasyFlexibleAdapter adapter, Item_Index_NewCategory.ViewHolder holder, int position, List payloads) {
     }
 
     public class ViewHolder extends FlexibleViewHolder {

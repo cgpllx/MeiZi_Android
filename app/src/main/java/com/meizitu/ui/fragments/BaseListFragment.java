@@ -7,6 +7,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -98,19 +100,25 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         };
         isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
-        ADInfo adInfo = null;
-        System.out.println("adInfoProvide="+adInfoProvide);
+
         if (adInfoProvide != null) {
-            adInfo = adInfoProvide.provideADInfo();
+            ADInfo   adInfo = adInfoProvide.provideADInfo();
+            if (adInfo != null) {
+                avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
+                avContainer.removeAllViews();
+                AdView  adView=new AdView(view.getContext());
+                adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
+                avContainer.addView(adView);
+                adView.setAdSize(AdSize.BANNER);
+                adView.setAdUnitId(adInfo.getAd_unit_id_banner());
+                adView.loadAd(new AdRequest.Builder().build());
+                adView.setVisibility(View.VISIBLE);
+            }
         }
-        if (adInfo != null) {
-            adView = EasyViewUtil.findViewById(view, R.id.adView);
-            adView.setAdUnitId(adInfo.getAd_unit_id_banner());
-            adView.setAdSize(AdSize.BANNER);
-            adView.loadAd(new AdRequest.Builder().build());
-        }
+
     }
-    AdView adView;
+
+    ViewGroup avContainer;
     /**
      * 恢复数据
      */

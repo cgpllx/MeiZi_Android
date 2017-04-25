@@ -11,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -124,18 +126,32 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     private void initAd(View view) {
         //----ad
-        adView = EasyViewUtil.findViewById(view, R.id.adView);
-        ADInfo adInfo = null;
+//        adView = EasyViewUtil.findViewById(view, R.id.adView);
+//        ADInfo adInfo = null;
+//        if (adInfoProvide != null) {
+//            adInfo = adInfoProvide.provideADInfo();
+//        }
+//        if (adInfo != null) {
+//            adView = EasyViewUtil.findViewById(view, R.id.adView);
+//            adView.setAdUnitId(adInfo.getAd_unit_id_banner());
+//            adView.setAdSize(AdSize.BANNER);
+//            adView.loadAd(new AdRequest.Builder().build());
+//        }
+//        adView.loadAd(new AdRequest.Builder().build());
+
         if (adInfoProvide != null) {
-            adInfo = adInfoProvide.provideADInfo();
+            ADInfo   adInfo = adInfoProvide.provideADInfo();
+            if (adInfo != null) {
+              ViewGroup avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
+                avContainer.removeAllViews();
+                adView=new AdView(view.getContext());
+                adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
+                avContainer.addView(adView);
+                adView.setAdSize(AdSize.BANNER);
+                adView.setAdUnitId(adInfo.getAd_unit_id_banner());
+                adView.loadAd(new AdRequest.Builder().build());
+            }
         }
-        if (adInfo != null) {
-            adView = EasyViewUtil.findViewById(view, R.id.adView);
-            adView.setAdUnitId(adInfo.getAd_unit_id_banner());
-            adView.setAdSize(AdSize.BANNER);
-            adView.loadAd(new AdRequest.Builder().build());
-        }
-        adView.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
