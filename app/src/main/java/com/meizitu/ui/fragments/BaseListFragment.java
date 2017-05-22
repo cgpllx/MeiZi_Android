@@ -71,7 +71,12 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        gridLayoutManager = new GridLayoutManager(getContext(), 1){
+            @Override
+            protected int getExtraLayoutSpace(RecyclerView.State state) {
+                return 800;
+            }
+        };
         simpleRecyclerView.setLayoutManager(gridLayoutManager);
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();

@@ -54,5 +54,9 @@ android {
             applicationId = "com.meizitu.asianbeauty_2"
             buildConfigField "int", "GATEGORYID", "300"
         }
+        hotasiansexgirl {
+            applicationId = "com.meizitu.hotasiansexgirl_3"
+            buildConfigField "int", "GATEGORYID", "300"
+        }
     }
 }
