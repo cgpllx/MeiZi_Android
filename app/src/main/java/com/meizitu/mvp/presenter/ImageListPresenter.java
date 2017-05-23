@@ -10,6 +10,7 @@ import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
 import cc.easyandroid.easycore.EasyCall;
@@ -21,17 +22,20 @@ public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Pagi
 
     final int gategoryId;
     final ImageApi imageApi;
+    final int requestTime;
 
     @Inject
-    public ImageListPresenter(ImageApi imageApi, int gategoryId) {
+    public ImageListPresenter(ImageApi imageApi, @Named("GategoryId")int gategoryId,  @Named("Time")int requestTime) {
         this.gategoryId = gategoryId;
         this.imageApi = imageApi;
+        this.requestTime = requestTime;
+
     }
 
 
     @Override
     protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex, String cachecontrol) {
-        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoList(gategoryId, pageIndex));
+        EasyCall easyCall = new RetrofitCallToEasyCall<>(imageApi.queryGroupImageInfoList(gategoryId, pageIndex,requestTime));
         EasyWorkUseCase.RequestValues requestValues = new EasyWorkUseCase.RequestValues<>(pulltype, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         return requestValues;
     }

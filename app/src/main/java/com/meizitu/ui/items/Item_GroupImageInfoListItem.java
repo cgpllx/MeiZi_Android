@@ -140,8 +140,10 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
         public void onClick(View view) {
             super.onClick(view);
             if (imageInfo != null) {
+                //todo:检测积分是否够
                 Intent intent = ImageDetailsActivity.newIntent(getContext(), imageInfo);
                 getContext().startActivity(intent);
+                //todo:消耗积分
             }
         }
     }

@@ -57,6 +57,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public Toolbar getToolbar() {
+
+//         DateUtils.formatDateTime(getApplicationContext(),System.currentTimeMillis(),1);
+
+
         return toolbar;
     }
 
