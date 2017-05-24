@@ -23,23 +23,22 @@ public class GroupImageInfo implements Parcelable, EasyDbObject {
     private int piccount;//数量
     @SerializedName("pixel")
     private String pixel;//尺寸
+    @SerializedName("localcoverimage")
+    private String localcoverimage;
 
+    public String getLocalcoverimage() {
+        return localcoverimage;
+    }
 
     public int getPiccount() {
         return piccount;
     }
 
-    public void setPiccount(int piccount) {
-        this.piccount = piccount;
-    }
 
     public String getPixel() {
         return pixel;
     }
 
-    public void setPixel(String pixel) {
-        this.pixel = pixel;
-    }
 
     public int getId() {
         return id;

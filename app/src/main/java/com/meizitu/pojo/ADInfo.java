@@ -3,9 +3,7 @@ package com.meizitu.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by cgpllx on 2017/4/24.
- */
+
 public class ADInfo implements Parcelable {
     String ad_unit_id_applicationCode;
     String ad_unit_id_native;

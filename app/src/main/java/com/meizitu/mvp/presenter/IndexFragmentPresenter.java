@@ -11,6 +11,7 @@ import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
@@ -24,11 +25,13 @@ public class IndexFragmentPresenter extends AbsSimpleListPresenter<ResponseInfo<
 
     final int id;
     final ImageApi imageApi;
+    final int time;
 
     @Inject
-    public IndexFragmentPresenter(ImageApi imageApi, int id) {
+    public IndexFragmentPresenter(ImageApi imageApi, int id, @Named("Time") int time) {
         this.id = id;
         this.imageApi = imageApi;
+        this.time = time;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class IndexFragmentPresenter extends AbsSimpleListPresenter<ResponseInfo<
 
     @Override
     protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex, String cachecontrol) {
-        EasyCall<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryLatestGroupImageList(pageIndex));
+        EasyCall<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryLatestGroupImageList(pageIndex, time));
         EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> requestValues = new EasyWorkUseCase.RequestValues<>(0, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         return requestValues;
     }

@@ -3,9 +3,6 @@ package com.meizitu.internal.di.modules;
 
 import com.meizitu.internal.di.PerActivity;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import javax.inject.Named;
 
 import dagger.Module;
@@ -27,15 +24,15 @@ public class ImageListModule {
     public int provideGategoryId() {
         return gategoryId;
     }
-
-    @Provides
-    @PerActivity
-    @Named("Time")
-    public int provideRequestTime() {
-        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
-        int convertTime = requestTime % 100;//time 0 - 99
-        return convertTime;
-    }
+//
+//    @Provides
+//    @PerActivity
+//    @Named("Time")
+//    public int provideRequestTime() {
+//        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+//        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
+//        int convertTime = requestTime % 100;//time 0 - 99
+//        return convertTime;
+//    }
 
 }

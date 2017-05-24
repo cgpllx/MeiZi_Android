@@ -36,8 +36,11 @@ import com.meizitu.service.interceptor.DecodeInterceptor;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cc.easyandroid.easycache.EasyHttpCache;
@@ -153,5 +156,15 @@ public class ApplicationModule {
     @Singleton
     public GetDataFromDbUseCase<Item_GroupImageInfoListItem> provideGetDataFromDbUseCase(Context application) {
         return new GetDataFromDbUseCase<>(new DbRepository(application));
+    }
+
+    @Provides
+    @Singleton
+    @Named("Time")
+    public int provideRequestTime() {
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
+        int convertTime = requestTime % 100;//time 0 - 99
+        return convertTime;
     }
 }

@@ -28,6 +28,7 @@ import com.meizitu.service.ImageApi;
 import com.meizitu.ui.activitys.BaseActivity;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -46,8 +47,6 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
 
     OkHttpClient getOkHttpClient();
 
-//    InterstitialAd getInterstitialAd();
-
     Tracker getTracker();
 
     GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getGetDatasFromDbUseCase();
@@ -60,4 +59,6 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
 
     ADInfoProvide getADInfoProvide();
 
+    @Named("Time")
+    int getTime();
 }

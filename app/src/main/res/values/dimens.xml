@@ -18,6 +18,7 @@
     <dimen name="q30dp">30dp</dimen>
     <dimen name="q35dp">35dp</dimen>
     <dimen name="q40dp">40dp</dimen>
+    <dimen name="q50dp">50dp</dimen>
 
 
     <!--sp-->

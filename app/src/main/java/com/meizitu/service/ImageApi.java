@@ -47,7 +47,7 @@ public interface ImageApi {
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/groupImageInfoListByNew?count=10")
-    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex);
+    Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex, @Query("time") int requestTime);
 
     @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/adInfo")

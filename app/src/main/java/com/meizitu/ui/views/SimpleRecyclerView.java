@@ -27,14 +27,10 @@ public class SimpleRecyclerView extends EasyRecyclerView {
 
     private void init(Context context) {
         setHeaderHander(new DefaultHeaderHander(getContext()));
-        setFooterHander(new ImageFooterHander(getContext()));
+        setFooterHander(new DefaultFooterHander(getContext()));
         setLayoutManager(new LinearLayoutManager(context));
         setRestItemCountToLoadMore(10);
         setOverScrollMode(OVER_SCROLL_NEVER);
-    }
-
-    public void setupDefaultDivider() {
-//        addItemDecoration(new EasyRecycleViewDivider(getContext(), LinearLayoutManager.HORIZONTAL).setNotShowDividerCount(1, 1));
     }
 
     int currentPage;

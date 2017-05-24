@@ -4,22 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <com.meizitu.ui.views.SimpleRecyclerView
         android:id="@+id/qfangRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingBottom="@dimen/q50dp"
         app:autoloadMore="false" />
-
-    <!--<com.google.android.gms.ads.AdView-->
-        <!--android:id="@+id/adView"-->
- <!---->
-        <!--android:visibility="gone"-->
-    <!--app:adUnitId="@string/ad_unit_id_banner"-->
-        <!--app:adSize="SMART_BANNER" />-->
 
     <RelativeLayout
         android:id="@+id/avContainer"
@@ -27,8 +21,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom">
-    </RelativeLayout>
-    <!--app:adSize="SMART_BANNER"-->
-    <!--app:adUnitId="@string/ad_unit_id_banner"-->
+        android:layout_gravity="bottom" />
 </RelativeLayout>
