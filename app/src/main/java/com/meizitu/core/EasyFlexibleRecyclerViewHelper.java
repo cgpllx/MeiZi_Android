@@ -1,7 +1,6 @@
 package com.meizitu.core;
 
 
-
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.SortedList;
 
@@ -22,7 +21,7 @@ import cc.easyandroid.easyutils.ArrayUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class EasyFlexibleRecyclerViewHelper<T extends IFlexible>   implements OnLoadMoreListener, OnRefreshListener, OnEasyProgressClickListener {
+public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLoadMoreListener, OnRefreshListener, OnEasyProgressClickListener {
 
     private SimpleRecyclerView mEasyRecyclerView;
     private EasyFlexibleAdapter<T> mEasyRecyclerAdapter;
@@ -85,23 +84,18 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible>   implements On
                     mEasyRecyclerView.post(new Runnable() {
                         @Override
                         public void run() {
-
-                            mEasyRecyclerAdapter.setItems(datas);
+//                            mEasyRecyclerAdapter.setItems(datas);
+                            onNewDataArrived(datas);
                             mEasyRecyclerView.flipPage();
                         }
                     });
-                    // KToast.showShort(context, "刷新完成");
                 } else {// 没有数据
-//                    mEasyRecyclerAdapter.
                     mEasyRecyclerAdapter.clearItems();// 移除之前的
-                    // listview.showErrorView();
-//                    mListview.setPullLoadEnable(false);
                     throw new NoneDataException();
                 }
             } else {// 加载成功
                 if (!ArrayUtils.isEmpty(datas)) {// 有数据
                     mEasyRecyclerAdapter.addItems(datas);
-                    // KToast.showShort(context, "加载完成");
                     mEasyRecyclerView.flipPage();
                     if (mShouldPullLoad && pageIndex < pageCount) {
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_COMPLETED);
@@ -114,70 +108,72 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible>   implements On
                 }
             }
         } catch (NoneDataException e) {
-            System.out.println("mListview.showEmptyView();");
             mEasyRecyclerView.showEmptyView();
         } finally {
-//            mListview.stopPull();//
             mEasyRecyclerView.finishLoadMore(-1);
             mEasyRecyclerView.finishRefresh(true);
         }
     }
 
-    public void xxx(){
-
-//        List<T> old_students = mEasyRecyclerAdapter.getItems();
-//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(this,), true);
-//        mEasyRecyclerAdapter.setItems(students);
-//                 result.dispatchUpdatesTo(mEasyRecyclerAdapter);
-    }
-
-
-    public int getOldListSize() {
-        return mEasyRecyclerAdapter.getItemCount();
-    }
-
-
-
-
-    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return false;
-    }
-
-
-    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return false;
-    }
-
-    class MyCallback extends DiffUtil.Callback{
+    class MyCallback extends DiffUtil.Callback {
         List<T> newData;
-        EasyFlexibleRecyclerViewHelper helper;
+        List<T> oldData;
 
-        public MyCallback(EasyFlexibleRecyclerViewHelper helper,List<T> newData) {
-            this.helper = helper;
+        public MyCallback(List<T> newData, List<T> oldData) {
             this.newData = newData;
+            this.oldData = oldData;
         }
 
         @Override
         public int getOldListSize() {
-            return helper.getOldListSize();
+            return oldData.size() + 1;
         }
 
         @Override
         public int getNewListSize() {
-            return newData.size();
+            return newData.size() + 1;
         }
 
+        // 两个Item是不是同一个东西，
+        // 它们的内容或许不一样，但id相同代表就是同一个
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            System.out.println("areItemsTheSame:oldItemPosition="+oldItemPosition+"   newItemPosition="+newItemPosition);
-            return false;
+            if (oldItemPosition == 0 && newItemPosition == 0){
+                return true;
+            }else if(oldItemPosition == 0){
+                return  false;
+            }else if(newItemPosition == 0){
+                return  false;
+            }//header
+            T oldItem = oldData.get(oldItemPosition - 1);
+            T newItem = newData.get(newItemPosition - 1);
+            System.out.println("areItemsTheSame:oldItemPosition=" + oldItemPosition + "   newItemPosition=" + newItemPosition + "---" + (oldItem.getLayoutRes() == newItem.getLayoutRes()));
+            return oldItem.getLayoutRes() == newItem.getLayoutRes();
         }
 
+        // 比较两个Item的内容是否一致，如不一致则会调用adapter的notifyItemChanged()
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            System.out.println("areContentsTheSame:oldItemPosition="+oldItemPosition+"   newItemPosition="+newItemPosition);
-            return false;
+            if (oldItemPosition == 0 && newItemPosition == 0){
+                return true;
+            }else if(oldItemPosition == 0){
+                return  false;
+            }else if(newItemPosition == 0){
+                return  false;
+            }//header
+            T oldItem = oldData.get(oldItemPosition - 1);
+            T newItem = newData.get(newItemPosition - 1);
+            System.out.println("areContentsTheSame:oldItemPosition=" + oldItemPosition + "   newItemPosition=" + newItemPosition + "---" + oldItem.equals(newItem));
+            return oldItem.equals(newItem);
         }
+    }
+
+    void onNewDataArrived(List<T> newItems) {
+//        mEasyRecyclerAdapter.setItemsAndNotifyChanged(newItems);
+        List<T> oldItems = mEasyRecyclerAdapter.getItems();
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems));
+        mEasyRecyclerAdapter.setItems(newItems);
+        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
     }
 
     public void setDatas(final List<T> datas) {
