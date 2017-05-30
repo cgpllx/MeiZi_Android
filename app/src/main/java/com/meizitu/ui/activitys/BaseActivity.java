@@ -57,10 +57,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public Toolbar getToolbar() {
-
-//         DateUtils.formatDateTime(getApplicationContext(),System.currentTimeMillis(),1);
-
-
         return toolbar;
     }
 
@@ -112,7 +108,6 @@ public class BaseActivity extends AppCompatActivity {
     private void sendGa() {
         try {
             mTracker.setScreenName(TAG);
-            System.out.println("cgp 发送界面=" + TAG);
             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         } catch (Exception e) {
             e.printStackTrace();

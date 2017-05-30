@@ -81,6 +81,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
 
         //-------------------
         public void setData(final Item_GroupImageInfoListItem imageInfo) {
+            System.out.println("Item_GroupImageInfoListItem="+imageInfo.getId());
             this.imageInfo = imageInfo;
             ImageUtils.clear(image);
             imagecount.setText(imageInfo.getPiccount() + "pics");

@@ -30,7 +30,7 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
     public boolean addItems(List items) {
         if (!ArrayUtils.isEmpty(items) && items.size() >= 10) {
             if (adInfo != null) {
-                items.add(5, new Item_GroupImageInfoList_AD(adInfo));
+                items.add(6, new Item_GroupImageInfoList_AD(adInfo));
             }
         }
         return super.addItems(items);
@@ -40,7 +40,7 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
     public void setItems(List items) {
         if (!ArrayUtils.isEmpty(items) && items.size() >= 10) {
             if (adInfo != null) {
-                items.add(5, new Item_GroupImageInfoList_AD(adInfo));
+//                items.add(6, new Item_GroupImageInfoList_AD(adInfo));
             }
         }
         super.setItems(items);

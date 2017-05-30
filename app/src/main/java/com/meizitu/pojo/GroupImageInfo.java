@@ -71,6 +71,23 @@ public class GroupImageInfo implements Parcelable, EasyDbObject {
     public void setCoverimage(String coverimage) {
         this.coverimage = coverimage;
     }
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(null == obj) {
+            return false;
+        }
+        if(getClass() != obj.getClass()) {
+            return false;
+        }
+
+        GroupImageInfo groupImageInfo = (GroupImageInfo) obj;
+        if(id!=groupImageInfo.id) {
+            return false;
+        }
+        return true;
+    }
 
     public GroupImageInfo() {
     }

@@ -15,6 +15,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.meizitu.R;
 import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.GroupImageInfo;
 
 import java.util.List;
 
@@ -57,6 +58,20 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
     @Override
     public int getLayoutRes() {
         return R.layout.item_groupimageinfolist_ad;
+    }
+
+
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(null == obj) {
+            return false;
+        }
+        if(getClass() != obj.getClass()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -123,10 +138,10 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
                                     }
                                 });
                             } else {
-                                mAdView.resume();
+//                                mAdView.resume();
                             }
                         } else {
-                            mAdView.pause();
+//                            mAdView.pause();
                         }
                     }
                 });
