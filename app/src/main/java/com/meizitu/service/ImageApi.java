@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface ImageApi {
     //    String DOMAIN = "www.ffvvv.cc";
     String DOMAIN = "appapi.ffvvv.cc";
-    //    String DOMAIN = "192.168.1.100:8080";
+//        String DOMAIN = "192.168.1.100:8080";
 //    String DOMAIN = "192.168.3.9:8080";
 //    String DOMAIN = "api.ffvvv.cc";
 //    String PATH = "/meizitu";
