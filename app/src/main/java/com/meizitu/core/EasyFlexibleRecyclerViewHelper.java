@@ -2,6 +2,7 @@ package com.meizitu.core;
 
 
 import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
 import android.support.v7.util.SortedList;
 
 import com.meizitu.pojo.Paging;
@@ -126,25 +127,31 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
 
         @Override
         public int getOldListSize() {
-            return oldData.size() + 1;
+            return oldData.size() + 1 + 1;
         }
 
         @Override
         public int getNewListSize() {
-            return newData.size() + 1;
+            return newData.size() + 1 + 1;
         }
 
         // 两个Item是不是同一个东西，
         // 它们的内容或许不一样，但id相同代表就是同一个
         @Override
         public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            if (oldItemPosition == 0 && newItemPosition == 0){
+            if (oldItemPosition == 0 && newItemPosition == 0) {
                 return true;
-            }else if(oldItemPosition == 0){
-                return  false;
-            }else if(newItemPosition == 0){
-                return  false;
+            } else if (oldItemPosition == 0) {
+                return false;
+            } else if (newItemPosition == 0) {
+                return false;
             }//header
+            if (oldItemPosition == getOldListSize()-1 && newItemPosition == getNewListSize()-1
+                    ) {
+                return true;
+            } else if (oldItemPosition == getOldListSize() - 1 || newItemPosition == getNewListSize() - 1) {
+                return false;
+            }
             T oldItem = oldData.get(oldItemPosition - 1);
             T newItem = newData.get(newItemPosition - 1);
             System.out.println("areItemsTheSame:oldItemPosition=" + oldItemPosition + "   newItemPosition=" + newItemPosition + "---" + (oldItem.getLayoutRes() == newItem.getLayoutRes()));
@@ -154,13 +161,16 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
         // 比较两个Item的内容是否一致，如不一致则会调用adapter的notifyItemChanged()
         @Override
         public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            if (oldItemPosition == 0 && newItemPosition == 0){
+            if (oldItemPosition == 0 && newItemPosition == 0) {
                 return true;
-            }else if(oldItemPosition == 0){
-                return  false;
-            }else if(newItemPosition == 0){
-                return  false;
-            }//header
+            } else if (oldItemPosition == 0 || newItemPosition == 0) {
+                return false;
+            }  //header
+            if (oldItemPosition == getOldListSize() - 1 && newItemPosition == getNewListSize() - 1) {
+                return true;
+            } else if (oldItemPosition == getOldListSize() - 1 || newItemPosition == getNewListSize() - 1) {
+                return false;
+            }
             T oldItem = oldData.get(oldItemPosition - 1);
             T newItem = newData.get(newItemPosition - 1);
             System.out.println("areContentsTheSame:oldItemPosition=" + oldItemPosition + "   newItemPosition=" + newItemPosition + "---" + oldItem.equals(newItem));
@@ -169,12 +179,38 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
     }
 
     void onNewDataArrived(List<T> newItems) {
-//        mEasyRecyclerAdapter.setItemsAndNotifyChanged(newItems);
+        //mEasyRecyclerAdapter.setItemsAndNotifyChanged(newItems);
         List<T> oldItems = mEasyRecyclerAdapter.getItems();
-        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems));
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems), true);
         mEasyRecyclerAdapter.setItems(newItems);
-        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
+//        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
+        result.dispatchUpdatesTo(new ListUpdateCallback() {
+            @Override
+            public void onInserted(int position, int count) {
+                System.out.println("cgp onInserted " + "position =" + position + " count=" + count);
+                mEasyRecyclerAdapter.notifyItemRangeInserted(position, count);
+            }
+
+            @Override
+            public void onRemoved(int position, int count) {
+                System.out.println("cgp onRemoved " + "position =" + position + " count=" + count);
+                mEasyRecyclerAdapter.notifyItemRangeRemoved(position, count);
+            }
+
+            @Override
+            public void onMoved(int fromPosition, int toPosition) {
+                System.out.println("cgp onMoved " + "fromPosition =" + fromPosition + " toPosition=" + toPosition);
+                mEasyRecyclerAdapter.notifyItemMoved(fromPosition, toPosition);
+            }
+
+            @Override
+            public void onChanged(int position, int count, Object payload) {
+                System.out.println("cgp onChanged " + "position =" + position + "count =" + count + " payload=" + payload);
+                mEasyRecyclerAdapter.notifyItemRangeChanged(position, count, payload);
+            }
+        });
     }
+
 
     public void setDatas(final List<T> datas) {
         try {
