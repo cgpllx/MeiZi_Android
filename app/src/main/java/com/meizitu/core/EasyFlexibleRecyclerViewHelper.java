@@ -146,8 +146,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
             } else if (newItemPosition == 0) {
                 return false;
             }//header
-            if (oldItemPosition == getOldListSize()-1 && newItemPosition == getNewListSize()-1
-                    ) {
+            if (oldItemPosition == getOldListSize()-1 && newItemPosition == getNewListSize()-1) {
                 return true;
             } else if (oldItemPosition == getOldListSize() - 1 || newItemPosition == getNewListSize() - 1) {
                 return false;
@@ -155,7 +154,8 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
             T oldItem = oldData.get(oldItemPosition - 1);
             T newItem = newData.get(newItemPosition - 1);
             System.out.println("areItemsTheSame:oldItemPosition=" + oldItemPosition + "   newItemPosition=" + newItemPosition + "---" + (oldItem.getLayoutRes() == newItem.getLayoutRes()));
-            return oldItem.getLayoutRes() == newItem.getLayoutRes();
+//            return oldItem.getLayoutRes() == newItem.getLayoutRes();
+            return oldItem.equals(newItem);
         }
 
         // 比较两个Item的内容是否一致，如不一致则会调用adapter的notifyItemChanged()
@@ -181,7 +181,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
     void onNewDataArrived(List<T> newItems) {
         //mEasyRecyclerAdapter.setItemsAndNotifyChanged(newItems);
         List<T> oldItems = mEasyRecyclerAdapter.getItems();
-        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems), true);
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems), false);
         mEasyRecyclerAdapter.setItems(newItems);
 //        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
         result.dispatchUpdatesTo(new ListUpdateCallback() {
