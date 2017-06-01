@@ -72,15 +72,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (fragment == null) {
             replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish()   ;
-            }
-        },2000);
-
-
     }
 
     private void initializeInjector() {
