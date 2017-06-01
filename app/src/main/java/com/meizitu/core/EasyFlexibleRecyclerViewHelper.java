@@ -2,7 +2,6 @@ package com.meizitu.core;
 
 
 import android.support.v7.util.DiffUtil;
-import android.support.v7.util.ListUpdateCallback;
 import android.support.v7.util.SortedList;
 
 import com.meizitu.pojo.Paging;
@@ -183,32 +182,7 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
         List<T> oldItems = mEasyRecyclerAdapter.getItems();
         final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyCallback(newItems, oldItems), false);
         mEasyRecyclerAdapter.setItems(newItems);
-//        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
-        result.dispatchUpdatesTo(new ListUpdateCallback() {
-            @Override
-            public void onInserted(int position, int count) {
-                System.out.println("cgp onInserted " + "position =" + position + " count=" + count);
-                mEasyRecyclerAdapter.notifyItemRangeInserted(position, count);
-            }
-
-            @Override
-            public void onRemoved(int position, int count) {
-                System.out.println("cgp onRemoved " + "position =" + position + " count=" + count);
-                mEasyRecyclerAdapter.notifyItemRangeRemoved(position, count);
-            }
-
-            @Override
-            public void onMoved(int fromPosition, int toPosition) {
-                System.out.println("cgp onMoved " + "fromPosition =" + fromPosition + " toPosition=" + toPosition);
-                mEasyRecyclerAdapter.notifyItemMoved(fromPosition, toPosition);
-            }
-
-            @Override
-            public void onChanged(int position, int count, Object payload) {
-                System.out.println("cgp onChanged " + "position =" + position + "count =" + count + " payload=" + payload);
-                mEasyRecyclerAdapter.notifyItemRangeChanged(position, count, payload);
-            }
-        });
+        result.dispatchUpdatesTo(mEasyRecyclerAdapter);
     }
 
 

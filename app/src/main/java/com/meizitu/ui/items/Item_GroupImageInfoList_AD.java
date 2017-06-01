@@ -15,7 +15,6 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.meizitu.R;
 import com.meizitu.pojo.ADInfo;
-import com.meizitu.pojo.GroupImageInfo;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 import cc.easyandroid.easyrecyclerview.items.IHolder;
 
 
-public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder>, IHeaderSpanFill, IHolder<ADInfo>,Parcelable {
+public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfoList_AD.ViewHolder>, IHeaderSpanFill, IHolder<ADInfo>, Parcelable {
 
     final ADInfo adInfo;
 
@@ -62,13 +61,13 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
 
 
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if (this == obj) {
             return true;
         }
-        if(null == obj) {
+        if (null == obj) {
             return false;
         }
-        if(getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         return true;
@@ -118,30 +117,24 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            if (!mAdView.isLoading() && !isLoaded) {
-                                if (recyclerView instanceof EasyRecyclerView) {
-                                    EasyRecyclerView easyRecyclerView = (EasyRecyclerView) recyclerView;
-                                    if (!isCanScollVertically(recyclerView) || easyRecyclerView.isRefreshIng() || easyRecyclerView.isLoadIng()) {
-                                        return;
-                                    }
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE && !mAdView.isLoading() && !isLoaded) {
+                            if (recyclerView instanceof EasyRecyclerView) {
+                                EasyRecyclerView easyRecyclerView = (EasyRecyclerView) recyclerView;
+                                if (!isCanScollVertically(recyclerView) || easyRecyclerView.isRefreshIng() || easyRecyclerView.isLoadIng()) {
+                                    return;
                                 }
-                                containerView.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (mAdView.getAdSize() == null) {
-                                            AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
-                                            mAdView.setAdSize(adSize);
-                                            mAdView.setAdUnitId(adInfo.getAd_unit_id_native());
-                                        }
-                                        mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
-                                    }
-                                });
-                            } else {
-//                                mAdView.resume();
                             }
-                        } else {
-//                            mAdView.pause();
+                            containerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mAdView.getAdSize() == null) {
+                                        AdSize adSize = new AdSize(AdSize.FULL_WIDTH, 300);/**/
+                                        mAdView.setAdSize(adSize);
+                                        mAdView.setAdUnitId(adInfo.getAd_unit_id_native());
+                                    }
+                                    mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+                                }
+                            });
                         }
                     }
                 });
