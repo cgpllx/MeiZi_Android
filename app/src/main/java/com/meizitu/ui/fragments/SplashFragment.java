@@ -15,6 +15,7 @@ import com.meizitu.R;
  * Created by cgpllx on 2017/4/6.
  */
 public class SplashFragment extends ImageBaseFragment {
+
     ImageView splash;
     Runnable runnable;
 
@@ -58,6 +59,5 @@ public class SplashFragment extends ImageBaseFragment {
             splash.removeCallbacks(runnable);
         }
     }
-
 
 }

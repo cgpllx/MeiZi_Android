@@ -9,12 +9,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.meizitu.R;
 import com.meizitu.adapter.GroupImageInfoListAdapter;
 import com.meizitu.internal.di.components.ImageListComponent;
 import com.meizitu.mvp.contract.ImageListContract;
 import com.meizitu.mvp.presenter.ImageListPresenter;
-import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Inject;
@@ -30,7 +31,9 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Inject
     GroupImageInfoListAdapter adapter;
 
-    ADInfoProvide adInfoProvide;
+    @Inject
+    Tracker mTracker;
+
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
@@ -48,6 +51,16 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
+        adapter.initializeListeners(new EasyFlexibleAdapter.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(int i) {
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setAction("ItemClick")//ÊÂ¼þ²Ù×÷
+                        .setValue(presenter.getCategoryId())
+                        .build());
+                return false;
+            }
+        });
         return adapter;
     }
 

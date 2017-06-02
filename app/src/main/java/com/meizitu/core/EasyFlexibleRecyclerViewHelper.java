@@ -195,7 +195,6 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
                     } else {
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FULLCOMPLETED);
                     }
-
                     mEasyRecyclerView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -203,7 +202,6 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
                             mEasyRecyclerView.flipPage();
                         }
                     });
-                    // KToast.showShort(context, "刷新完成");
                 } else {// 没有数据
 //                    mEasyRecyclerAdapter.
                     mEasyRecyclerAdapter.clearItems();// 移除之前的

@@ -20,7 +20,7 @@ public class ImageListModule {
 
     @Provides
     @PerActivity
-    @Named("GategoryId")// You can also use Qualifier
+    @Named("CategoryId")// You can also use Qualifier
     public int provideGategoryId() {
         return gategoryId;
     }
