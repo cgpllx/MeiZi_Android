@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ad_unit_id_native">ca-app-pub-7086711774077602/7273725601</string>
+    <string name="ad_unit_id_banner">ca-app-pub-7086711774077602/2005921209</string>
+    <string name="ad_unit_id_applicationCode">ca-app-pub-7086711774077602~3122727604</string>
+
+    <string name="ad_unit_id_interstitial">ca-app-pub-7086711774077602/5882560805</string>
+</resources>
