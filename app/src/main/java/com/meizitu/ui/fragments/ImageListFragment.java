@@ -55,7 +55,7 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
             @Override
             public boolean onItemClick(int i) {
                 mTracker.send(new HitBuilders.EventBuilder()
-                        .setAction("ItemClick")//ÊÂ¼þ²Ù×÷
+                        .setAction("ItemClick")//
                         .setValue(presenter.getCategoryId())
                         .build());
                 return false;

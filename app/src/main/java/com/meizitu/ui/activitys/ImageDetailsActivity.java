@@ -47,10 +47,14 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(adInfo.getAd_unit_id_interstitial());
             AdRequest adRequest = new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build();
-            mInterstitialAd.loadAd(adRequest);
+           try{
+               mInterstitialAd.loadAd(adRequest);
+           }catch (Exception e){
+               e.printStackTrace();
+           }
+
         }
         startTime = System.currentTimeMillis();
-
     }
 
     private void initializeInjector() {

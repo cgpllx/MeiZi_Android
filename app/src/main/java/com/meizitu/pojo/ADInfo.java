@@ -3,11 +3,17 @@ package com.meizitu.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 
 public class ADInfo implements Parcelable {
+    @SerializedName("ad_unit_id_applicationCode")
     String ad_unit_id_applicationCode;
+    @SerializedName("ad_unit_id_native")
     String ad_unit_id_native;
+    @SerializedName("ad_unit_id_banner")
     String ad_unit_id_banner;
+    @SerializedName("ad_unit_id_interstitial")
     String ad_unit_id_interstitial;
 
     public String getAd_unit_id_applicationCode() {

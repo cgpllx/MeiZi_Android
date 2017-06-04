@@ -17,6 +17,7 @@ import com.meizitu.R;
 import com.meizitu.pojo.ADInfo;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
@@ -132,7 +133,12 @@ public class Item_GroupImageInfoList_AD implements IFlexible<Item_GroupImageInfo
                                         mAdView.setAdSize(adSize);
                                         mAdView.setAdUnitId(adInfo.getAd_unit_id_native());
                                     }
-                                    mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+                                    try {
+                                        mAdView.loadAd(new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build());
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             });
                         }

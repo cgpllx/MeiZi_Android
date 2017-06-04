@@ -107,17 +107,23 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         onQfangViewPrepared(view, savedInstanceState);
 
         if (adInfoProvide != null) {
-            ADInfo   adInfo = adInfoProvide.provideADInfo();
+            ADInfo adInfo = adInfoProvide.provideADInfo();
             if (adInfo != null) {
                 avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
                 avContainer.removeAllViews();
                 AdView  adView=new AdView(view.getContext());
                 adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
-                avContainer.addView(adView);
                 adView.setAdSize(AdSize.BANNER);
                 adView.setAdUnitId(adInfo.getAd_unit_id_banner());
-                adView.loadAd(new AdRequest.Builder().build());
-                adView.setVisibility(View.VISIBLE);
+                avContainer.addView(adView);
+                AdRequest adRequest=new AdRequest.Builder().build();
+                try{
+                    adView.loadAd(adRequest);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
         }
 
