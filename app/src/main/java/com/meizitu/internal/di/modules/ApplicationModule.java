@@ -163,7 +163,7 @@ public class ApplicationModule {
     @Named("Time")
     public int provideRequestTime() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
+        int requestTime = calendar.get(Calendar.DAY_OF_YEAR)+20;
         int convertTime = requestTime % 100;//time 0 - 99
         return convertTime;
     }

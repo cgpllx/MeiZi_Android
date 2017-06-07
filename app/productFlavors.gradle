@@ -50,7 +50,7 @@ android {
             applicationId = "com.meizitu.weimeixiezhen_1"
             buildConfigField "int", "GATEGORYID", "300"
         }
-        asianbeauty {
+        asianbeauty {//上架  亚洲
             applicationId = "com.meizitu.asianbeauty_2"
             buildConfigField "int", "GATEGORYID", "300"
         }
