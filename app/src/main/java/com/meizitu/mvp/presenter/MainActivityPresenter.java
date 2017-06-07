@@ -8,7 +8,6 @@ import android.support.v4.app.ShareCompat;
 import com.meizitu.R;
 import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.pojo.ADInfo;
-import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.ImageApi;
 
@@ -64,7 +63,6 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
                     if (adInfo != null) {
                         if(isViewAttached())
                             getView().onAdInfoSuccess(adInfo);
-
                     }
                 }
             }

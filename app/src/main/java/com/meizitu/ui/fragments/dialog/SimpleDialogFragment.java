@@ -13,10 +13,12 @@ import com.meizitu.R;
 public class SimpleDialogFragment extends DialogFragment {
     private static final String TITLEKEY = "title";
     private static final String MESSAGEKEY = "message";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     public static SimpleDialogFragment newInstance(String title,String message) {
         SimpleDialogFragment addClassifyDialogFragment = new SimpleDialogFragment();
         Bundle args = new Bundle();
@@ -25,8 +27,6 @@ public class SimpleDialogFragment extends DialogFragment {
         addClassifyDialogFragment.setArguments(args);
         return addClassifyDialogFragment;
     }
-
-
 
     private PositiveButtonOnClickListener buttonOnClickListener = null;
 
@@ -37,7 +37,6 @@ public class SimpleDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         CharSequence title = getArguments().getString(TITLEKEY);
         CharSequence message = getArguments().getString(MESSAGEKEY);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.custom_dialog);
