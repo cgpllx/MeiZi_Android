@@ -20,6 +20,7 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.android.gms.analytics.ExceptionReporter;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
@@ -115,15 +116,6 @@ public class ApplicationModule {
         return okHttpClient;
     }
 
-//    @Provides
-//    @Singleton
-//    public InterstitialAd provideInterstitialAd(Context application) {
-//        InterstitialAd mInterstitialAd = new InterstitialAd(application);
-//        mInterstitialAd.setAdUnitId(application.getResources().getString(R.string.ad_unit_id_interstitial));
-//        return mInterstitialAd;
-//    }
-
-
     @Provides
     @Singleton
     public Tracker provideTracker(Context application) {
@@ -131,6 +123,7 @@ public class ApplicationModule {
         Tracker mTracker = analytics.newTracker("UA-92262187-1");
         mTracker.enableExceptionReporting(true);
         mTracker.enableAutoActivityTracking(true);
+
         return mTracker;
     }
 

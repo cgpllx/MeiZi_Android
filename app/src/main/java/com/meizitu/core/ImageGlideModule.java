@@ -25,7 +25,7 @@ public class ImageGlideModule implements GlideModule {
         // Apply options to the builder here.
         builder.setMemoryCache(new LruResourceCache(1024 * 1024 * 8))
                 .setDiskCache(new InternalCacheDiskCacheFactory(context, 1024 * 1024 * 256));
-        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
+        builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
     }
 
     /**

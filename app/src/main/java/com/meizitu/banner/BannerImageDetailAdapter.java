@@ -12,8 +12,6 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.meizitu.R;
 
-import java.util.ArrayList;
-
 import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import uk.co.senab.photoview.PhotoView;
@@ -33,7 +31,7 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
         final IBanner banner = getItem(position);
         Glide.with(container.getContext())//
                 .load(banner.getImageUrl())//
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)//
                 .placeholder(R.drawable.image_detail_placeholder)//
                 .error(R.mipmap.image_detail_load_fail)
                 .dontAnimate().into(new GlideDrawableImageViewTarget(imageView) {
@@ -62,5 +60,14 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
             }
         });
         return contentView;
+    }
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+       super.destroyItem(container,position,object);
+        ViewGroup contentView = (ViewGroup) object;
+        PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
+        if (imageView == null)
+            return;
+        Glide.clear(imageView);     //ºËÐÄ£¬½â¾öOOM
     }
 }

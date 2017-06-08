@@ -108,7 +108,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                                     ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
                                     layoutParams.height = height;
                                     image.setLayoutParams(layoutParams);
-                                    image.setScaleType(ImageView.ScaleType.FIT_XY);
+//                                    image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 } else {
                                     setImageDefaultLayoutParams();
                                 }

@@ -19,9 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_alignParentLeft="true"
+            android:adjustViewBounds="true"
+            android:maxHeight="600dp"
             android:layout_alignParentStart="true"
             tools:background="@drawable/imagebackground"
-            android:scaleType="fitCenter" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/imagecount"
