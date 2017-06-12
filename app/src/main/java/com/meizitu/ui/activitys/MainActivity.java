@@ -3,7 +3,6 @@ package com.meizitu.ui.activitys;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -72,6 +71,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (fragment == null) {
             replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
+//        int i=1/0;
     }
 
     private void initializeInjector() {

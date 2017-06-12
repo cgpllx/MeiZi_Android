@@ -68,6 +68,6 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
         PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
         if (imageView == null)
             return;
-        Glide.clear(imageView);     //ºËÐÄ£¬½â¾öOOM
+        Glide.clear(imageView);     //ï¿½ï¿½oom
     }
 }
