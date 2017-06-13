@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.ExceptionReporter;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.components.DaggerApplicationComponent;
 import com.meizitu.internal.di.modules.ApplicationModule;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * app
@@ -15,7 +16,7 @@ public class ImageApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //LeakCanary.install(this);
+        LeakCanary.install(this);
         initializeInjector();
         Thread.UncaughtExceptionHandler myHandler = new ExceptionReporter(applicationComponent.getTracker(), Thread.getDefaultUncaughtExceptionHandler(), this);
         Thread.setDefaultUncaughtExceptionHandler(myHandler);

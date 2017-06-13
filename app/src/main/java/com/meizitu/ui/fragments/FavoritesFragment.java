@@ -2,7 +2,6 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,10 +58,10 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
         switch (item.getItemId()) {
             case R.id.action_list_to_grid:
                 if (gridLayoutManager.getSpanCount() == 1) {
-                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_grid_to_list));
+                    item.setIcon(R.drawable.ic_grid_white_24dp);
                     gridLayoutManager.setSpanCount(2);
                 } else {
-                    item.setIcon(AnimatedVectorDrawableCompat.create(getContext(), R.drawable.avd_list_to_grid));
+                    item.setIcon(R.drawable.ic_list_white_24dp);
                     gridLayoutManager.setSpanCount(1);
                 }
                 helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());

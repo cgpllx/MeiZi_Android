@@ -29,7 +29,7 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
         final EasyProgressFrameLayout progressLayout = EasyViewUtil.findViewById(contentView, R.id.progressView);
 
         final IBanner banner = getItem(position);
-        Glide.with(container.getContext())//
+        Glide.with(imageView.getContext())//
                 .load(banner.getImageUrl())//
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)//
                 .placeholder(R.drawable.image_detail_placeholder)//
