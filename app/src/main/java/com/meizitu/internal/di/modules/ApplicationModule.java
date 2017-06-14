@@ -20,7 +20,6 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.google.android.gms.analytics.ExceptionReporter;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
@@ -34,6 +33,7 @@ import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.service.ImageApi;
 import com.meizitu.service.RestApiAdapter;
 import com.meizitu.service.interceptor.DecodeInterceptor;
+import com.meizitu.service.interceptor.PublicHeaderInterceptor;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import java.io.File;
@@ -109,7 +109,8 @@ public class ApplicationModule {
                 .followRedirects(true)
                 .cookieJar(cookieJar)
                 .addInterceptor(new DecodeInterceptor())//decode
-                .addNetworkInterceptor(new BridgeInterceptor(cookieJar))
+                .addNetworkInterceptor(new BridgeInterceptor(cookieJar))//zip
+                .addNetworkInterceptor(new PublicHeaderInterceptor())
 //                .addNetworkInterceptor(new CacheInterceptor())
                 .cache(new Cache(new File(application.getCacheDir(), "okhttpcache"), 1024 * 1024 * 10))
                 .build();
@@ -156,7 +157,7 @@ public class ApplicationModule {
     @Named("Time")
     public int provideRequestTime() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        int requestTime = calendar.get(Calendar.DAY_OF_YEAR)+20;
+        int requestTime = calendar.get(Calendar.DAY_OF_YEAR) + 20;
         int convertTime = requestTime % 100;//time 0 - 99
         return convertTime;
     }

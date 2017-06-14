@@ -10,7 +10,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -31,25 +30,25 @@ public interface ImageApi {
      * "Cache-Control: public, max-age=3600
      * http://localhost:8080/meizitu/groupImageInfoList?category=70&page=1&count=3000
      */
-    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+//    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/groupImageInfoList?count=10")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryGroupImageInfoList(@Query("category") int category, @Query("page") int pageIndex, @Query("time") int requestTime);
     /**
      * http://localhost:8080/meizitu/groupImageInfoDetails?id=2130
      */
-    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+//    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/groupImageInfoDetails")
     Call<ResponseInfo<Item_GroupImageInfoListItem>> queryGroupImageInfoDetails(@Query("id") int id);
 
-    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+//    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/categoryList")
     Call<ResponseInfo<List<Item_CategoryInfoItem>>> categoryList(@Query("id") int id);
 
-    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+//    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/groupImageInfoListByNew?count=10")
     Call<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> queryLatestGroupImageList(@Query("page") int pageIndex, @Query("time") int requestTime);
 
-    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
+//    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/adInfo")
     Call<ResponseInfo<ADInfo>> queryAdInfo();
 }
