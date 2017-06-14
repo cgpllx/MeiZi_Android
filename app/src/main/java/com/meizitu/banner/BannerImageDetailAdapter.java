@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -24,8 +25,9 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
 
     @Override
     public View newView(ViewGroup container, int position) {
+
         View contentView = LayoutInflater.from(container.getContext()).inflate(R.layout.viewpager_eachpage_layout, null);
-        PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
+        final PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
         final EasyProgressFrameLayout progressLayout = EasyViewUtil.findViewById(contentView, R.id.progressView);
 
         final IBanner banner = getItem(position);
@@ -34,6 +36,7 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)//
                 .placeholder(R.drawable.image_detail_placeholder)//
                 .error(R.mipmap.image_detail_load_fail)
+//                .centerCrop()
                 .dontAnimate().into(new GlideDrawableImageViewTarget(imageView) {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
