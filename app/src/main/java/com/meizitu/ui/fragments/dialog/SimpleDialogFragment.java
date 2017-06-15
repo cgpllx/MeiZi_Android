@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
 import com.meizitu.R;
@@ -59,5 +61,11 @@ public class SimpleDialogFragment extends DialogFragment {
 
     public interface PositiveButtonOnClickListener {
         void positiveOnClick();
+    }
+    public void show(FragmentManager manager, String tag) {
+
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.add(this, tag);
+        ft.commitAllowingStateLoss();
     }
 }
