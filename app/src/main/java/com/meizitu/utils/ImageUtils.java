@@ -62,7 +62,7 @@ public class ImageUtils {
     }
 
     public static void load(Context context, ImageView imageView, String imageUrl, int placeholder) {
-        Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(placeholder).dontAnimate().into(imageView);
+        Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.RESULT).placeholder(placeholder).dontAnimate().into(imageView);
     }
 
     public static void load1(Context context, ImageView imageView, String imageUrl, int placeholder) {
