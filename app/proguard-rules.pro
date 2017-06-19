@@ -39,8 +39,8 @@
 
 #-------------------------------------------定制化区域----------------------------------------------
 #---------------------------------1.实体类---------------------------------
-   -keep class com.qfang.qfangwanghk.pojo.**{*;}#不混淆所有的com.qfang.bean包下的类和这些类的所有成员变量
-   -keep class com.qfang.qfangwanghk.core.QfangGlideModule #不混淆所有的com.qfang.bean包下的类和这些类的所有成员变量
+-keep class com.qfang.qfangwanghk.pojo.**{*;}#不混淆所有的com.qfang.bean包下的类和这些类的所有成员变量
+-keep class com.qfang.qfangwanghk.core.QfangGlideModule #不混淆所有的com.qfang.bean包下的类和这些类的所有成员变量
 #-------------------------------------------------------------------------
 
 #---------------------------------2.第三方包-------------------------------

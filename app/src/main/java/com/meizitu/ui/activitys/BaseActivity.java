@@ -9,8 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meizitu.ImageApplication;
 import com.meizitu.R;
 import com.meizitu.internal.di.components.ApplicationComponent;
@@ -25,7 +24,7 @@ import javax.inject.Inject;
 public class BaseActivity extends AppCompatActivity {
 
     @Inject
-    Tracker mTracker;
+    FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +106,11 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void sendGa() {
         try {
-            mTracker.setScreenName(TAG);
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+//            mFirebaseAnalytics.setScreenName(TAG);
+//            mFirebaseAnalytics.send(new HitBuilders.ScreenViewBuilder().build());
+//            mFirebaseAnalytics.setCurrentScreen(this, screenName, null /* class override */);
+//            mFirebaseAnalytics.setAnalyticsCollectionEnabled();
+//            FirebaseAnalytics.getInstance(this).s
         } catch (Exception e) {
             e.printStackTrace();
         }

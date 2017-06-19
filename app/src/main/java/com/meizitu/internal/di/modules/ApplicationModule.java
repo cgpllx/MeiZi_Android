@@ -20,8 +20,7 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.meizitu.ImageApplication;
 import com.meizitu.mvp.repository.DbRepository;
@@ -119,13 +118,14 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public Tracker provideTracker(Context application) {
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(application);
-        Tracker mTracker = analytics.newTracker("UA-92262187-1");
-        mTracker.enableExceptionReporting(true);
-        mTracker.enableAutoActivityTracking(true);
+    public FirebaseAnalytics provideTracker(Context application) {
+//        GoogleAnalytics analytics = GoogleAnalytics.getInstance(application);
+//        Tracker mTracker = analytics.newTracker("UA-92262187-1");
+//        mTracker.enableExceptionReporting(true);
+//        mTracker.enableAutoActivityTracking(true);
+        FirebaseAnalytics firebaseAnalytics= FirebaseAnalytics.getInstance(application);
 
-        return mTracker;
+        return firebaseAnalytics;
     }
 
     @Provides
