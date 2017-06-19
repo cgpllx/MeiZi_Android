@@ -111,6 +111,7 @@ public class BaseActivity extends AppCompatActivity {
 //            mFirebaseAnalytics.setCurrentScreen(this, screenName, null /* class override */);
 //            mFirebaseAnalytics.setAnalyticsCollectionEnabled();
 //            FirebaseAnalytics.getInstance(this).s
+//            mFirebaseAnalytics.logEvent();
         } catch (Exception e) {
             e.printStackTrace();
         }

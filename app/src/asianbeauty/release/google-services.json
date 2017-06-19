@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "120488542981",
+    "firebase_url": "https://image1-c8d47.firebaseio.com",
+    "project_id": "image1-c8d47",
+    "storage_bucket": "image1-c8d47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120488542981:android:73beab25dd09fc67",
+        "android_client_info": {
+          "package_name": "com.meizitu.hotasiansexgirl_3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120488542981-p2ajvnb41ld4vn9cvunqdmcspqda782u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFmza9g2vbbHOfWQsrUTRsdNV5GyQ6vc0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

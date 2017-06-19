@@ -118,7 +118,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public FirebaseAnalytics provideTracker(Context application) {
+    public FirebaseAnalytics provideFirebaseAnalytics(Context application) {
 //        GoogleAnalytics analytics = GoogleAnalytics.getInstance(application);
 //        Tracker mTracker = analytics.newTracker("UA-92262187-1");
 //        mTracker.enableExceptionReporting(true);

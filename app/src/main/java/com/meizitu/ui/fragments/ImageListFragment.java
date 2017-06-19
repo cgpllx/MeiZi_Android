@@ -8,8 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meizitu.R;
 import com.meizitu.adapter.GroupImageInfoListAdapter;
 import com.meizitu.internal.di.components.ImageListComponent;
@@ -31,7 +31,7 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     GroupImageInfoListAdapter adapter;
 
     @Inject
-    Tracker mTracker;
+    FirebaseAnalytics mTracker;
 
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
@@ -53,11 +53,11 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         adapter.initializeListeners(new EasyFlexibleAdapter.OnItemClickListener() {
             @Override
             public boolean onItemClick(int i) {
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setAction("ItemClick")//
-                        .setCategory("Category=" + presenter.getCategoryId())
-                        .setValue(presenter.getCategoryId())
-                        .build());
+//                mTracker.send(new HitBuilders.EventBuilder()
+//                        .setAction("ItemClick")//
+//                        .setCategory("Category=" + presenter.getCategoryId())
+//                        .setValue(presenter.getCategoryId())
+//                        .build());
                 return false;
             }
         });

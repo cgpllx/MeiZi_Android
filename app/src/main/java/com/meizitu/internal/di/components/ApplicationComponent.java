@@ -17,7 +17,7 @@ package com.meizitu.internal.di.components;
 
 import android.content.Context;
 
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meizitu.internal.di.modules.ApplicationModule;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
 import com.meizitu.mvp.usecase.GetDataFromDbUseCase;
@@ -47,7 +47,7 @@ public interface ApplicationComponent {//要注入的对象必须在Component �
 
     OkHttpClient getOkHttpClient();
 
-    Tracker getTracker();
+    FirebaseAnalytics provideFirebaseAnalytics();
 
     GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getGetDatasFromDbUseCase();
 
