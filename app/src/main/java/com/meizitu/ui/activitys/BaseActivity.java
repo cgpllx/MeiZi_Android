@@ -106,12 +106,10 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void sendGa() {
         try {
-//            mFirebaseAnalytics.setScreenName(TAG);
-//            mFirebaseAnalytics.send(new HitBuilders.ScreenViewBuilder().build());
-//            mFirebaseAnalytics.setCurrentScreen(this, screenName, null /* class override */);
-//            mFirebaseAnalytics.setAnalyticsCollectionEnabled();
-//            FirebaseAnalytics.getInstance(this).s
-//            mFirebaseAnalytics.logEvent();
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, TAG);
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ScreenName");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         } catch (Exception e) {
             e.printStackTrace();
         }

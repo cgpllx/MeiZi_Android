@@ -3,6 +3,7 @@ package com.meizitu.ui.items;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meizitu.R;
 import com.meizitu.pojo.GroupImageInfo;
 import com.meizitu.ui.activitys.ImageDetailsActivity;
@@ -121,7 +123,7 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                 }
             });
             ImageUtils.load(getContext(), image, imageInfo.getCoverimage(), R.drawable.levellist);
-            image.setImageLevel(getAdapterPosition()%9);
+            image.setImageLevel(getAdapterPosition() % 9);
             title.setText(imageInfo.getTitle());
         }
 
@@ -146,6 +148,8 @@ public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlex
                 //todo:消耗积分
             }
         }
+
+
     }
 
     public Item_GroupImageInfoListItem() {

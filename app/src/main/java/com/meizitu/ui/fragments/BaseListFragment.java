@@ -14,7 +14,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
-import com.meizitu.core.CacheControl;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.mvp.contract.SimpleListContract;
 import com.meizitu.pojo.ADInfo;
@@ -84,23 +83,23 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             @Override
             public void onRefresh() {
                 super.onRefresh();
-                execute(REFRESH, CacheControl.FORCE_NETWORK);
+                execute(REFRESH);
             }
 
             @Override
             public void onLoadMore(EasyRecyclerView.FooterHander footerHander) {
                 super.onLoadMore(footerHander);
-                execute(LOADMORE, CacheControl.DEFAULT);
+                execute(LOADMORE);
             }
 
             @Override
             public void onEmptyViewClick() {
-                execute(LOADMORE, CacheControl.FORCE_NETWORK);
+                execute(LOADMORE);
             }
 
             @Override
             public void onErrorViewClick() {
-                execute(LOADMORE, CacheControl.FORCE_NETWORK);
+                execute(LOADMORE);
             }
         };
         isPrepared = true;
@@ -210,12 +209,12 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     }
 
     protected void refesh() {
-        execute(EasyFlexibleRecyclerViewHelper.REFRESH, CacheControl.FORCE_NETWORK);
+        execute(EasyFlexibleRecyclerViewHelper.REFRESH);
     }
 
 
-    private void execute(int pulltype, String cachecontrol) {
-        presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1, cachecontrol);
+    private void execute(int pulltype) {
+        presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1);
     }
 
 

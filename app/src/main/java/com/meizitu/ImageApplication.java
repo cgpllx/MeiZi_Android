@@ -3,7 +3,7 @@ package com.meizitu;
 import android.app.Application;
 import android.content.Context;
 
-
+import com.bumptech.glide.Glide;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.components.DaggerApplicationComponent;
 import com.meizitu.internal.di.modules.ApplicationModule;
@@ -21,7 +21,6 @@ public class ImageApplication extends Application {
 
     }
 
-
     private ApplicationComponent applicationComponent;
 
     public static ImageApplication get(Context context) {
@@ -29,8 +28,8 @@ public class ImageApplication extends Application {
     }
 
     private void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+        this.applicationComponent = DaggerApplicationComponent.builder()//
+                .applicationModule(new ApplicationModule(this))//
                 .build();
     }
 
@@ -41,6 +40,6 @@ public class ImageApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-//        Glide.get(this).clearMemory();
+        Glide.get(this).clearMemory();
     }
 }

@@ -80,7 +80,7 @@ public class FavoritesListPresenter extends EasyBasePresenter<FavoritesListContr
 
 
     @Override
-    public void executeSimpleListRequest(int pulltype, int pageIndex, String cachecontrol) {
+    public void executeSimpleListRequest(int pulltype, int pageIndex  ) {
         execute();
     }
 }

@@ -65,7 +65,7 @@ public class IndexFragmentPresenter extends AbsSimpleListPresenter<ResponseInfo<
     }
 
     @Override
-    protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex, String cachecontrol) {
+    protected EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> getRequestValues(int pulltype, int pageIndex) {
         EasyCall<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryLatestGroupImageList(pageIndex, time));
         EasyWorkUseCase.RequestValues<ResponseInfo<Paging<List<Item_GroupImageInfoListItem>>>> requestValues = new EasyWorkUseCase.RequestValues<>(0, easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         return requestValues;

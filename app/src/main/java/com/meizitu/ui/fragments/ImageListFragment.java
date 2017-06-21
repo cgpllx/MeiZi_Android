@@ -25,13 +25,13 @@ import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements ImageListContract.View {
 
     @Inject
-    ImageListPresenter presenter;
+    ImageListPresenter mPresenter;
 
     @Inject
-    GroupImageInfoListAdapter adapter;
+    GroupImageInfoListAdapter mAdapter;
 
     @Inject
-    FirebaseAnalytics mTracker;
+    FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         setHasOptionsMenu(true);
         getComponent(ImageListComponent.class).inject(this);
 
-        presenter.attachView(this);
+        mPresenter.attachView(this);
     }
 
     public static Fragment newInstance() {
@@ -50,18 +50,17 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
 
     @Override
     protected EasyFlexibleAdapter<Item_GroupImageInfoListItem> onCreateEasyRecyclerAdapter() {
-        adapter.initializeListeners(new EasyFlexibleAdapter.OnItemClickListener() {
+        mAdapter.initializeListeners(new EasyFlexibleAdapter.OnItemClickListener() {
             @Override
             public boolean onItemClick(int i) {
-//                mTracker.send(new HitBuilders.EventBuilder()
-//                        .setAction("ItemClick")//
-//                        .setCategory("Category=" + presenter.getCategoryId())
-//                        .setValue(presenter.getCategoryId())
-//                        .build());
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, mPresenter.getCategoryId() + "");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemClick");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 return false;
             }
         });
-        return adapter;
+        return mAdapter;
     }
 
     @Override
@@ -70,16 +69,15 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         inflater.inflate(R.menu.imagelistmenu, menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_list_to_grid:
                 if (gridLayoutManager.getSpanCount() == 1) {
-                    item.setIcon( R.drawable.ic_grid_white_24dp);
+                    item.setIcon(R.drawable.ic_grid_white_24dp);
                     gridLayoutManager.setSpanCount(2);
                 } else {
-                    item.setIcon( R.drawable.ic_list_white_24dp);
+                    item.setIcon(R.drawable.ic_list_white_24dp);
                     gridLayoutManager.setSpanCount(1);
                 }
                 helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount() - 2);
@@ -91,9 +89,9 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (presenter != null) {
-            presenter.detachView();
-            presenter = null;
+        if (mPresenter != null) {
+            mPresenter.detachView();
+            mPresenter = null;
         }
     }
 }

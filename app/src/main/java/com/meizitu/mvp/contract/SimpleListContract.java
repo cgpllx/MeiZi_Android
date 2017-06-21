@@ -23,6 +23,6 @@ public interface SimpleListContract {
 
     interface Presenter<T, V extends SimpleListContract.View<T>> extends EasyIPresenter<V> {
 
-        void executeSimpleListRequest(int pulltype, int pageIndex,String cachecontrol);
+        void executeSimpleListRequest(int pulltype, int pageIndex);
     }
 }
