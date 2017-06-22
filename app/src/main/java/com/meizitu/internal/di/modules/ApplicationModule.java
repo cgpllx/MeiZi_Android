@@ -107,8 +107,8 @@ public class ApplicationModule {
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 .followRedirects(true)
                 .cookieJar(cookieJar)
-                .addInterceptor(new DecodeInterceptor())//decode
                 .addNetworkInterceptor(new BridgeInterceptor(cookieJar))//zip
+                .addInterceptor(new DecodeInterceptor())//decode
                 .addNetworkInterceptor(new PublicHeaderInterceptor())
 //                .addNetworkInterceptor(new CacheInterceptor())
                 .cache(new Cache(new File(application.getCacheDir(), "okhttpcache"), 1024 * 1024 * 10))
