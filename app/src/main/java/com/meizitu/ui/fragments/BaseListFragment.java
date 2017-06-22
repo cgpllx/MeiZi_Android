@@ -83,7 +83,8 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             @Override
             public void onRefresh() {
                 super.onRefresh();
-                execute(REFRESH);
+//                execute(REFRESH);
+                refesh();
             }
 
             @Override
@@ -213,7 +214,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     }
 
 
-    private void execute(int pulltype) {
+    protected void execute(int pulltype) {
         presenter.executeSimpleListRequest(pulltype, helper.getCurrentPage() + 1);
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.meizitu.adapter.IndexListAdapter;
+import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.internal.di.components.MainActivityComponent;
 import com.meizitu.mvp.contract.IndexFragmentContract;
 import com.meizitu.mvp.presenter.IndexFragmentPresenter;
@@ -38,7 +39,7 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         helper.setRefreshEnabled(false);
         gridLayoutManager.setSpanCount(6);
         if(helper.getRecyclerAdapter().getHeaderItemCount()<2){
-            presenter.execute();
+//            presenter.execute();
         }
 
     }
@@ -67,8 +68,9 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
 
     @Override
     protected void refesh() {
-        super.refesh();
+//        super.refesh();
         presenter.execute();
+
     }
 
     @Override
@@ -82,6 +84,7 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
             ArrayList list = new ArrayList<>(responseInfo.getData());
             helper.getRecyclerAdapter().addHeaderItems(list);
             helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());
+            execute(EasyFlexibleRecyclerViewHelper.LOADMORE);
         }
     }
 
