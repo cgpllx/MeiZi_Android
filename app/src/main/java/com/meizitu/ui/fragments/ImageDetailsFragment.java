@@ -242,7 +242,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.detailmenu_down:
-                EasyPermission.with(this)
+                EasyPermission.with(this)//因为回调onRequestPermissionsResult在Fragment或者activity中，所以这里写在activity和Fragment方便处理
                         .requestCode(DOWNPERMISSIONREQUESTCODE)
                         .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .rationale(new RationaleListener() {

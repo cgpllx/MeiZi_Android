@@ -219,7 +219,6 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
                 }
                 break;
         }
-
     }
 
     @Override
