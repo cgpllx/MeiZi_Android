@@ -81,14 +81,6 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
         super.onBackPressed();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mInterstitialAd!=null){
-//            mInterstitialAd.
-        }
-    }
-
     boolean showAd() {
         long endTime = System.currentTimeMillis();
         return endTime - startTime > DELAYED_TIME;
