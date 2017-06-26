@@ -69,6 +69,7 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
     compile 'com.github.cgpllx:EasyRecyclerView:1.6.6'
+//    compile 'cc.easyandroid:EasyRecyclerView:1.0.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
