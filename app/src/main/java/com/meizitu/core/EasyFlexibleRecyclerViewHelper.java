@@ -187,9 +187,11 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
 
 
     public void setDatas(final List<T> datas) {
+        System.out.println("cgp= 11111");
         try {
             if (mEasyRecyclerView.isRefreshIng()) {// 刷新 成功
                 if (!ArrayUtils.isEmpty(datas)) {// 有数据
+                    System.out.println("cgp= 222");
                     if (mShouldPullLoad && datas.size() >= eachPageNumber) {
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_COMPLETED);
                     } else {
@@ -198,13 +200,15 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
                     mEasyRecyclerView.post(new Runnable() {
                         @Override
                         public void run() {
-                            mEasyRecyclerAdapter.setItems(datas);
+                            mEasyRecyclerAdapter.setItemsAndNotifyChanged(datas);
                             mEasyRecyclerView.flipPage();
                         }
                     });
+                    System.out.println("cgp= 333");
                 } else {// 没有数据
 //                    mEasyRecyclerAdapter.
                     mEasyRecyclerAdapter.clearItems();// 移除之前的
+                    System.out.println("cgp= 444");
                     // listview.showErrorView();
 //                    mListview.setPullLoadEnable(false);
                     throw new NoneDataException();
@@ -212,6 +216,8 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
             } else {// 加载成功
                 if (!ArrayUtils.isEmpty(datas)) {// 有数据
                     mEasyRecyclerAdapter.addItems(datas);
+//                    mEasyRecyclerAdapter.notifyDataSetChanged();
+                    System.out.println("cgp= 555");
                     // KToast.showShort(context, "加载完成");
                     mEasyRecyclerView.flipPage();
                     if (mShouldPullLoad && datas.size() >= eachPageNumber) {
@@ -220,11 +226,13 @@ public class EasyFlexibleRecyclerViewHelper<T extends IFlexible> implements OnLo
                         mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FULLCOMPLETED);
                     }
                 } else {// 没有数据
+                    System.out.println("cgp= 666");
                     mEasyRecyclerView.finishLoadMore(EasyRecyclerView.FooterHander.LOADSTATUS_FULLCOMPLETED);
                     throw new NoneDataException();
                 }
             }
         } catch (NoneDataException e) {
+            System.out.println("cgp= 777");
             System.out.println("mListview.showEmptyView();");
             mEasyRecyclerView.showEmptyView();
         } finally {

@@ -28,7 +28,7 @@ import cc.easyandroid.easyutils.DisplayUtils;
 import cc.easyandroid.easyutils.WindowUtil;
 
 
-@SuppressLint("ParcelCreator")
+
 public class Item_GroupImageInfoListItem extends GroupImageInfo implements IFlexible<Item_GroupImageInfoListItem.ViewHolder> {
 
     @Override

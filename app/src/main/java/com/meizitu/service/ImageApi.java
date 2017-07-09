@@ -18,15 +18,15 @@ import retrofit2.http.Query;
 public interface ImageApi {
     //    String DOMAIN = "www.ffvvv.cc";
 //    String DOMAIN = "appapi.ffvvv.cc";
-//    String DOMAIN = "app1.ffvvv.cc";
+    String DOMAIN = "app1.ffvvv.cc";
 //    String DOMAIN = "app2.ffvvv.cc";
 //    String DOMAIN = "app3.ffvvv.cc";
 //    String DOMAIN = "app4.ffvvv.cc";
-        String DOMAIN = "192.168.1.102:8080";
+//        String DOMAIN = "192.168.1.102:8080";
 //    String DOMAIN = "192.168.3.9:8080";
 //    String DOMAIN = "api.ffvvv.cc";
-    String PATH = "/meizitu";
-//    String PATH = "";
+//    String PATH = "/meizitu";
+    String PATH = "";
 
     //public, max-age=10 请求中带有max-age 响应中也可以有，测试发现是以少的为准，
 

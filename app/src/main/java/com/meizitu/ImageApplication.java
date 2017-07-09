@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide;
 import com.meizitu.internal.di.components.ApplicationComponent;
 import com.meizitu.internal.di.components.DaggerApplicationComponent;
 import com.meizitu.internal.di.modules.ApplicationModule;
-import com.squareup.leakcanary.LeakCanary;
+
 
 /**
  * app
@@ -16,7 +16,7 @@ public class ImageApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
         initializeInjector();
 
     }
