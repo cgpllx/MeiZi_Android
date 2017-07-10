@@ -141,7 +141,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
                 ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
                 int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
                 helper.setDatas(list);
-                System.out.println("cgp="+list);
                 simpleRecyclerView.scrollToPosition(firstVisibleItemPosition);
             }
         } catch (Exception e) {

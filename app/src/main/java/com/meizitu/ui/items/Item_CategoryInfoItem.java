@@ -2,6 +2,7 @@ package com.meizitu.ui.items;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,31 @@ public class Item_CategoryInfoItem extends Category implements IFlexible<Item_Ca
             }
         }
     }
+    public Item_CategoryInfoItem() {
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    protected Item_CategoryInfoItem(Parcel in) {
+        super(in);
+    }
+
+    public static final Creator<Item_CategoryInfoItem> CREATOR = new Creator<Item_CategoryInfoItem>() {
+        public Item_CategoryInfoItem createFromParcel(Parcel source) {
+            return new Item_CategoryInfoItem(source);
+        }
+
+        public Item_CategoryInfoItem[] newArray(int size) {
+            return new Item_CategoryInfoItem[size];
+        }
+    };
 
 }

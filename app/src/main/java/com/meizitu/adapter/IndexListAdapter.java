@@ -72,7 +72,7 @@ public class IndexListAdapter extends EasyFlexibleAdapter {
 
     @Override
     public boolean isEmpty() {
-        return false;
-//        return getHeaderItemCount()<1;
+//        return false;
+        return getNormalItemCount()<=0;
     }
 }
