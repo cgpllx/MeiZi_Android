@@ -1,6 +1,8 @@
 package com.meizitu.ui.views;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
@@ -45,5 +47,22 @@ public class SimpleRecyclerView extends EasyRecyclerView {
 
     public void resetPage() {
         currentPage = 0;
+    }
+
+    static final String CURRENTPAGEKEY = "currentPagekey";
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        Bundle bundle = (Bundle) state;
+        super.onRestoreInstanceState(bundle.getParcelable("super_data"));
+        currentPage = bundle.getInt(CURRENTPAGEKEY, 0);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("super_data", super.onSaveInstanceState());
+        bundle.putInt(CURRENTPAGEKEY, currentPage);
+        return bundle;
     }
 }
