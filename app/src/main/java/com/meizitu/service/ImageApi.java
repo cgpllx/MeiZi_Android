@@ -17,8 +17,8 @@ import retrofit2.http.Query;
  */
 public interface ImageApi {
     //    String DOMAIN = "www.ffvvv.cc";
-//    String DOMAIN = "appapi.ffvvv.cc";
-    String DOMAIN = "app1.ffvvv.cc";
+    String DOMAIN = "appapi.ffvvv.cc";
+//    String DOMAIN = "app1.ffvvv.cc";
 //    String DOMAIN = "app2.ffvvv.cc";
 //    String DOMAIN = "app3.ffvvv.cc";
 //    String DOMAIN = "app4.ffvvv.cc";

@@ -70,7 +70,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        gridLayoutManager = new GridLayoutManager(getContext(), 1){
+        gridLayoutManager = new GridLayoutManager(getContext(), 1) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
                 return 800;
@@ -111,15 +111,15 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             if (adInfo != null) {
                 avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
                 avContainer.removeAllViews();
-                AdView  adView=new AdView(view.getContext());
-                adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT));
+                AdView adView = new AdView(view.getContext());
+                adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
                 adView.setAdSize(AdSize.BANNER);
                 adView.setAdUnitId(adInfo.getAd_unit_id_banner());
                 avContainer.addView(adView);
-                AdRequest adRequest=new AdRequest.Builder().build();
-                try{
+                AdRequest adRequest = new AdRequest.Builder().build();
+                try {
                     adView.loadAd(adRequest);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -130,6 +130,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     }
 
     ViewGroup avContainer;
+
     /**
      * 恢复数据
      */
@@ -197,7 +198,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
 
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible) {
+        if (!isPrepared || !isVisible()) {
             return;
         }
         autoRefresh();

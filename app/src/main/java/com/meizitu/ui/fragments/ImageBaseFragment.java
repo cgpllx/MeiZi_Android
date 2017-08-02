@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.ui.activitys.BaseActivity;
 
@@ -29,10 +28,6 @@ public abstract class ImageBaseFragment extends EasyLazyLoadFragment {
     }
 
     protected abstract int getResourceId();
-
-
-    protected void lazyLoad() {
-    }
 
 
     public void onError(Object i, Throwable throwable) {

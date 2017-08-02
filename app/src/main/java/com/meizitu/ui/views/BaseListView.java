@@ -7,15 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.meizitu.R;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.mvp.contract.SimpleListContract;
-import com.meizitu.pojo.ADInfo;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 
@@ -25,12 +19,7 @@ import java.util.List;
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
-import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.ArrayUtils;
-
-/**
- * Created by chenguoping on 17/8/1.
- */
 
 public class BaseListView<T extends IFlexible> extends SimpleRecyclerView implements SimpleListContract.View<ResponseInfo<Paging<List<T>>>> {
 
@@ -53,10 +42,13 @@ public class BaseListView<T extends IFlexible> extends SimpleRecyclerView implem
         initView(context);
     }
 
-    GridLayoutManager gridLayoutManager;
 
     private void initView(Context context) {
-        gridLayoutManager = new GridLayoutManager(getContext(), 1) {
+
+    }
+
+    public void buildDefaultConfig() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
                 return 800;
@@ -103,17 +95,17 @@ public class BaseListView<T extends IFlexible> extends SimpleRecyclerView implem
     }
 
     @Override
-    public void autoRefresh() {
+    public final void autoRefresh() {
         super.autoRefresh();
-
     }
 
     protected void execute(int pulltype) {
         presenter.executeSimpleListRequest(pulltype, getCurrentPage() + 1);
     }
 
-    protected EasyFlexibleAdapter<T> onCreateEasyRecyclerAdapter() {
-        return new EasyFlexibleAdapter<>();
+    @Override
+    public void refeshList() {
+        autoRefresh();
     }
 
     @Override
@@ -171,59 +163,41 @@ public class BaseListView<T extends IFlexible> extends SimpleRecyclerView implem
         this.presenter = presenter;
     }
 
-    @Override
-    public void refeshList() {
-        autoRefresh();
-    }
 
     /**
      * 恢复数据
      */
-    void onViewStateRestored(Bundle savedInstanceState) {
-        try {
-            if (savedInstanceState != null) {
-                ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
-                int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
-                helper.setDatas(list);
-                scrollToPosition(firstVisibleItemPosition);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        Bundle bundle = (Bundle) state;
-        super.onRestoreInstanceState(bundle.getParcelable("super_data"));
-        onViewStateRestored(bundle);
+        Bundle savedInstanceState = (Bundle) state;
+        super.onRestoreInstanceState(savedInstanceState.getParcelable("super_data"));
+        if (savedInstanceState != null) {
+            ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
+            int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
+            helper.setDatas(list);
+            scrollToPosition(firstVisibleItemPosition);
+        }
     }
-
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("super_data", super.onSaveInstanceState());
-        onSaveInstanceState(bundle);
-        return bundle;
-    }
-
-    public static final String SAVEDATATAG = "saveDataTAG";
-    public static final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
 
     /**
      * 保存数据
      */
-    void onSaveInstanceState(Bundle outState) {
-        try {
-            ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
-            if (!ArrayUtils.isEmpty(list)) {
-                outState.putParcelableArrayList(SAVEDATATAG, list);
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) getLayoutManager();
-                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle outState = new Bundle();
+        outState.putParcelable("super_data", super.onSaveInstanceState());
+        ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
+        if (!ArrayUtils.isEmpty(list)) {
+            outState.putParcelableArrayList(SAVEDATATAG, list);
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) getLayoutManager();
+            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+            outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
         }
+        return outState;
     }
+
+    final String SAVEDATATAG = "saveDataTAG";
+
+    final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
+
 }

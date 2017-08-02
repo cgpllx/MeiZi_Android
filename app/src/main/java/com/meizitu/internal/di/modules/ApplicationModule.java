@@ -22,6 +22,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
+import com.meizitu.BuildConfig;
 import com.meizitu.ImageApplication;
 import com.meizitu.mvp.repository.DbRepository;
 import com.meizitu.mvp.usecase.DeleteByIdFromDbUseCase;
@@ -123,7 +124,7 @@ public class ApplicationModule {
 //        Tracker mTracker = analytics.newTracker("UA-92262187-1");
 //        mTracker.enableExceptionReporting(true);
 //        mTracker.enableAutoActivityTracking(true);
-        FirebaseAnalytics firebaseAnalytics= FirebaseAnalytics.getInstance(application);
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(application);
 
         return firebaseAnalytics;
     }
@@ -157,8 +158,8 @@ public class ApplicationModule {
     @Named("Time")
     public int provideRequestTime() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        int requestTime = calendar.get(Calendar.DAY_OF_YEAR) ;
-        int convertTime = requestTime % 100;//time 0 - 99
+        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
+        int convertTime = requestTime * BuildConfig.APPLICATION_ID.hashCode() % 100;//time 0 - 99
         return convertTime;
     }
 }

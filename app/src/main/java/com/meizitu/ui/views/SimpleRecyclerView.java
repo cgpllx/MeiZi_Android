@@ -3,7 +3,6 @@ package com.meizitu.ui.views;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
 import cc.easyandroid.easyrecyclerview.EasyRecyclerView;
@@ -30,7 +29,7 @@ public class SimpleRecyclerView extends EasyRecyclerView {
     private void init(Context context) {
         setHeaderHander(new DefaultHeaderHander(getContext()));
         setFooterHander(new DefaultFooterHander(getContext()));
-        setLayoutManager(new LinearLayoutManager(context));
+//        setLayoutManager(new LinearLayoutManager(context));
         setRestItemCountToLoadMore(10);
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
