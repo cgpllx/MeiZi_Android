@@ -41,18 +41,16 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         super.onQfangViewPrepared(view, savedInstanceState);
         helper.setRefreshEnabled(false);
         gridLayoutManager.setSpanCount(6);
-        if(helper.getRecyclerAdapter().getHeaderItemCount()<2){
-//            presenter.execute();
-        }
-
     }
 
 
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
-        setUserVisibleHint(true);
         getComponent(MainActivityComponent.class).inject(this);
+        if (savedInstanceState != null) {
+            //presenter.xxx(savedInstanceState);这里要恢复数据
+        }
         presenter.attachView(this);
     }
 
@@ -68,12 +66,12 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
 
     @Override
     public void onCategoryListError(Object o, Throwable t) {
-        onSimpleListError(o,t);
+        onSimpleListError(o, t);
     }
 
     @Override
     protected void refesh() {
-//        super.refesh();
+        //super.refesh();///屏蔽父类调用请求列表，先让他请求类别
         presenter.execute();
 
     }
@@ -84,14 +82,13 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     }
 
     public void deliverCategoryResult(Object i, ResponseInfo<List<Item_CategoryInfoItem>> responseInfo) {
-        if(responseInfo!=null){
+        if (responseInfo != null) {
             helper.getRecyclerAdapter().addHeaderItem(new Item_Index_NewCategory());
             ArrayList list = new ArrayList<>(responseInfo.getData());
-//            list.add(new Item_Index_LatestImage());
-            helper.getRecyclerAdapter().addItems(list);
+            helper.getRecyclerAdapter().addHeaderItems(list);
             helper.getRecyclerAdapter().notifyDataSetChanged();
-//            helper.getRecyclerAdapter().addItem(new Item_Index_LatestImage());
-//            execute(EasyFlexibleRecyclerViewHelper.LOADMORE);
+            helper.getRecyclerAdapter().addHeaderItem(new Item_Index_LatestImage());
+            execute(EasyFlexibleRecyclerViewHelper.LOADMORE);
         }
     }
 

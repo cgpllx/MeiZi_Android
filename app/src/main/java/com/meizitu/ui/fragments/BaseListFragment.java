@@ -83,7 +83,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             @Override
             public void onRefresh() {
                 super.onRefresh();
-//                execute(REFRESH);
                 refesh();
             }
 
@@ -140,8 +139,10 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         try {
             if (savedInstanceState != null) {
                 ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
+                ArrayList headerItemslist = savedInstanceState.getParcelableArrayList(SAVEHEDERITEMSTAG);
                 int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
                 helper.setDatas(list);
+                helper.getRecyclerAdapter().addHeaderItems(headerItemslist);
                 simpleRecyclerView.scrollToPosition(firstVisibleItemPosition);
             }
         } catch (Exception e) {
@@ -149,8 +150,9 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         }
     }
 
-    public static final String SAVEDATATAG = "saveDataTAG";
-    public static final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
+    final String SAVEDATATAG = "saveDataTAG";
+    final String SAVEHEDERITEMSTAG = "savehederitemstag";
+    final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
 
     /**
      * 保存数据
@@ -162,10 +164,15 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
             if (!ArrayUtils.isEmpty(list)) {
                 outState.putParcelableArrayList(SAVEDATATAG, list);
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
-                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
             }
+            //heder items
+            ArrayList headerItems = (ArrayList) helper.getRecyclerAdapter().getHeaderItems();
+            if (!ArrayUtils.isEmpty(headerItems)) {
+                outState.putParcelableArrayList(SAVEHEDERITEMSTAG, headerItems);
+            }
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
+            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+            outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,7 +205,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
 
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible()) {
+        if (!isPrepared || !getUserVisibleHint()) {
             return;
         }
         autoRefresh();

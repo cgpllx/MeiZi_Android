@@ -1,5 +1,7 @@
 package com.meizitu.ui.items;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,7 @@ import cc.easyandroid.easyrecyclerview.holders.FlexibleViewHolder;
 import cc.easyandroid.easyrecyclerview.items.IFlexible;
 import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 
-public class Item_Index_NewCategory implements IFlexible<Item_Index_NewCategory.ViewHolder> ,IHeaderSpanFill{
+public class Item_Index_NewCategory implements IFlexible<Item_Index_NewCategory.ViewHolder> ,IHeaderSpanFill, Parcelable {
 
     @Override
     public boolean isEnabled() {
@@ -54,4 +56,31 @@ public class Item_Index_NewCategory implements IFlexible<Item_Index_NewCategory.
             super(view, adapter);
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    public Item_Index_NewCategory() {
+    }
+
+    protected Item_Index_NewCategory(Parcel in) {
+    }
+
+    public static final Parcelable.Creator<Item_Index_NewCategory> CREATOR = new Parcelable.Creator<Item_Index_NewCategory>() {
+        @Override
+        public Item_Index_NewCategory createFromParcel(Parcel source) {
+            return new Item_Index_NewCategory(source);
+        }
+
+        @Override
+        public Item_Index_NewCategory[] newArray(int size) {
+            return new Item_Index_NewCategory[size];
+        }
+    };
 }

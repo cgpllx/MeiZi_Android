@@ -18,8 +18,10 @@ package com.meizitu.internal.di.components;
 
 import com.meizitu.internal.di.PerActivity;
 import com.meizitu.internal.di.modules.ActivityModule;
+import com.meizitu.internal.di.modules.FavoritesModule;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.ui.activitys.MainActivity;
+import com.meizitu.ui.fragments.FavoritesFragment;
 import com.meizitu.ui.fragments.IndexFragment;
 
 import dagger.Component;

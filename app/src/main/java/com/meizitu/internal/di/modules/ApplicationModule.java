@@ -159,7 +159,7 @@ public class ApplicationModule {
     public int provideRequestTime() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
         int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
-        int convertTime = requestTime * BuildConfig.APPLICATION_ID.hashCode() % 100;//time 0 - 99
+        int convertTime = (requestTime +BuildConfig.APPLICATION_ID.hashCode()) % 100;//time 0 - 99
         return convertTime;
     }
 }

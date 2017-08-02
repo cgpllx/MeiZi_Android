@@ -24,15 +24,5 @@ public class ImageListModule {
     public int provideGategoryId() {
         return gategoryId;
     }
-//
-//    @Provides
-//    @PerActivity
-//    @Named("Time")
-//    public int provideRequestTime() {
-//        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-//        int requestTime = calendar.get(Calendar.DAY_OF_YEAR);
-//        int convertTime = requestTime % 100;//time 0 - 99
-//        return convertTime;
-//    }
 
 }

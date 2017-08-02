@@ -17,6 +17,7 @@ import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerMainActivityComponent;
 import com.meizitu.internal.di.components.MainActivityComponent;
+import com.meizitu.internal.di.modules.FavoritesModule;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
 import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
@@ -31,7 +32,7 @@ import javax.inject.Inject;
 import cc.easyandroid.easyutils.EasyToast;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<MainActivityComponent>,MainActivityContract.View {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, HasComponent<MainActivityComponent>, MainActivityContract.View {
     MainActivityComponent component;
 
     DrawerLayout drawer;
@@ -161,6 +162,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onAdInfoSuccess(ADInfo adInfo) {
         adInfoProvide.setAdInfo(adInfo);
-        MobileAds.initialize(this,adInfo.getAd_unit_id_applicationCode());
+        MobileAds.initialize(this, adInfo.getAd_unit_id_applicationCode());
     }
 }
