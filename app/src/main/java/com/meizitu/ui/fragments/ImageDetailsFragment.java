@@ -87,8 +87,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         if (savedInstanceState != null) {
             //presenter.xxx(savedInstanceState);这里要恢复数据
         }
-        presenter.attachView(this);
-
 
         viewPager = EasyViewUtil.findViewById(view, R.id.banner_viewpager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
@@ -124,6 +122,13 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         });
 
         initAd(view);
+        if (savedInstanceState == null) {
+            //presenter.xxx(savedInstanceState);这里要恢复数据
+            execute();
+        }
+        easyProgress.showContentView();
+
+
     }
 
     private void initAd(View view) {
@@ -146,9 +151,9 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     @Override
     public void onStart() {
         super.onStart();
-        if (noData()) {
-            execute();
-        }
+//        if (noData()) {
+//            execute();
+//        }
     }
 
     private boolean noData() {
@@ -172,6 +177,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     @Override
     public void onSuccess(ResponseInfo<GroupImageInfo> groupImageInfoResponseInfo) {
+        System.out.println("cgp onSuccess");
         if (groupImageInfoResponseInfo != null && groupImageInfoResponseInfo.isSuccess()) {
             GroupImageInfo groupImageInfo = groupImageInfoResponseInfo.getData();
             if (groupImageInfo != null) {

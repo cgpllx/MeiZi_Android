@@ -40,7 +40,19 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         if (savedInstanceState != null) {
             //presenter.xxx(savedInstanceState);这里要恢复数据
         }
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void onQfangViewPrepared(View view, Bundle savedInstanceState) {
+        super.onQfangViewPrepared(view, savedInstanceState);
+        if (savedInstanceState != null) {
+            int spancount = savedInstanceState.getInt(SPANCOUNTKEY, 1);
+            if (spancount == 2) {
+                gridLayoutManager.setSpanCount(2);
+            } else {
+                gridLayoutManager.setSpanCount(1);
+            }
+        }
     }
 
     public static ImageListFragment newInstance() {
@@ -61,6 +73,22 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
             }
         });
         return mAdapter;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.action_list_to_grid);
+            if (item != null && gridLayoutManager != null) {
+                if (gridLayoutManager.getSpanCount() == 2) {
+                    item.setIcon(R.drawable.ic_grid_white_24dp);
+                } else {
+                    item.setIcon(R.drawable.ic_list_white_24dp);
+                }
+            }
+        }
+
     }
 
     @Override
@@ -85,6 +113,14 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SPANCOUNTKEY, gridLayoutManager.getSpanCount());
+    }
+
+    final String SPANCOUNTKEY = "SpanCountKey";
 
     @Override
     public void onDestroyView() {

@@ -35,7 +35,6 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
         if (savedInstanceState != null) {
             //presenter.xxx(savedInstanceState);Data is restored Here
         }
-        presenter.attachView(this);
     }
 
     public static FavoritesFragment newInstance() {

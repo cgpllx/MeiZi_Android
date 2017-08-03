@@ -47,7 +47,6 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         if (savedInstanceState != null) {
             //presenter.xxx(savedInstanceState);这里要恢复数据
         }
-        presenter.attachView(this);
     }
 
     @Override

@@ -18,25 +18,6 @@ import cc.easyandroid.easyrecyclerview.items.IHeaderSpanFill;
 public class IndexListAdapter extends EasyFlexibleAdapter {
 
 
-    @Override
-    public boolean addItems(List items) {
-//        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
-//            items.add(10, new Item_GroupImageInfoList_AD());
-//            items.add(19, new Item_GroupImageInfoList_AD());
-//        }
-        return super.addItems(items);
-    }
-
-    @Override
-    public void setItems(List items) {
-//        if (!ArrayUtils.isEmpty(items) && items.size() >= 20) {
-//            items.add(10, new Item_GroupImageInfoList_AD());
-//            items.add(19, new Item_GroupImageInfoList_AD());
-//        }
-        super.setItems(items);
-    }
-
-
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         recyclerView.addOnScrollListener(onScrollListener);
