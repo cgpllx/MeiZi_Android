@@ -25,7 +25,6 @@ import com.meizitu.mvp.usecase.GetDatasFromDbUseCase;
 import com.meizitu.mvp.usecase.InsertDataFromDbUseCase;
 import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.service.ImageApi;
-import com.meizitu.ui.activitys.BaseActivity;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import javax.inject.Named;
@@ -39,7 +38,7 @@ import okhttp3.OkHttpClient;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {//要注入的对象必须在Component 中现实暴露出来，（或者是构造可以注入）
 
-    void inject(BaseActivity baseActivity);//公用对象都注入到父Activity
+//    void inject(BaseActivity baseActivity);//公用对象都注入到父Activity
 
     Context context();
 

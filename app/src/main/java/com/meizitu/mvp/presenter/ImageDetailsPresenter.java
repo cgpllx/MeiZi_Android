@@ -64,13 +64,14 @@ public class ImageDetailsPresenter extends SimpleWorkPresenter<ImageDetailsContr
     public ImageDetailsPresenter(Context mContext, ImageApi imageApi, Item_GroupImageInfoListItem mGroupImageInfo,//
                                  InsertDataFromDbUseCase<Item_GroupImageInfoListItem> insertDataFromDbUseCase,//
                                  GetDataFromDbUseCase<Item_GroupImageInfoListItem> getDataFromDbUseCase,//
-                                 DeleteByIdFromDbUseCase deleteByIdFromDbUseCase) {
+                                 DeleteByIdFromDbUseCase deleteByIdFromDbUseCase,ImageDetailsContract.View view) {
         this.mContext = mContext;
         this.mImageApi = imageApi;
         this.mGroupImageInfo = mGroupImageInfo;
         this.mInsertDataFromDbUseCase = insertDataFromDbUseCase;
         this.mDeleteByIdFromDbUseCase = deleteByIdFromDbUseCase;
         this.mGetDataFromDbUseCase = getDataFromDbUseCase;
+        attachView(view);
     }
 
     private void exeDownloadRequest(String imageurl, final Activity activity) {

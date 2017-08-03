@@ -2,9 +2,6 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.meizitu.adapter.IndexListAdapter;
@@ -15,8 +12,8 @@ import com.meizitu.mvp.presenter.IndexFragmentPresenter;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
-import com.meizitu.ui.items.Item_Index_NewCategory;
 import com.meizitu.ui.items.Item_Index_LatestImage;
+import com.meizitu.ui.items.Item_Index_NewCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +21,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
-import cc.easyandroid.easyutils.ArrayUtils;
 
 
 public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements IndexFragmentContract.View {
     @Inject
     IndexFragmentPresenter presenter;
 
-    public static Fragment newInstance() {
+    public static IndexFragment newInstance() {
         IndexFragment fragment = new IndexFragment();
         return fragment;
     }
@@ -47,11 +43,16 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
-        getComponent(MainActivityComponent.class).inject(this);
+        getComponent(MainActivityComponent.class).inject(this);//这里相当于会重新创建注入Presenter
         if (savedInstanceState != null) {
             //presenter.xxx(savedInstanceState);这里要恢复数据
         }
         presenter.attachView(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override

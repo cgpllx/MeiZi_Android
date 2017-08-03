@@ -2,12 +2,10 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meizitu.R;
@@ -39,11 +37,13 @@ public class ImageListFragment extends BaseListFragment<Item_GroupImageInfoListI
         setUserVisibleHint(true);
         setHasOptionsMenu(true);
         getComponent(ImageListComponent.class).inject(this);
-
+        if (savedInstanceState != null) {
+            //presenter.xxx(savedInstanceState);这里要恢复数据
+        }
         mPresenter.attachView(this);
     }
 
-    public static Fragment newInstance() {
+    public static ImageListFragment newInstance() {
         ImageListFragment fragment = new ImageListFragment();
         return fragment;
     }

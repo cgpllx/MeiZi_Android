@@ -16,13 +16,24 @@
 package com.meizitu.internal.di.modules;
 
 
+import com.meizitu.internal.di.PerActivity;
+import com.meizitu.mvp.contract.FavoritesListContract;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Dagger module that provides user related collaborators.
  */
 @Module
 public class FavoritesModule {
-    public FavoritesModule() {
+    FavoritesListContract.View view;
+    public FavoritesModule(FavoritesListContract.View view) {
+        this.view=view;
+    }
+    @Provides
+    @PerActivity
+    public FavoritesListContract.View getView() {
+        return view;
     }
 }

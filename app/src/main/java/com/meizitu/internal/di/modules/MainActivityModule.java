@@ -13,24 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.meizitu.internal.di.components;
+package com.meizitu.internal.di.modules;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.internal.di.modules.IndexFragmentModule;
-import com.meizitu.internal.di.modules.MainActivityModule;
-import com.meizitu.ui.activitys.MainActivity;
-import com.meizitu.ui.fragments.IndexFragment;
+import com.meizitu.mvp.contract.MainActivityContract;
 
-import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
 
+/**
+ * Dagger module that provides user related collaborators.
+ */
+@Module
+public class MainActivityModule {
 
-@PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = {IndexFragmentModule.class, MainActivityModule.class})
-public interface MainActivityComponent {//只会继承方法
+    MainActivityContract.View view;
 
-    void inject(IndexFragment indexFragment);
+    public MainActivityModule(MainActivityContract.View view) {
+        this.view = view;
+    }
 
-    void inject(MainActivity mainActivity);
-
+    @Provides
+    @PerActivity
+    public MainActivityContract.View getView() {
+        return view;
+    }
 }

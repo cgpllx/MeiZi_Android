@@ -2,7 +2,6 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,13 +30,15 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
-        setUserVisibleHint(true);
         setHasOptionsMenu(true);
         getComponent(FavoritesComponent.class).inject(this);
+        if (savedInstanceState != null) {
+            //presenter.xxx(savedInstanceState);Data is restored Here
+        }
         presenter.attachView(this);
     }
 
-    public static Fragment newInstance() {
+    public static FavoritesFragment newInstance() {
         FavoritesFragment fragment = new FavoritesFragment();
         return fragment;
     }

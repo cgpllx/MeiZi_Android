@@ -17,7 +17,6 @@ package com.meizitu.internal.di.components;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.internal.di.modules.ActivityModule;
 import com.meizitu.internal.di.modules.FavoritesModule;
 import com.meizitu.ui.fragments.FavoritesFragment;
 
@@ -25,8 +24,8 @@ import dagger.Component;
 
 
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, FavoritesModule.class})
-public interface FavoritesComponent extends ActivityComponent {//只会继承方法
+@Component(dependencies = ApplicationComponent.class, modules = {FavoritesModule.class})
+public interface FavoritesComponent   {//只会继承方法
 
     void inject(FavoritesFragment favoritesFragment);
 

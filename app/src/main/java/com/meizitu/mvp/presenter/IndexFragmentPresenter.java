@@ -28,10 +28,11 @@ public class IndexFragmentPresenter extends AbsSimpleListPresenter<ResponseInfo<
     final int time;
 
     @Inject
-    public IndexFragmentPresenter(ImageApi imageApi, int id, @Named("Time") int time) {
+    public IndexFragmentPresenter(ImageApi imageApi, int id, @Named("Time") int time,IndexFragmentContract.View view) {
         this.id = id;
         this.imageApi = imageApi;
         this.time = time;
+        attachView(view);
     }
 
     @Override

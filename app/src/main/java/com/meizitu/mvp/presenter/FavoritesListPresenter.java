@@ -26,8 +26,9 @@ public class FavoritesListPresenter extends EasyBasePresenter<FavoritesListContr
     protected final GetDatasFromDbUseCase<Item_GroupImageInfoListItem> mGetDatasFromDbUseCase;
 
     @Inject
-    public FavoritesListPresenter(GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getDatasFromDbUseCase) {
+    public FavoritesListPresenter(GetDatasFromDbUseCase<Item_GroupImageInfoListItem> getDatasFromDbUseCase,FavoritesListContract.View view) {
         this.mGetDatasFromDbUseCase = getDatasFromDbUseCase;
+        attachView(view);
     }
 
     @Override

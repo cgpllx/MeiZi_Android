@@ -17,6 +17,7 @@ package com.meizitu.internal.di.modules;
 
 
 import com.meizitu.internal.di.PerActivity;
+import com.meizitu.mvp.contract.IndexFragmentContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -25,10 +26,18 @@ import dagger.Provides;
 @Module
 public class IndexFragmentModule {
 
+    private final IndexFragmentContract.View view;
     private int id = -1;
 
-    public IndexFragmentModule(int id) {
+    public IndexFragmentModule(int id, IndexFragmentContract.View view) {
         this.id = id;
+        this.view = view;
+    }
+
+    @Provides
+    @PerActivity
+    public IndexFragmentContract.View getView() {
+        return view;
     }
 
     @Provides
@@ -36,7 +45,6 @@ public class IndexFragmentModule {
     public int provideGategoryId() {
         return id;
     }
-
 
 
 }

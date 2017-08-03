@@ -17,7 +17,6 @@ package com.meizitu.internal.di.components;
 
 
 import com.meizitu.internal.di.PerActivity;
-import com.meizitu.internal.di.modules.ActivityModule;
 import com.meizitu.internal.di.modules.ImageDetailsModule;
 import com.meizitu.ui.activitys.ImageDetailsActivity;
 import com.meizitu.ui.fragments.ImageDetailsFragment;
@@ -26,8 +25,8 @@ import dagger.Component;
 
 
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, ImageDetailsModule.class})
-public interface ImageDetailsComponent extends ActivityComponent {//只会继承方法
+@Component(dependencies = ApplicationComponent.class, modules = {  ImageDetailsModule.class})
+public interface ImageDetailsComponent   {//只会继承方法
 
     void inject(ImageDetailsFragment mainActivity);
     void inject(ImageDetailsActivity detailsActivity);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +16,9 @@ import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerMainActivityComponent;
 import com.meizitu.internal.di.components.MainActivityComponent;
-import com.meizitu.internal.di.modules.FavoritesModule;
 import com.meizitu.internal.di.modules.IndexFragmentModule;
+import com.meizitu.internal.di.modules.MainActivityModule;
+import com.meizitu.mvp.contract.IndexFragmentContract;
 import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
 import com.meizitu.pojo.ADInfo;
@@ -65,20 +65,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initializeInjector();
-        presenter.attachView(this);
-        presenter.executeAdInfoRequest();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(INDEXFRAGMENT_TAG);
+        IndexFragment fragment = (IndexFragment) getSupportFragmentManager().findFragmentByTag(INDEXFRAGMENT_TAG);
         if (fragment == null) {
-            replaceFragment(R.id.content_main, IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
+            replaceFragment(R.id.content_main, fragment=IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
-//        int i=1/0;
+        initializeInjector(fragment);
+        presenter.executeAdInfoRequest();
     }
 
-    private void initializeInjector() {
+    private void initializeInjector(IndexFragmentContract.View indexFragmentView) {
         this.component = DaggerMainActivityComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .indexFragmentModule(new IndexFragmentModule(40))
+                .mainActivityModule(new MainActivityModule(this))
+                .indexFragmentModule(new IndexFragmentModule(40,indexFragmentView))
                 .build();
         this.component.inject(this);
     }

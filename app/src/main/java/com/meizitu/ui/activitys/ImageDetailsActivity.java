@@ -11,6 +11,7 @@ import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerImageDetailsComponent;
 import com.meizitu.internal.di.components.ImageDetailsComponent;
 import com.meizitu.internal.di.modules.ImageDetailsModule;
+import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.pojo.ADInfo;
 import com.meizitu.pojo.ADInfoProvide;
 import com.meizitu.pojo.GroupImageInfo;
@@ -37,32 +38,37 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_details);
-        this.initializeInjector();
-        this.component.inject(this);// inject
-        initTitleBar();
-        replaceFragment(R.id.content, ImageDetailsFragment.newFragment(), "ImageDetails");
 
+        initTitleBar();
+        ImageDetailsFragment fragment = (ImageDetailsFragment) getSupportFragmentManager().findFragmentByTag(IMAGEDETAILSFRAGMENTTAG);
+        if (fragment == null) {
+            replaceFragment(R.id.content, fragment = ImageDetailsFragment.newFragment(), IMAGEDETAILSFRAGMENTTAG);
+        }
+        this.initializeInjector(fragment);
+
+        this.component.inject(this);// inject
         ADInfo adInfo = adInfoProvide.provideADInfo();
         if (adInfo != null) {
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(adInfo.getAd_unit_id_interstitial());
             AdRequest adRequest = new AdRequest.Builder().addTestDevice("F1AC9E2E84EDE9EFF5C811AA189991B4").build();
-           try{
-               mInterstitialAd.loadAd(adRequest);
-           }catch (Exception e){
-               e.printStackTrace();
-           }
+            try {
+                mInterstitialAd.loadAd(adRequest);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
         startTime = System.currentTimeMillis();
     }
 
-    private void initializeInjector() {
+    public static final String IMAGEDETAILSFRAGMENTTAG = "ImageDetailsFragment";
+
+    private void initializeInjector(ImageDetailsContract.View imageDetailsView) {
         Item_GroupImageInfoListItem groupImageInfo = getIntent().getParcelableExtra(ITEM_GROUPIMAGEINFOLISTITEM_EXTRA);
         this.component = DaggerImageDetailsComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .imageDetailsModule(new ImageDetailsModule(groupImageInfo))
-                .activityModule(getActivityModule())
+                .imageDetailsModule(new ImageDetailsModule(groupImageInfo, imageDetailsView))
                 .build();
     }
 
@@ -70,7 +76,6 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
         Intent intent = new Intent(context, ImageDetailsActivity.class);
         intent.putExtra(ITEM_GROUPIMAGEINFOLISTITEM_EXTRA, groupImageInfo);
         return intent;
-
     }
 
     @Override

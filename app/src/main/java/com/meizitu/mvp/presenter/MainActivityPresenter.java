@@ -24,8 +24,9 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
     final ImageApi imageApi;
 
     @Inject
-    public MainActivityPresenter(ImageApi imageApi) {
+    public MainActivityPresenter(ImageApi imageApi,MainActivityContract.View view) {
         this.imageApi = imageApi;
+        attachView(view);
     }
 
     @Override

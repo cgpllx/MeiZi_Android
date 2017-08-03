@@ -5,7 +5,6 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,7 +64,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     BannerImageDetailAdapter<Image> bannerAdapter;
 
-    public static Fragment newFragment() {
+    public static ImageDetailsFragment newFragment() {
         ImageDetailsFragment fragment = new ImageDetailsFragment();
         return fragment;
     }
@@ -85,6 +84,9 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.getComponent(ImageDetailsComponent.class).inject(this);
+        if (savedInstanceState != null) {
+            //presenter.xxx(savedInstanceState);这里要恢复数据
+        }
         presenter.attachView(this);
 
 

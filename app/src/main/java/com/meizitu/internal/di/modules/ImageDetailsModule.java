@@ -17,6 +17,7 @@ package com.meizitu.internal.di.modules;
 
 
 import com.meizitu.internal.di.PerActivity;
+import com.meizitu.mvp.contract.ImageDetailsContract;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
 
 import dagger.Module;
@@ -28,11 +29,19 @@ import dagger.Provides;
 @Module
 public class ImageDetailsModule {
 
+    private final ImageDetailsContract.View view;
     private Item_GroupImageInfoListItem item_groupImageInfoListItem;
 
 
-    public ImageDetailsModule(Item_GroupImageInfoListItem item_groupImageInfoListItem) {
+    public ImageDetailsModule(Item_GroupImageInfoListItem item_groupImageInfoListItem, ImageDetailsContract.View view) {
         this.item_groupImageInfoListItem = item_groupImageInfoListItem;
+        this.view = view;
+    }
+
+    @Provides
+    @PerActivity
+    public ImageDetailsContract.View getView() {
+        return view;
     }
 
     @Provides

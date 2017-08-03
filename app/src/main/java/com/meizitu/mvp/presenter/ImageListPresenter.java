@@ -25,11 +25,11 @@ public class ImageListPresenter extends AbsSimpleListPresenter<ResponseInfo<Pagi
     final int requestTime;
 
     @Inject
-    public ImageListPresenter(ImageApi imageApi, @Named("CategoryId")int categoryId,  @Named("Time")int requestTime) {
+    public ImageListPresenter(ImageApi imageApi, @Named("CategoryId")int categoryId,  @Named("Time")int requestTime,ImageListContract.View view) {
         this.categoryId = categoryId;
         this.imageApi = imageApi;
         this.requestTime = requestTime;
-
+        attachView(view);
     }
 
 
