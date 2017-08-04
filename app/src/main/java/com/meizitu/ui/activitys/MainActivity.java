@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onAppInfoSuccess(final AppInfo appInfo) {
         if (appInfo != null) {
-            if (appInfo.versionCode > AppUtils.getVersionCode(this)) {//���°汾
+            if (appInfo.versionCode > AppUtils.getVersionCode(this)) {//有新版本
                 SimpleDialogFragment.newInstance(getResources().getString(R.string.newversion), appInfo.getDescription()).setPositiveButtonOnClickListener(new SimpleDialogFragment.PositiveButtonOnClickListener() {
                     @Override
                     public void positiveOnClick() {
