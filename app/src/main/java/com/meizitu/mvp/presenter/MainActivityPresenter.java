@@ -1,6 +1,7 @@
 package com.meizitu.mvp.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.ShareCompat;
@@ -8,13 +9,16 @@ import android.support.v4.app.ShareCompat;
 import com.meizitu.R;
 import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.AppInfo;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.service.ImageApi;
+import com.meizitu.utils.AppUpGradeManager;
 
 import javax.inject.Inject;
 
 import cc.easyandroid.easyclean.UseCase;
 import cc.easyandroid.easyclean.domain.easywork.EasyWorkUseCase;
+import cc.easyandroid.easyclean.repository.EasyWorkRepository;
 import cc.easyandroid.easycore.EasyCall;
 import cc.easyandroid.easyhttp.core.CacheMode;
 import cc.easyandroid.easyhttp.retrofit2.RetrofitCallToEasyCall;
@@ -24,7 +28,7 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
     final ImageApi imageApi;
 
     @Inject
-    public MainActivityPresenter(ImageApi imageApi,MainActivityContract.View view) {
+    public MainActivityPresenter(ImageApi imageApi, MainActivityContract.View view) {
         this.imageApi = imageApi;
         attachView(view);
     }
@@ -62,7 +66,7 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
                 if (responseInfo != null) {
                     ADInfo adInfo = responseInfo.getData();
                     if (adInfo != null) {
-                        if(isViewAttached())
+                        if (isViewAttached())
                             getView().onAdInfoSuccess(adInfo);
                     }
                 }
@@ -72,6 +76,34 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
             public void onError(Throwable throwable) {
             }
         });
+    }
+
+    @Override
+    public void executeAppInfoRequest(String applicationId) {
+        EasyCall<ResponseInfo<AppInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.checkAppUpdate());
+        final EasyWorkUseCase.RequestValues<ResponseInfo<AppInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
+        handleRequest(new EasyWorkUseCase(new EasyWorkRepository()), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<AppInfo>>>() {
+            @Override
+            public void onSuccess(EasyWorkUseCase.ResponseValue<ResponseInfo<AppInfo>> responseValue) {
+                ResponseInfo<AppInfo> responseInfo = responseValue.getData();
+                if (responseInfo != null) {
+                    AppInfo adInfo = responseInfo.getData();
+                    if (adInfo != null) {
+                        if (isViewAttached())
+                            getView().onAppInfoSuccess(adInfo);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+        });
+    }
+
+    @Override
+    public void executeDownLoadNewApp(Context context, AppInfo appInfo) {
+        AppUpGradeManager.downLoadApk(context, appInfo);
     }
 
     @Override

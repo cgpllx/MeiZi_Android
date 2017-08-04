@@ -1,5 +1,7 @@
 package com.meizitu.pojo;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.SerializedName;
 import com.meizitu.banner.IBanner;
 
@@ -32,4 +34,35 @@ public class Image implements IBanner {
 	public String getImageUrl() {
 		return imageurl;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.imageurl);
+		dest.writeInt(this.groupimageinfo_id);
+		dest.writeByte(loaded ? (byte) 1 : (byte) 0);
+	}
+
+	public Image() {
+	}
+
+	protected Image(Parcel in) {
+		this.imageurl = in.readString();
+		this.groupimageinfo_id = in.readInt();
+		this.loaded = in.readByte() != 0;
+	}
+
+	public static final Creator<Image> CREATOR = new Creator<Image>() {
+		public Image createFromParcel(Parcel source) {
+			return new Image(source);
+		}
+
+		public Image[] newArray(int size) {
+			return new Image[size];
+		}
+	};
 }

@@ -3,6 +3,7 @@ package com.meizitu.ui.activitys;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.BuildConfig;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.meizitu.R;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.internal.di.components.DaggerMainActivityComponent;
@@ -23,12 +23,14 @@ import com.meizitu.mvp.contract.MainActivityContract;
 import com.meizitu.mvp.presenter.MainActivityPresenter;
 import com.meizitu.pojo.ADInfo;
 import com.meizitu.pojo.ADInfoProvide;
+import com.meizitu.pojo.AppInfo;
 import com.meizitu.ui.fragments.IndexFragment;
 import com.meizitu.ui.fragments.SplashFragment;
 import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
 import javax.inject.Inject;
 
+import cc.easyandroid.easyutils.AppUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
 
@@ -67,17 +69,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
         IndexFragment fragment = (IndexFragment) getSupportFragmentManager().findFragmentByTag(INDEXFRAGMENT_TAG);
         if (fragment == null) {
-            replaceFragment(R.id.content_main, fragment=IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
+            replaceFragment(R.id.content_main, fragment = IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
         initializeInjector(fragment);
         presenter.executeAdInfoRequest();
+        presenter.executeAppInfoRequest(BuildConfig.APPLICATION_ID);
     }
 
     private void initializeInjector(IndexFragmentContract.View indexFragmentView) {
         this.component = DaggerMainActivityComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .mainActivityModule(new MainActivityModule(this))
-                .indexFragmentModule(new IndexFragmentModule(40,indexFragmentView))
+                .indexFragmentModule(new IndexFragmentModule(40, indexFragmentView))
                 .build();
         this.component.inject(this);
     }
@@ -160,7 +163,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onAdInfoSuccess(ADInfo adInfo) {
-        adInfoProvide.setAdInfo(adInfo);
-        MobileAds.initialize(this, adInfo.getAd_unit_id_applicationCode());
+        adInfoProvide.setAdInfo(this,adInfo);
+    }
+
+    @Override
+    public void onAppInfoSuccess(final AppInfo appInfo) {
+        if (appInfo != null) {
+            if (appInfo.versionCode > AppUtils.getVersionCode(this)) {//ÓÐÐÂ°æ±¾
+                SimpleDialogFragment.newInstance(getResources().getString(R.string.newversion), appInfo.getDescription()).setPositiveButtonOnClickListener(new SimpleDialogFragment.PositiveButtonOnClickListener() {
+                    @Override
+                    public void positiveOnClick() {
+                        presenter.executeDownLoadNewApp(MainActivity.this, appInfo);
+                    }
+                }).show(getSupportFragmentManager(), "versionCodeFragment");
+            }
+        }
     }
 }

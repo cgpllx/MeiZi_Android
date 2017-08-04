@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.meizitu.internal.di.HasComponent;
 import com.meizitu.ui.activitys.BaseActivity;
 
-import cc.easyandroid.easyui.fragment.EasyLazyLoadFragment;
 import cc.easyandroid.easyutils.EasyToast;
 
 /**
@@ -30,6 +29,10 @@ public abstract class ImageBaseFragment extends Fragment {
 
     protected abstract int getResourceId();
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 
     public void onError(Object i, Throwable throwable) {
         EasyToast.showShort(getContext(), TextUtils.isEmpty(throwable.getMessage()) ? "服務器或者網絡異常" : throwable.getMessage());

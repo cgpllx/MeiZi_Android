@@ -56,7 +56,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     /**
      * 标志位，标志已经初始化完成
      */
-    private boolean isPrepared;
+//    private boolean isPrepared;
 
     protected SimpleListContract.Presenter<ResponseInfo<Paging<List<T>>>, SimpleListContract.View<ResponseInfo<Paging<List<T>>>>> presenter;
 
@@ -102,11 +102,14 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
                 execute(LOADMORE);
             }
         };
-        isPrepared = true;
         onQfangViewPrepared(view, savedInstanceState);
 
         if (adInfoProvide != null) {
             ADInfo adInfo = adInfoProvide.provideADInfo();
+            if (adInfo == null && savedInstanceState != null) {
+                adInfo = savedInstanceState.getParcelable(ADINFOTAG);
+                adInfoProvide.setAdInfo(getContext(),adInfo);
+            }
             if (adInfo != null) {
                 avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
                 avContainer.removeAllViews();
@@ -121,8 +124,6 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
         }
 
@@ -150,9 +151,10 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         }
     }
 
-    final String SAVEDATATAG = "saveDataTAG";
-    final String SAVEHEDERITEMSTAG = "savehederitemstag";
-    final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";
+    final String SAVEDATATAG = "saveDataTAG";//列表普通item
+    final String SAVEHEDERITEMSTAG = "savehederitemstag";//列表header
+    final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";//现在的位置
+    final String ADINFOTAG = "adinfo";//adinfo
 
     /**
      * 保存数据
@@ -170,6 +172,13 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             if (!ArrayUtils.isEmpty(headerItems)) {
                 outState.putParcelableArrayList(SAVEHEDERITEMSTAG, headerItems);
             }
+            //adinfo
+            if (adInfoProvide != null) {
+                ADInfo adInfo = adInfoProvide.provideADInfo();
+                if (adInfo != null) {
+                    outState.putParcelable(ADINFOTAG, adInfo);
+                }
+            }
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
             int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
             outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
@@ -179,8 +188,8 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         if (noData()) {
             lazyLoad();
         }
@@ -205,7 +214,8 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
 
     protected void lazyLoad() {
-        if (!isPrepared || !getUserVisibleHint()) {
+        //Resume没有调用 而且setUserVisibleHint没有设置true，都不加载数据
+        if (!isResumed() || !getUserVisibleHint()) {
             return;
         }
         autoRefresh();

@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -13,11 +12,12 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.meizitu.R;
 
+import cc.easyandroid.easyrecyclerview.core.IEmptyAdapter;
 import cc.easyandroid.easyrecyclerview.core.progress.EasyProgressFrameLayout;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import uk.co.senab.photoview.PhotoView;
 
-public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPagerAdapter<T> {
+public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPagerAdapter<T> implements IEmptyAdapter {
 
     public BannerImageDetailAdapter() {
         super();
@@ -36,7 +36,6 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)//
                 .placeholder(R.drawable.image_detail_placeholder)//
                 .error(R.mipmap.image_detail_load_fail)
-//                .centerCrop()
                 .dontAnimate().into(new GlideDrawableImageViewTarget(imageView) {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
@@ -57,20 +56,26 @@ public class BannerImageDetailAdapter<T extends IBanner> extends AbstractViewPag
                 super.onLoadStarted(placeholder);
                 if (!banner.isLoaded()) {
                     progressLayout.showLoadingView();
-                }else{
+                } else {
                     progressLayout.showContentView();
                 }
             }
         });
         return contentView;
     }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-       super.destroyItem(container,position,object);
+        super.destroyItem(container, position, object);
         ViewGroup contentView = (ViewGroup) object;
         PhotoView imageView = EasyViewUtil.findViewById(contentView, R.id.photoview);
         if (imageView == null)
             return;
-        Glide.clear(imageView);     //��oom
+        Glide.clear(imageView);     //oom
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return getCount() == 0;
     }
 }

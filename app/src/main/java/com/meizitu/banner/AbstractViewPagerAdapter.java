@@ -36,6 +36,10 @@ public abstract class AbstractViewPagerAdapter<T> extends PagerAdapter {
         return mItems.size();
     }
 
+    public ArrayList<T> getItems() {
+        return mItems;
+    }
+
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;

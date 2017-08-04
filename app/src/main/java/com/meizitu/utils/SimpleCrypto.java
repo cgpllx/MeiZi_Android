@@ -8,7 +8,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by chenguoping on 16/10/22.
+ * 加密解密
  */
 public class SimpleCrypto {
     public static String encrypt(String seed, String cleartext) throws Exception {

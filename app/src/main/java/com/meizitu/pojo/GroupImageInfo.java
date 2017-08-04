@@ -16,7 +16,7 @@ public class GroupImageInfo implements Parcelable, EasyDbObject {
     @SerializedName("title")
     private String title;
     @SerializedName("images")
-    private List<Image> images;
+    private ArrayList<Image> images;
     @SerializedName("coverimage")
     private String coverimage;//封面图片
     @SerializedName("piccount")
@@ -44,46 +44,34 @@ public class GroupImageInfo implements Parcelable, EasyDbObject {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
-    public List<Image> getImages() {
+    public ArrayList<Image> getImages() {
         return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
     }
 
     public String getCoverimage() {
         return coverimage;
     }
 
-    public void setCoverimage(String coverimage) {
-        this.coverimage = coverimage;
-    }
+
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if (this == obj) {
             return true;
         }
-        if(null == obj) {
+        if (null == obj) {
             return false;
         }
-        if(getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
 
         GroupImageInfo groupImageInfo = (GroupImageInfo) obj;
-        if(id!=groupImageInfo.id) {
+        if (id != groupImageInfo.id) {
             return false;
         }
         return true;

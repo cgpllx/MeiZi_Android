@@ -1,6 +1,7 @@
 package com.meizitu.service;
 
 import com.meizitu.pojo.ADInfo;
+import com.meizitu.pojo.AppInfo;
 import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
@@ -55,4 +56,7 @@ public interface ImageApi {
 //    @Headers({"Cache-Duration:640000", "Cache-Time:36000", "Cache-Control: public"})
     @GET(PATH + "/adInfo")
     Call<ResponseInfo<ADInfo>> queryAdInfo();
+
+    @GET(PATH + "/appUpdate")
+    Call<ResponseInfo<AppInfo>> checkAppUpdate();
 }
