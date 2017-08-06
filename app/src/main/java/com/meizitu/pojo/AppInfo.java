@@ -3,6 +3,8 @@ package com.meizitu.pojo;
 import com.google.gson.annotations.SerializedName;
 
 public class AppInfo {
+
+    public static final String DOWNLOAD_ID="DOWNLOAD_ID";
     @SerializedName("versionName")
     public String versionName;
     @SerializedName("versionCode")

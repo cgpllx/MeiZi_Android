@@ -64,7 +64,7 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
                     item.setIcon(R.drawable.ic_list_white_24dp);
                     gridLayoutManager.setSpanCount(1);
                 }
-                helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount());
+                helper.getRecyclerAdapter().notifyItemRangeChanged(1, helper.getRecyclerAdapter().getItemCount()-2);
                 break;
         }
         return super.onOptionsItemSelected(item);

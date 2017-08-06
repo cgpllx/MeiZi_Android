@@ -114,6 +114,8 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
             ArrayList<Image> images = savedInstanceState.getParcelableArrayList(ADAPTERDATA);
             if (!ArrayUtils.isEmpty(images)) {
                 bannerAdapter.setItems(images);
+                bannerAdapter.notifyDataSetChanged();
+                viewpagerIndicator.setViewPager(viewPager);
             }
         }
 
@@ -184,7 +186,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         execute();
     }
     private boolean noData() {
-        return viewPager.getChildCount() <= 0;
+        return bannerAdapter.getCount() <= 0;
     }
 
     public void execute() {
@@ -209,8 +211,8 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
             if (groupImageInfo != null) {
                 bannerAdapter.addItems(groupImageInfo.getImages());
                 bannerAdapter.notifyDataSetChanged();
-//                viewpagerIndicator.setViewPager(viewPager);
-//                viewpagerIndicator.setTitleName(groupImageInfo.getTitle());
+                viewpagerIndicator.setViewPager(viewPager);
+                viewpagerIndicator.setTitleName(groupImageInfo.getTitle());
                 showAllMenu(getToolBar().getMenu());
             }
         }

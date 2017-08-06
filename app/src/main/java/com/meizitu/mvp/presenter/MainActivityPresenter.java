@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.design.BuildConfig;
 import android.support.v4.app.ShareCompat;
 
 import com.meizitu.R;
@@ -26,6 +28,7 @@ import cc.easyandroid.easyutils.EasyToast;
 
 public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContract.View> implements MainActivityContract.Presenter {
     final ImageApi imageApi;
+    String applicationId = com.meizitu.BuildConfig.APPLICATION_ID;
 
     @Inject
     public MainActivityPresenter(ImageApi imageApi, MainActivityContract.View view) {
@@ -57,7 +60,7 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
 
     @Override
     public void executeAdInfoRequest() {
-        EasyCall<ResponseInfo<ADInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryAdInfo());
+        EasyCall<ResponseInfo<ADInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.queryAdInfo(applicationId));
         final EasyWorkUseCase.RequestValues<ResponseInfo<ADInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         handleRequest(getDefaultEasyWorkUseCase(), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<ADInfo>>>() {
             @Override
@@ -79,8 +82,8 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
     }
 
     @Override
-    public void executeAppInfoRequest(String applicationId) {
-        EasyCall<ResponseInfo<AppInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.checkAppUpdate());
+    public void executeAppInfoRequest() {
+        EasyCall<ResponseInfo<AppInfo>> easyCall = new RetrofitCallToEasyCall<>(imageApi.checkAppUpdate(applicationId));
         final EasyWorkUseCase.RequestValues<ResponseInfo<AppInfo>> requestValues = new EasyWorkUseCase.RequestValues<>("", easyCall, CacheMode.LOAD_NETWORK_ELSE_CACHE);
         handleRequest(new EasyWorkUseCase(new EasyWorkRepository()), requestValues, new UseCase.UseCaseCallback<EasyWorkUseCase.ResponseValue<ResponseInfo<AppInfo>>>() {
             @Override
@@ -103,7 +106,8 @@ public class MainActivityPresenter extends SimpleWorkPresenter<MainActivityContr
 
     @Override
     public void executeDownLoadNewApp(Context context, AppInfo appInfo) {
-        AppUpGradeManager.downLoadApk(context, appInfo);
+        long download_id = AppUpGradeManager.downLoadApk(context, appInfo);
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(AppInfo.DOWNLOAD_ID, download_id).apply();
     }
 
     @Override

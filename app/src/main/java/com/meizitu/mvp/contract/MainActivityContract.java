@@ -26,7 +26,7 @@ public interface MainActivityContract {
 
         void executeAdInfoRequest();
 
-        void executeAppInfoRequest(String applicationId);
+        void executeAppInfoRequest( );
 
         void executeDownLoadNewApp(Context context,AppInfo appInfo);
     }

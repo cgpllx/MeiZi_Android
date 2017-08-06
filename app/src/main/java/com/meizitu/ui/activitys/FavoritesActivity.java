@@ -12,7 +12,9 @@ import com.meizitu.ui.fragments.FavoritesFragment;
 
 
 public class FavoritesActivity extends BaseSwipeBackActivity implements HasComponent<FavoritesComponent> {
+
     FavoritesComponent favoritesComponent;
+
     public static final String TAG = FavoritesActivity.class.getSimpleName();
 
     @Override

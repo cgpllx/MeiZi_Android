@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.BuildConfig;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdView;
@@ -30,6 +32,7 @@ import com.meizitu.ui.fragments.dialog.SimpleDialogFragment;
 
 import javax.inject.Inject;
 
+import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.AppUtils;
 import cc.easyandroid.easyutils.EasyToast;
 
@@ -61,6 +64,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
         initTitleBar();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        AppBarLayout appBarLayout= EasyViewUtil.findViewById(this, R.id.app_bar);
         imageView = (ImageView) findViewById(R.id.image);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -72,9 +76,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             replaceFragment(R.id.content_main, fragment = IndexFragment.newInstance(), INDEXFRAGMENT_TAG);
         }
         initializeInjector(fragment);
+        if (savedInstanceState != null) {
+            appBarLayout.setExpanded(false);
+        }else{
+            presenter.executeAppInfoRequest();
+        }
         presenter.executeAdInfoRequest();
-        presenter.executeAppInfoRequest(BuildConfig.APPLICATION_ID);
+
     }
+
 
     private void initializeInjector(IndexFragmentContract.View indexFragmentView) {
         this.component = DaggerMainActivityComponent.builder()
@@ -112,9 +122,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     sharedPreferences.edit().putInt(CONTROLEVALUATION, exitCount + 1).commit();
                 }
             } else {
-                startTime = endTime;
                 EasyToast.showShort(getApplicationContext(), getString(R.string.pressAnotherExit));
             }
+            startTime = endTime;
         }
     }
 

@@ -2,8 +2,10 @@ package com.meizitu.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.view.View;
 
+import com.meizitu.R;
 import com.meizitu.adapter.IndexListAdapter;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.internal.di.components.MainActivityComponent;
@@ -21,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cc.easyandroid.easyrecyclerview.EasyFlexibleAdapter;
+import cc.easyandroid.easyui.utils.EasyViewUtil;
 
 
 public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem> implements IndexFragmentContract.View {
@@ -38,7 +41,6 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         helper.setRefreshEnabled(false);
         gridLayoutManager.setSpanCount(6);
     }
-
 
     @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
