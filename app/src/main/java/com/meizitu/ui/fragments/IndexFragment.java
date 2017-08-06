@@ -11,6 +11,7 @@ import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
 import com.meizitu.internal.di.components.MainActivityComponent;
 import com.meizitu.mvp.contract.IndexFragmentContract;
 import com.meizitu.mvp.presenter.IndexFragmentPresenter;
+import com.meizitu.pojo.Paging;
 import com.meizitu.pojo.ResponseInfo;
 import com.meizitu.ui.items.Item_CategoryInfoItem;
 import com.meizitu.ui.items.Item_GroupImageInfoListItem;
@@ -76,6 +77,11 @@ public class IndexFragment extends BaseListFragment<Item_GroupImageInfoListItem>
         //super.refesh();///屏蔽父类调用请求列表，先让他请求类别
         presenter.execute();
 
+    }
+
+    @Override
+    protected boolean noData() {
+        return helper.getRecyclerAdapter().getHeaderItemCount()==0;
     }
 
     @Override
