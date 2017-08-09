@@ -10,7 +10,7 @@ import dagger.Provides;
 
 
 /**
- * 这个类没有用，为什么要怎么搞呢���
+ * 父类转哦给你树妖主人的对象
  */
 @Module
 public class ActivityModule {
