@@ -1,5 +1,6 @@
 package com.meizitu.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.meizitu.internal.di.PerActivity;
@@ -65,4 +66,14 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
             super.onScrollStateChanged(recyclerView, newState);
         }
     };
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
