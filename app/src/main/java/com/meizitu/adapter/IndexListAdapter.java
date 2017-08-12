@@ -20,7 +20,6 @@ public class IndexListAdapter extends EasyFlexibleAdapter {
 
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        recyclerView.addOnScrollListener(onScrollListener);
         RecyclerView.LayoutManager manager1 = recyclerView.getLayoutManager();
         if (manager1 instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = (GridLayoutManager) manager1;
@@ -39,21 +38,7 @@ public class IndexListAdapter extends EasyFlexibleAdapter {
 
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        recyclerView.removeOnScrollListener(onScrollListener);
-    }
-
-    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-    };
-
-    @Override
     public boolean isEmpty() {
-//        return false;
         return getHeaderItemCount()==0;
     }
 }

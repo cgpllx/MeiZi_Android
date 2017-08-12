@@ -3,6 +3,7 @@
     <string name="app_name_desc">Pure beautiful sexy models</string>
     <string name="loading">loading..</string>
     <string name="load_error">Error loading,click reload</string>
+    <string name="systemupgrade">System upgrade, please visit later...</string>
     <string name="nodata">nodata</string>
     <string name="pressAnotherExit">pressAnotherExit</string>
     <string name="saveAddress">Save picture successfully, save path as：%1$s</string>

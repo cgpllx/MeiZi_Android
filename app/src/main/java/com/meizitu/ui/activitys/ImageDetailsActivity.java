@@ -97,6 +97,7 @@ public class ImageDetailsActivity extends BaseSwipeBackActivity implements HasCo
         }
     }
 
+
     @Override
     public ImageDetailsComponent getComponent() {
         return component;//

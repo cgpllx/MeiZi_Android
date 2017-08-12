@@ -3,7 +3,8 @@
     <string name="app_name">app_name</string>
     <string name="loading">正在加载..</string>
     <string name="load_error">加载出错,点击重新加载</string>
-    <string name="nodata">暂无数据</string>
+    <string name="systemupgrade">系统升级中,请稍后访问....</string>
+    <string name="nodata">没有数据</string>
     <string name="pressAnotherExit">再按一次退出</string>
     <string name="saveAddress">图片保存成功，保存路径为：%1$s</string>
     <string name="downloadError">下载出错了</string>

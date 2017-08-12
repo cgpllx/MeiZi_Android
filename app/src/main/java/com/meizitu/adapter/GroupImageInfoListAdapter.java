@@ -39,41 +39,32 @@ public class GroupImageInfoListAdapter extends EasyFlexibleAdapter {
 
     @Override
     public void setItems(List items) {
-        if (!ArrayUtils.isEmpty(items) && items.size() >= 10) {
-            if (adInfo != null) {
-//                items.add(6, new Item_GroupImageInfoList_AD(adInfo));
-            }
-        }
         super.setItems(items);
     }
 
 
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        recyclerView.addOnScrollListener(onScrollListener);
-    }
-
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        recyclerView.removeOnScrollListener(onScrollListener);
-    }
-
-    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-    };
-
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        if (adInfo == null && savedInstanceState != null) {
+            adInfo = savedInstanceState.getParcelable(ADINFOTAG);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        try {
+            //adinfo
+            if (outState != null && adInfo != null) {
+                outState.putParcelable(ADINFOTAG, adInfo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    final String ADINFOTAG = "adinfo";//adinfo
+
+
 }

@@ -3,6 +3,7 @@ package com.meizitu.ui.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.meizitu.R;
 import com.meizitu.core.EasyFlexibleRecyclerViewHelper;
+import com.meizitu.core.ImageGridLayoutManager;
 import com.meizitu.mvp.contract.SimpleListContract;
 import com.meizitu.pojo.ADInfo;
 import com.meizitu.pojo.ADInfoProvide;
@@ -50,14 +52,18 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
     protected GridLayoutManager gridLayoutManager;
 
+    protected ViewGroup avContainer;
+
+    final String ADINFOTAG = "adinfo";//adinfo
+
+    AdView adView = null;
+
     @Inject
     ADInfoProvide adInfoProvide;//Subclasses will be injected if needed
 
     /**
      * 标志位，标志已经初始化完成
      */
-//    private boolean isPrepared;
-
     protected SimpleListContract.Presenter<ResponseInfo<Paging<List<T>>>, SimpleListContract.View<ResponseInfo<Paging<List<T>>>>> presenter;
 
     @Override
@@ -70,12 +76,7 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
         super.onViewCreated(view, savedInstanceState);
         onQfangViewCreated(view, savedInstanceState);
         simpleRecyclerView = EasyViewUtil.findViewById(view, R.id.qfangRecyclerView);
-        gridLayoutManager = new GridLayoutManager(getContext(), 1) {
-            @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 800;
-            }
-        };
+        gridLayoutManager = new ImageGridLayoutManager(getContext(), 1);
         simpleRecyclerView.setLayoutManager(gridLayoutManager);
         simpleRecyclerView.setHasFixedSize(true);
         final EasyFlexibleAdapter<T> adapter = onCreateEasyRecyclerAdapter();
@@ -103,17 +104,47 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
             }
         };
         onQfangViewPrepared(view, savedInstanceState);
+        avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
+    }
 
+
+    /**
+     * 保存数据
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         if (adInfoProvide != null) {
             ADInfo adInfo = adInfoProvide.provideADInfo();
-            if (adInfo == null && savedInstanceState != null) {
-                adInfo = savedInstanceState.getParcelable(ADINFOTAG);
-                adInfoProvide.setAdInfo(getContext(),adInfo);
-            }
             if (adInfo != null) {
-                avContainer = EasyViewUtil.findViewById(view, R.id.avContainer);
-                avContainer.removeAllViews();
-                AdView adView = new AdView(view.getContext());
+                outState.putParcelable(ADINFOTAG, adInfo);
+            }
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            ADInfo adInfo = savedInstanceState.getParcelable(ADINFOTAG);
+            adInfoProvide.setAdInfo(getContext(), adInfo);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (noData()) {
+            lazyLoad();
+        }
+        showAd();
+    }
+
+    private void showAd() {
+        if (adView == null && adInfoProvide != null) {//adview 如果不为空就说明已经加载过了
+            ADInfo adInfo = adInfoProvide.provideADInfo();
+            if (adInfo != null) {
+                adView = new AdView(getContext());
                 adView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
                 adView.setAdSize(AdSize.BANNER);
                 adView.setAdUnitId(adInfo.getAd_unit_id_banner());
@@ -129,74 +160,8 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
 
     }
 
-    ViewGroup avContainer;
-
-    /**
-     * 恢复数据
-     */
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        try {
-            if (savedInstanceState != null) {
-                ArrayList list = savedInstanceState.getParcelableArrayList(SAVEDATATAG);
-                ArrayList headerItemslist = savedInstanceState.getParcelableArrayList(SAVEHEDERITEMSTAG);
-                int firstVisibleItemPosition = savedInstanceState.getInt(FIRSTVISIBLEPOSITION, 0);
-                helper.setDatas(list);
-                helper.getRecyclerAdapter().addHeaderItems(headerItemslist);
-                simpleRecyclerView.scrollToPosition(firstVisibleItemPosition);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    final String SAVEDATATAG = "saveDataTAG";//列表普通item
-    final String SAVEHEDERITEMSTAG = "savehederitemstag";//列表header
-    final String FIRSTVISIBLEPOSITION = "firstVisiblePosition";//现在的位置
-    final String ADINFOTAG = "adinfo";//adinfo
-
-    /**
-     * 保存数据
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            ArrayList<? extends Parcelable> list = (ArrayList<? extends Parcelable>) helper.getRecyclerAdapter().getItems();
-            if (!ArrayUtils.isEmpty(list)) {
-                outState.putParcelableArrayList(SAVEDATATAG, list);
-            }
-            //heder items
-            ArrayList headerItems = (ArrayList) helper.getRecyclerAdapter().getHeaderItems();
-            if (!ArrayUtils.isEmpty(headerItems)) {
-                outState.putParcelableArrayList(SAVEHEDERITEMSTAG, headerItems);
-            }
-            //adinfo
-            if (adInfoProvide != null) {
-                ADInfo adInfo = adInfoProvide.provideADInfo();
-                if (adInfo != null) {
-                    outState.putParcelable(ADINFOTAG, adInfo);
-                }
-            }
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) simpleRecyclerView.getLayoutManager();
-            int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-            outState.putInt(FIRSTVISIBLEPOSITION, firstVisibleItemPosition);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (noData()) {
-            lazyLoad();
-        }
-    }
-
     protected boolean noData() {
-        return helper.getRecyclerAdapter().getNormalItemCount() <= 0;
+        return helper.getRecyclerAdapter().isEmpty() ;
     }
 
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
@@ -302,6 +267,14 @@ public class BaseListFragment<T extends IFlexible> extends ImageBaseFragment imp
                     simpleRecyclerView.finishLoadMore(-1);
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (adView != null) {
+            adView.destroy();
         }
     }
 }

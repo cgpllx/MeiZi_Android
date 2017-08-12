@@ -39,6 +39,7 @@ import cc.easyandroid.easypermission.EasyPermission;
 import cc.easyandroid.easypermission.PermissionListener;
 import cc.easyandroid.easypermission.Rationale;
 import cc.easyandroid.easypermission.RationaleListener;
+import cc.easyandroid.easyrecyclerview.listener.OnEasyProgressClickListener;
 import cc.easyandroid.easyui.utils.EasyViewUtil;
 import cc.easyandroid.easyutils.ArrayUtils;
 
@@ -91,7 +92,24 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         bannerAdapter = new BannerImageDetailAdapter();
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(bannerAdapter);
+        viewPager.setOnEasyProgressClickListener(new OnEasyProgressClickListener() {
+            @Override
+            public void onLoadingViewClick() {
+
+            }
+
+            @Override
+            public void onEmptyViewClick() {
+
+            }
+
+            @Override
+            public void onErrorViewClick() {
+                lazyLoad();
+            }
+        });
         viewpagerIndicator = EasyViewUtil.findViewById(view, R.id.viewpagerIndicator);
+        viewpagerIndicator.setViewPager(viewPager);//和viewpager的pregress有冲突
         up = EasyViewUtil.findViewById(view, R.id.up, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,23 +127,8 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
         });
 
         initAd(view, savedInstanceState);
-        if (savedInstanceState != null) {
-            //presenter.xxx(savedInstanceState);这里要恢复数据
-            ArrayList<Image> images = savedInstanceState.getParcelableArrayList(ADAPTERDATA);
-            if (!ArrayUtils.isEmpty(images)) {
-                bannerAdapter.setItems(images);
-                bannerAdapter.notifyDataSetChanged();
-                viewpagerIndicator.setViewPager(viewPager);
-            }
-        }
-
-
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-    }
 
     private void initAd(View view, Bundle savedInstanceState) {
         //----ad
@@ -149,7 +152,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
     }
 
     final String ADINFOTAG = "adinfo";//adinfo
-    final String ADAPTERDATA = "adapterdata";//adapterdata
 
     /**
      * 保存数据
@@ -165,7 +167,6 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
                     outState.putParcelable(ADINFOTAG, adInfo);
                 }
             }
-            outState.putParcelableArrayList(ADAPTERDATA, bannerAdapter.getItems());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,12 +196,12 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
 
     @Override
     public void onStart(Object tag) {
-//        viewPager.showLoadingView();
+        viewPager.showLoadingView();
     }
 
     @Override
     public void onError(Throwable throwable) {
-//        viewPager.showErrorView();
+        viewPager.showErrorView();
     }
 
 
@@ -211,7 +212,7 @@ public class ImageDetailsFragment extends ImageBaseFragment implements ImageDeta
             if (groupImageInfo != null) {
                 bannerAdapter.addItems(groupImageInfo.getImages());
                 bannerAdapter.notifyDataSetChanged();
-                viewpagerIndicator.setViewPager(viewPager);
+
                 viewpagerIndicator.setTitleName(groupImageInfo.getTitle());
                 showAllMenu(getToolBar().getMenu());
             }

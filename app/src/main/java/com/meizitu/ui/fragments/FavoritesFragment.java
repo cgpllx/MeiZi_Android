@@ -28,6 +28,11 @@ public class FavoritesFragment extends BaseListFragment<Item_GroupImageInfoListI
     GroupImageInfoListAdapter adapter;
 
     @Override
+    protected int getResourceId() {
+        return R.layout.fragment_favorites_list;
+    }
+
+    @Override
     protected void onQfangViewCreated(View view, Bundle savedInstanceState) {
         super.onQfangViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
